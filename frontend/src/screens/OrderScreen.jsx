@@ -291,7 +291,8 @@ const OrderScreen = () => {
                   <div className='cart-box-right'>
                     Produkty:
                     <div className='ml-auto'>
-                      {cart.itemsPrice.replace('.', ',')} €
+                      {cart.itemsPrice} €
+                      {/* {cart.itemsPrice.replace('.', ',')} € */}
                     </div>
                   </div>
                 </Row>
@@ -302,7 +303,8 @@ const OrderScreen = () => {
                     Poštovné:
                     <div className='ml-auto'>
                       {' '}
-                      {cart.shippingPrice.replace('.', ',')} €
+                      {cart.shippingPrice} €
+                      {/* {cart.shippingPrice.replace('.', ',')} € */}
                     </div>
                   </div>
                 </Row>
@@ -314,7 +316,8 @@ const OrderScreen = () => {
                     Celkom:
                     <div className='ml-auto'>
                       {' '}
-                      {cart.totalPrice.replace('.', ',')} €
+                      {cart.totalPrice} €
+                      {/* {cart.totalPrice.replace('.', ',')} € */}
                     </div>
                   </div>
                 </Row>

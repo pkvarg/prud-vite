@@ -131,10 +131,16 @@ a#adminmenu.dropdown-toggle.nav-link:hover {
   margin-right: 35px;
 }
 
+.header-basket {
+  font-size: 25px;
+  font-weight: 100;
+  margin-bottom: 7.5px;
+}
+
 p.number-in-cart {
   position: absolute;
-  right: 50px;
-  top: -10px;
+  right: -7px;
+  top: -7.5px;
   display: inline-block;
   border-radius: 50%;
   width: 20px;

@@ -5,6 +5,7 @@ import { Navbar, Nav, Container, NavDropdown } from 'react-bootstrap'
 import SearchBox from './SearchBox'
 import { logout } from '../actions/userActions'
 import { Link } from 'react-router-dom'
+import * as Icon from 'react-bootstrap-icons'
 
 const Header = () => {
   const dispatch = useDispatch()
@@ -34,7 +35,8 @@ const Header = () => {
                 <p className='number-in-cart '>
                   <span>{cartItems.length}</span>
                 </p>
-                <i className='fas fa-shopping-cart'></i> Košík
+
+                <Icon.Cart2 className='header-basket'>Košík</Icon.Cart2>
               </Nav.Link>
             </LinkContainer>
             {userInfo ? (

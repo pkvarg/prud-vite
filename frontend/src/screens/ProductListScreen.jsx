@@ -6,6 +6,7 @@ import { useParams } from 'react-router-dom'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
 import Paginate from '../components/Paginate'
+import * as Icon from 'react-bootstrap-icons'
 
 import {
   listProducts,
@@ -113,12 +114,13 @@ const ProductListScreen = () => {
         </Col>
         <Col className='text-end'>
           <Button className='my-3 btn-red' onClick={linkToCreateDiscount}>
-            <i className='fas fa-plus'></i> Vytvoriť Akciu
+            <Icon.Plus size={25} />
+            Vytvoriť akciu
           </Button>
         </Col>
         <Col className='text-end'>
           <Button className='my-3 btn-blue' onClick={createProductHandler}>
-            <i className='fas fa-plus'></i> Vytvoriť produkt
+            <Icon.Plus size={25} /> Vytvoriť produkt
           </Button>
         </Col>
       </Row>
@@ -134,12 +136,13 @@ const ProductListScreen = () => {
 
         <Col className='text-start'>
           <Button className='my-3 btn-red' onClick={linkToCreateDiscount}>
-            <i className='fas fa-plus'></i> Vytvoriť Akciu
+            <Icon.Plus size={25} />
+            Vytvoriť akciu
           </Button>
         </Col>
         <Col className='text-start'>
           <Button className='my-3 btn-blue' onClick={createProductHandler}>
-            <i className='fas fa-plus'></i> Vytvoriť produkt
+            <Icon.Plus size={25} /> Vytvoriť produkt
           </Button>
         </Col>
       </Row>
@@ -198,7 +201,7 @@ const ProductListScreen = () => {
                   <td>
                     <LinkContainer to={`/admin/product/${product._id}/edit`}>
                       <Button variant='light' className='btn-sm'>
-                        <i className='fas fa-edit'></i>
+                        <Icon.Pencil />
                       </Button>
                     </LinkContainer>
                     <Button
@@ -206,7 +209,7 @@ const ProductListScreen = () => {
                       className='btn-sm'
                       onClick={() => deleteHandler(product._id)}
                     >
-                      <i className='fas fa-trash'></i>
+                      <Icon.Trash />
                     </Button>
                   </td>
                 </tr>

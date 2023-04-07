@@ -6,6 +6,7 @@ import Message from '../components/Message'
 import Loader from '../components/Loader'
 import { listUsers, deleteUser } from '../actions/userActions'
 import { useNavigate } from 'react-router-dom'
+import * as Icon from 'react-bootstrap-icons'
 
 const UserListScreen = () => {
   const dispatch = useDispatch()
@@ -60,15 +61,15 @@ const UserListScreen = () => {
                 </td>
                 <td>
                   {user.isAdmin ? (
-                    <i className='fas fa-check' style={{ color: 'green' }}></i>
+                    <Icon.Check style={{ color: 'green' }} />
                   ) : (
-                    <i className='fas fa-times' style={{ color: 'red' }}></i>
+                    <Icon.X style={{ color: 'red' }} />
                   )}
                 </td>
                 <td>
                   <LinkContainer to={`/admin/user/${user._id}/edit`}>
                     <Button variant='light' className='btn-sm'>
-                      <i className='fas fa-edit'></i>
+                      <Icon.Pencil />
                     </Button>
                   </LinkContainer>
                   <Button
@@ -76,7 +77,7 @@ const UserListScreen = () => {
                     className='btn-sm'
                     onClick={() => deleteHandler(user._id)}
                   >
-                    <i className='fas fa-trash'></i>
+                    <Icon.Trash />
                   </Button>
                 </td>
               </tr>

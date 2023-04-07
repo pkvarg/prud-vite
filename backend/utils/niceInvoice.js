@@ -6,14 +6,8 @@ const __dirname = path.resolve()
 const niceInvoice = (invoice, path) => {
   let doc = new PDFDocument({ size: 'A4', margin: 40 })
 
-  doc.registerFont(
-    'Cardo',
-    __dirname + '/backend/utils/fonts/Cardo-Regular.ttf'
-  )
-  doc.registerFont(
-    'Cardo-Bold',
-    __dirname + '/backend/utils/fonts/Cardo-Bold.ttf'
-  )
+  doc.registerFont('Cardo', __dirname + '/utils/fonts/Cardo-Regular.ttf')
+  doc.registerFont('Cardo-Bold', __dirname + '/utils/fonts/Cardo-Bold.ttf')
 
   header(doc, invoice)
   customerInformation(doc, invoice)

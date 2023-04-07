@@ -5,8 +5,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
 import { listOrders } from '../actions/orderActions'
-
 import { useNavigate } from 'react-router-dom'
+import * as Icon from 'react-bootstrap-icons'
 
 const OrderListScreen = () => {
   const dispatch = useDispatch()
@@ -56,14 +56,14 @@ const OrderListScreen = () => {
                   {order.isPaid ? (
                     order.paidAt.substring(0, 10)
                   ) : (
-                    <i className='fas fa-times' style={{ color: 'red' }}></i>
+                    <Icon.X style={{ color: 'red' }} />
                   )}
                 </td>
                 <td>
                   {order.isDelivered ? (
                     order.deliveredAt.substring(0, 10)
                   ) : (
-                    <i className='fas fa-times' style={{ color: 'red' }}></i>
+                    <Icon.X style={{ color: 'red' }} />
                   )}
                 </td>
                 <td>
