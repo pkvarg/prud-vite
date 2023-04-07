@@ -29,6 +29,7 @@ app.use(
   cors({
     origin: [
       'http://localhost:3000',
+      'http://localhost:5173',
       'https://pictusweb.art',
       'https://prud.onrender.com',
     ],

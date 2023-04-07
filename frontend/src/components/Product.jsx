@@ -12,7 +12,7 @@ const Product = ({ product }) => {
     <div className='my-3 p-3'>
       <Link to={`/product/${product._id}`}>
         <Card.Img
-          src={product.image}
+          src={`${product.image}`}
           variant='top'
           className='product-img-card-width'
         />

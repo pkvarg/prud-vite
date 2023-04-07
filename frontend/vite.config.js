@@ -7,8 +7,16 @@ export default defineConfig({
 
   server: {
     port: 3000,
-    hmr: {
-      overlay: false,
+    proxy: {
+      '/api': {
+        target: 'http://localhost:5000',
+      },
+      '/uploads': {
+        target: 'http://localhost:5000',
+      },
     },
+    // hmr: {
+    //   overlay: false,
+    // },
   },
 })

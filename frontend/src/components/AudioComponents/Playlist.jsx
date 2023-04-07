@@ -5,7 +5,7 @@ let Playlist = (subcategory) => {
   const downloadFileHandler = (fileName) => {
     fileName = `${fileName}.mp3`
     console.log(fileName)
-    fetch(`/uploads/${fileName}`).then((response) => {
+    fetch(`/./backend/uploads/${fileName}`).then((response) => {
       response.blob().then((blob) => {
         const fileURL = window.URL.createObjectURL(blob)
         let alink = document.createElement('a')
