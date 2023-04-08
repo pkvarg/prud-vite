@@ -7,7 +7,7 @@ let Playlist2 = () => {
     fileName = `${fileName}.mp3`
     console.log(fileName)
 
-    fetch(`/./backend/uploads/${fileName}`).then((response) => {
+    fetch(`/uploads/${fileName}`).then((response) => {
       response.blob().then((blob) => {
         const fileURL = window.URL.createObjectURL(blob)
         let alink = document.createElement('a')

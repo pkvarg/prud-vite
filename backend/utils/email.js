@@ -59,7 +59,7 @@ class Email {
     const __dirname = path.resolve()
     // 1) Render HTML based on a pug template
     const html = pug.renderFile(
-      `${__dirname}/backend/utils/mailTemplates/${template}.pug`,
+      `${__dirname}/utils/mailTemplates/${template}.pug`,
       {
         user: this.user,
         firstName: this.firstName,

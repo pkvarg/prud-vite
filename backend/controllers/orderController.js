@@ -193,7 +193,7 @@ const addOrderItems = asyncHandler(async (req, res) => {
       orderNumber: createdOrder.orderNumber,
       header: {
         company_name: 'Prúd',
-        company_logo: __dirname + '/backend/utils/prud-prud-logo.png',
+        company_logo: __dirname + '/utils/prud-prud-logo.png',
         company_address: 'Špieszova 5, 84104, Bratislava, Slovensko',
       },
       ico: 'IČO: 36076589',
