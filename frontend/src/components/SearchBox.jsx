@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { Form, Button } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom'
+import * as Icon from 'react-bootstrap-icons'
 
 const SearchBox = () => {
   const [keyword, setKeyword] = useState('')
@@ -25,7 +26,7 @@ const SearchBox = () => {
         className='mr-sm-2 ml-sm-5'
       ></Form.Control>
       <Button type='submit' className='mx-1 header-search-btn'>
-        <i className='fas fa-search'></i>
+        <Icon.Search />
       </Button>
     </Form>
   )

@@ -13,7 +13,7 @@ let AudioPlayer = (subcategory) => {
           <AudioActions />
           <Playlist subcategory={subcategory} />
         </div>
-        <Controls />
+        {/* <Controls /> */}
       </div>
     </PlayerState>
   )

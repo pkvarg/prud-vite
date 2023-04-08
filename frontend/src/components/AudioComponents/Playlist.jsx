@@ -1,5 +1,7 @@
 import React, { useContext } from 'react'
 import playerContext from './context/playerContext'
+import Controls from './../AudioComponents/Controls'
+import * as Icon from 'react-bootstrap-icons'
 
 let Playlist = (subcategory) => {
   const downloadFileHandler = (fileName) => {
@@ -24,6 +26,16 @@ let Playlist = (subcategory) => {
     )
   })
 
+  let filteredSongsList = []
+  songslist.forEach((song) => {
+    filteredSongsList.push(song)
+  })
+
+  console.log('filtered:', filteredSongsList)
+
+  console.log('PL current:', currentSong)
+  console.log('PL SongsList:', songslist)
+
   return (
     <>
       <div className='playlist no_drag'>
@@ -40,7 +52,7 @@ let Playlist = (subcategory) => {
               onClick={() => SetCurrent(i)}
             >
               <div className='tmbn_song'>
-                <i className='fas fa-play'></i>
+                <Icon.Play />
               </div>
               <div className='songmeta_playlist'>
                 <span className='songname'>{song.audioTitle}</span>
@@ -48,7 +60,7 @@ let Playlist = (subcategory) => {
                   className='btn-mp3'
                   onClick={() => downloadFileHandler(song.audioTitle)}
                 >
-                  <i className='fa-solid fa-download'></i>
+                  <Icon.Download />
                 </button>
               </div>
               <div className='playlist_btns_group'></div>
@@ -56,6 +68,7 @@ let Playlist = (subcategory) => {
           ))}
         </ul>
       </div>
+      <Controls />
     </>
   )
 }

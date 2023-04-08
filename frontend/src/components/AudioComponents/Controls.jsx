@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef, useContext } from 'react'
 import playerContext from './context/playerContext'
+import * as Icon from 'react-bootstrap-icons'
 
 let Controls = () => {
   // Global State
@@ -14,9 +15,11 @@ let Controls = () => {
   } = useContext(playerContext)
   const audio = useRef('audio_tag')
 
-  songslist = songslist.filter((audio) => {
-    return audio.category === 'Slová života'
-  })
+  // songslist = songslist.filter((audio) => {
+  //   return audio.category === 'Slová života'
+  // })
+
+  console.log('controls, songsList, cursong:', songslist, currentSong)
 
   const handleEnd = () => {
     //   if (currentSong === songslist.length - 1) {
@@ -58,6 +61,8 @@ let Controls = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentSong])
 
+  console.log('controls:', songslist)
+
   return (
     <div className='controls'>
       <audio
@@ -71,7 +76,7 @@ let Controls = () => {
       />
       <div className='vlme'>
         <span className='volum'>
-          <i className='fas fa-volume-down'></i>
+          <Icon.VolumeDown size={35} />
         </span>
         <input
           value={Math.round(statevolum * 100)}
@@ -83,7 +88,7 @@ let Controls = () => {
       </div>
       <div className='musicControls'>
         <span className='prev' onClick={prevSong}>
-          <i className='fas fa-step-backward'></i>
+          <Icon.SkipBackward />
         </span>
 
         <span
@@ -94,15 +99,15 @@ let Controls = () => {
           }}
         >
           <span className={!playing ? '' : 'hide'}>
-            <i className='fas fa-play'></i>
+            <Icon.Play />
           </span>
           <span className={!playing ? 'hide' : ''}>
-            <i className='fas fa-pause'></i>
+            <Icon.Pause />
           </span>
         </span>
 
         <span className='next' onClick={nextSong}>
-          <i className='fas fa-step-forward'></i>
+          <Icon.SkipForward />
         </span>
       </div>
 

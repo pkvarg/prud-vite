@@ -51,7 +51,7 @@ const Header = () => {
             ) : (
               <LinkContainer to='/login' className='grey-navbar-sign-in'>
                 <Nav.Link>
-                  <i className='fas fa-user'></i> Prihlásenie
+                  <Icon.Person className='header-user' /> Prihlásenie
                 </Nav.Link>
               </LinkContainer>
             )}
@@ -116,7 +116,7 @@ const Header = () => {
         <div className='red-navbar-container'>
           <Container>
             <Navbar.Brand>
-              {/* <i className='fas fa-home no-mobile'></i> */}
+             
               <div className='mobile-navbar mobile-only'>
                 <div className='mobile-sign-in mobile-only'>
                   {userInfo ? (
@@ -131,7 +131,7 @@ const Header = () => {
                   ) : (
                     <LinkContainer to='/login'>
                       <Nav.Link className='mobile-sign-in'>
-                        <i className='fas fa-user'></i>
+                        <Icon.Person className='header-user' />
                       </Nav.Link>
                     </LinkContainer>
                   )}
@@ -180,12 +180,12 @@ const Header = () => {
                       <p className='number-in-cart'>
                         <span>{cartItems.length}</span>
                       </p>
-                      <i className='fas fa-shopping-cart'></i>
+                      <Icon.Cart className='header-cart' />
                     </Nav.Link>
                   </LinkContainer>
                 </div>
                 <Link to='favorites' className=''>
-                  <i className='fa-solid fa-heart mobile'></i>
+                  <Icon.HeartFill className='header-heart' />
                 </Link>
               </div>
             </Navbar.Brand>
@@ -307,10 +307,10 @@ const Header = () => {
               rel='noreferrer'
               className='no-mobile'
             >
-              <i className='fab fa-facebook-f'></i>
+              <Icon.Facebook className='header-facebook-white' />
             </a>
             <Link to='favorites' className='no-mobile'>
-              <i className='fa-solid fa-heart white'></i>
+              <Icon.HeartFill className='header-heart-white' />
             </Link>
 
             {/* <div className='search-navbar-mobile mobile-only'>

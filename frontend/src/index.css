@@ -131,10 +131,27 @@ a#adminmenu.dropdown-toggle.nav-link:hover {
   margin-right: 35px;
 }
 
-.header-basket {
+.header-basket,
+.header-user {
   font-size: 25px;
   font-weight: 100;
   margin-bottom: 7.5px;
+}
+
+.header-heart-white,
+.header-facebook-white {
+  color: white !important;
+  font-size: 25px;
+  margin-left: 10px;
+}
+
+.header-heart-white:hover,
+.header-facebook-white:hover {
+  color: #611316 !important;
+}
+
+.header-heart {
+  color: red;
 }
 
 p.number-in-cart {
@@ -304,28 +321,7 @@ a.dropdown-item:hover,
   margin-left: auto;
 }
 
-i.fab.fa-facebook-f {
-  color: #f1f1f1;
-  font-size: 20px;
-  margin-left: 20px;
-  padding: 8.5px 8.5px;
-}
 
-i.fa-facebook-f:hover {
-  background-color: #611316;
-}
-
-i.fa-solid.fa-heart.white {
-  color: white;
-  font-size: 22.5px;
-  margin-top: 2px;
-  margin-left: 5px;
-  padding: 8.5px 8.5px;
-}
-
-i.fa-solid.fa-heart.white:hover {
-  background-color: #611316;
-}
 
 a.my-3.favorites-login h5 {
   color: #5e5d5d;
@@ -562,15 +558,7 @@ h3.product-name {
   border: none;
 }
 
-i.fa-solid.fa-heart.no-color {
-  color: black;
-  transform: translateY(-27.5%);
-}
 
-i.fa-solid.fa-heart.red {
-  color: red;
-  /* transform: translateY(-27.5%); */
-}
 
 .btn-back {
   background-color: #2cb3e6;

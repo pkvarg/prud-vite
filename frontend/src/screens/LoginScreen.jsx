@@ -36,15 +36,15 @@ const LoginScreen = () => {
     let userObject = jwt_decode(response.credential)
     setUser(userObject)
     document.getElementById('signInDiv').hidden = true
-    // G
+
     const data = {
       name: userObject.name,
       email: userObject.email,
       googleId: userObject.sub,
-      //token: response.credential,
+
       isAdmin: false,
     }
-    //console.log(data)
+
     dispatch(getGoogleUserInfo(data))
   }
 

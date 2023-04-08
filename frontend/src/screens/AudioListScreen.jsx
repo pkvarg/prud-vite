@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
+import * as Icon from 'react-bootstrap-icons'
 
 import { listAudio, deleteAudio, createAudio } from '../actions/audioActions'
 import { useNavigate } from 'react-router-dom'
@@ -74,7 +75,8 @@ const AudioListScreen = () => {
         </Col>
         <Col className='text-end'>
           <Button className='my-3 btn-red' onClick={createAudioHandler}>
-            <i className='fas fa-plus'></i> Pridať audio súbor
+            <Icon.Plus size={25} />
+            Pridať audio súbor
           </Button>
         </Col>
       </Row>
@@ -84,7 +86,7 @@ const AudioListScreen = () => {
         </Col>
         <Col className='text-end'>
           <Button className='my-3 btn-red' onClick={createAudioHandler}>
-            <i className='fas fa-plus'></i> Pridať audio súbor
+            <Icon.Plus size={25} /> Pridať audio súbor
           </Button>
         </Col>
       </Row>
@@ -117,7 +119,7 @@ const AudioListScreen = () => {
                   <td>
                     <LinkContainer to={`/admin/audio/${audio._id}/edit`}>
                       <Button variant='light' className='btn-sm'>
-                        <i className='fas fa-edit'></i>
+                        <Icon.PencilFill />
                       </Button>
                     </LinkContainer>
                     <Button
@@ -125,7 +127,7 @@ const AudioListScreen = () => {
                       className='btn-sm'
                       onClick={() => deleteHandler(audio._id)}
                     >
-                      <i className='fas fa-trash'></i>
+                      <Icon.Trash />
                     </Button>
                   </td>
                 </tr>

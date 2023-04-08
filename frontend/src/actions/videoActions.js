@@ -44,7 +44,12 @@ export const listVideo =
 export const listVideoDetails = (id) => async (dispatch) => {
   try {
     dispatch({ type: VIDEO_DETAILS_REQUEST })
-    const { data } = await axios.get(`/api/video/${id}`)
+    const { data } = await axios.get(`/api/video/${id}`, {
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'cache-control': 'no-cache',
+      },
+    })
 
     dispatch({
       type: VIDEO_DETAILS_SUCCESS,
