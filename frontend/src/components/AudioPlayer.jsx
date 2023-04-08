@@ -3,7 +3,7 @@ import '../../src/audio.css'
 import Controls from './AudioComponents/Controls'
 import AudioActions from './AudioComponents/AudioActions'
 import Playlist from './AudioComponents/Playlist'
-import PlayerState from './AudioComponents/context/playerState'
+import PlayerState from './AudioComponents/context/PlayerState'
 
 let AudioPlayer = (subcategory) => {
   return (
@@ -13,7 +13,7 @@ let AudioPlayer = (subcategory) => {
           <AudioActions />
           <Playlist subcategory={subcategory} />
         </div>
-        {/* <Controls /> */}
+        {/* <Controls subcategory={subcategory} /> */}
       </div>
     </PlayerState>
   )

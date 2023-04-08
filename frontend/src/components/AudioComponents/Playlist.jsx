@@ -1,6 +1,7 @@
 import React, { useContext } from 'react'
 import playerContext from './context/playerContext'
 import Controls from './../AudioComponents/Controls'
+
 import * as Icon from 'react-bootstrap-icons'
 
 let Playlist = (subcategory) => {
@@ -18,7 +19,9 @@ let Playlist = (subcategory) => {
     })
   }
 
-  let { songslist, currentSong, SetCurrent } = useContext(playerContext)
+  let { songslist, setSongslist, currentSong, SetCurrent } =
+    useContext(playerContext)
+
   songslist = songslist.filter((audio) => {
     return (
       audio.category === 'Slová života' &&
@@ -26,12 +29,13 @@ let Playlist = (subcategory) => {
     )
   })
 
-  let filteredSongsList = []
-  songslist.forEach((song) => {
-    filteredSongsList.push(song)
-  })
+  // let filteredSongsList = []
+  // songslist.forEach((song) => {
+  //   filteredSongsList.push(song)
+  // })
 
-  console.log('filtered:', filteredSongsList)
+  // console.log('filtered:', filteredSongsList)
+  //setSongslist(filteredSongsList)
 
   console.log('PL current:', currentSong)
   console.log('PL SongsList:', songslist)
@@ -68,7 +72,7 @@ let Playlist = (subcategory) => {
           ))}
         </ul>
       </div>
-      <Controls />
+      <Controls subcategory={subcategory} songslist={songslist} />
     </>
   )
 }

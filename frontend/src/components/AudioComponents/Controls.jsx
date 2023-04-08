@@ -2,24 +2,14 @@ import React, { useState, useEffect, useRef, useContext } from 'react'
 import playerContext from './context/playerContext'
 import * as Icon from 'react-bootstrap-icons'
 
-let Controls = () => {
+let Controls = ({ subcategory, songslist }) => {
   // Global State
-  let {
-    currentSong,
-    nextSong,
-    prevSong,
-    playing,
-    togglePlaying,
+  // let { currentSong, nextSong, prevSong, playing, togglePlaying, songslist } =
+  //   useContext(playerContext)
+  let { currentSong, nextSong, prevSong, playing, togglePlaying } =
+    useContext(playerContext)
 
-    songslist,
-  } = useContext(playerContext)
   const audio = useRef('audio_tag')
-
-  // songslist = songslist.filter((audio) => {
-  //   return audio.category === 'Slová života'
-  // })
-
-  console.log('controls, songsList, cursong:', songslist, currentSong)
 
   const handleEnd = () => {
     //   if (currentSong === songslist.length - 1) {
@@ -60,8 +50,6 @@ let Controls = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentSong])
-
-  console.log('controls:', songslist)
 
   return (
     <div className='controls'>
