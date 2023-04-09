@@ -6,7 +6,11 @@ import Message from '../components/Message'
 import Loader from '../components/Loader'
 import FormContainer from '../components/FormContainer'
 import { login, getGoogleUserInfo } from '../actions/userActions'
-import jwt_decode from 'jwt-decode'
+
+import { auth, provider } from './../firebaseConfig'
+import { signInWithPopup } from 'firebase/auth'
+import { GoogleButton } from 'react-google-button'
+
 const LoginScreen = () => {
   const navigate = useNavigate()
 
@@ -32,42 +36,35 @@ const LoginScreen = () => {
 
   const [user, setUser] = useState({})
 
-  const handleCallbackResponse = (response) => {
-    let userObject = jwt_decode(response.credential)
-    setUser(userObject)
-    document.getElementById('signInDiv').hidden = true
-
-    const data = {
-      name: userObject.name,
-      email: userObject.email,
-      googleId: userObject.sub,
-
-      isAdmin: false,
-    }
-
-    dispatch(getGoogleUserInfo(data))
-  }
-
   const handleSignOut = (event) => {
     setUser({})
     localStorage.removeItem('userInfo')
-    document.getElementById('signInDiv').hidden = false
   }
 
-  useEffect(() => {
-    /* global google */
-    google.accounts.id.initialize({
-      client_id: import.meta.env.VITE_GOOGLE_ID,
-      callback: handleCallbackResponse,
-    })
+  // Google Firebase
+  const signInWithGoogle = () => {
+    signInWithPopup(auth, provider).then((result) => {
+      let userObject = result.user
+      setUser(userObject)
+      const data = {
+        name: userObject.displayName,
+        email: userObject.email,
+        googleId: userObject.uid,
 
-    google.accounts.id.renderButton(document.getElementById('signInDiv'), {
-      theme: 'outline',
-      size: 'large',
-    })
+        isAdmin: false,
+      }
 
-    // google.accounts.id.prompt()
-  })
+      dispatch(getGoogleUserInfo(data))
+    })
+  }
+
+  const handleGoogleSignIn = () => {
+    try {
+      signInWithGoogle()
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   return (
     <FormContainer>
@@ -116,7 +113,7 @@ const LoginScreen = () => {
           </Col>
         </Row>
         <h2 className='my-3'>Prihlásenie účtom Google</h2>
-        <div id='signInDiv'></div>
+        <GoogleButton onClick={handleGoogleSignIn} />
 
         {/* {user && (
           <div className=''>
