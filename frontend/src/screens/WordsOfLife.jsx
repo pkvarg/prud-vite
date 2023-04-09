@@ -3,10 +3,12 @@ import { Link } from 'react-router-dom'
 import AudioPlayer from '../components/AudioPlayer'
 
 const WordsOfLife = () => {
-  const [subcategory, setSubcategory] = useState()
+  const [subcategory, setSubcategory] = useState('Boží evangelium')
   const subHandler = (sub) => {
     setSubcategory(sub)
   }
+
+  const category = 'SLOVÁ ŽIVOTA A PRAVDY'
 
   return (
     <>
@@ -228,7 +230,7 @@ const WordsOfLife = () => {
         </button>
       </div>
 
-      <AudioPlayer subcategory={subcategory} />
+      <AudioPlayer category={category} subcategory={subcategory} />
     </>
   )
 }

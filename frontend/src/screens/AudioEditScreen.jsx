@@ -510,6 +510,19 @@ const AudioEditScreen = () => {
               </Form.Group>
             )}
 
+            {category === 'Štúdium života' && (
+              <Form.Group controlId='subcategory' className='my-3'>
+                <Form.Label>Podkategória</Form.Label>
+
+                <Form.Control
+                  className='rounded-5'
+                  type='text'
+                  placeholder='Podkategória'
+                  onChange={(e) => setSubcategory(e.target.value)}
+                ></Form.Control>
+              </Form.Group>
+            )}
+
             <Button
               className='my-5 btn-blue rounded'
               type='submit'

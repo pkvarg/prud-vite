@@ -1,19 +1,18 @@
 import React from 'react'
 import '../../src/audio.css'
-import Controls from './AudioComponents/Controls'
 import AudioActions from './AudioComponents/AudioActions'
-import Playlist from './AudioComponents/Playlist'
 import PlayerState from './AudioComponents/context/PlayerState'
+import PlayControls from './AudioComponents/PlayControls'
 
-let AudioPlayer = (subcategory) => {
+let AudioPlayer = ({ category, subcategory }) => {
+  console.log(subcategory)
   return (
     <PlayerState>
       <div className='audioplayer'>
         <div className='inside_content'>
-          <AudioActions />
-          <Playlist subcategory={subcategory} />
+          <AudioActions category={category} />
+          <PlayControls subcategory={subcategory} />
         </div>
-        {/* <Controls subcategory={subcategory} /> */}
       </div>
     </PlayerState>
   )

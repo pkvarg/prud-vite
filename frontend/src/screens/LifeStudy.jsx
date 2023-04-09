@@ -1,8 +1,14 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
-import AudioPlayer2 from '../components/AudioPlayer2'
+import AudioPlayer from '../components/AudioPlayer'
 
 const LifeStudy = () => {
+  const [subcategory, setSubcategory] = useState('Štúdium života')
+  // const subHandler = (sub) => {
+  //   setSubcategory(sub)
+  // }
+  const category = 'ŠTÚDIUM ŽIVOTA'
+
   return (
     <>
       <Link className='btn btn-back my-3' to='/'>
@@ -23,7 +29,7 @@ const LifeStudy = () => {
           výklady biblickej pravdy.
         </p>
       </div>
-      <AudioPlayer2 />
+      <AudioPlayer category={category} subcategory={subcategory} />
     </>
   )
 }

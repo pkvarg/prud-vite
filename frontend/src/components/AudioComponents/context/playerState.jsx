@@ -2,6 +2,7 @@ import React, { useState, useReducer } from 'react'
 import playerReducer from './playerReducer'
 import playerContext from './playerContext'
 import { wordsOflife } from './mp3s'
+import { mp3s } from './mp3s'
 
 import {
   SET_CURRENT_SONG,
@@ -12,11 +13,9 @@ import {
 } from './types'
 
 const PlayerState = (props) => {
-  const [songslist, setSongslist] = useState([])
-
   const initialState = {
     currentSong: 0,
-    songslist: wordsOflife,
+    songslist: mp3s,
     //songslist: songslist,
     repeat: false,
     random: false,
@@ -92,7 +91,6 @@ const PlayerState = (props) => {
         currentSong: state.currentSong,
         songs: state.songs,
         songslist: state.songslist,
-        setSongslist,
         repeat: state.repeat,
         random: state.random,
         playing: state.playing,
