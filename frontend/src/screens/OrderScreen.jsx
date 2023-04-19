@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
-// import axios from 'axios'
+import axios from 'axios'
 import { PayPalButtons, usePayPalScriptReducer } from '@paypal/react-paypal-js'
-import { Link, useNavigate, useParams } from 'react-router-dom'
+import { Link, useNavigate, useParams, useLocation } from 'react-router-dom'
 import {
   Button,
   Row,
@@ -9,6 +9,7 @@ import {
   ListGroup,
   Image,
   Card,
+  ListGroupItem,
   // ListGroupItem,
 } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
@@ -29,12 +30,20 @@ import {
   ORDER_CANCELL_RESET,
   ORDER_LIST_MY_RESET,
 } from '../constants/orderConstants'
+import { loadStripe } from '@stripe/stripe-js'
+import { addDecimals } from '../functions'
 
 const OrderScreen = () => {
+  const stripeApiKey = import.meta.env.VITE_STRIPE_API_KEY
+
+  const stripePromise = loadStripe(stripeApiKey)
+
   const cart = useSelector((state) => state.cart)
 
   const dispatch = useDispatch()
   const params = useParams()
+  const locationOrder = useLocation()
+
   const navigate = useNavigate()
   const orderId = params.id
   const [{ isPending, isResolved, isRejected }] = usePayPalScriptReducer()
@@ -71,9 +80,7 @@ const OrderScreen = () => {
 
   if (!loading) {
     // Calculate Prices
-    const addDecimals = (num) => {
-      return (Math.round(num * 100) / 100).toFixed(2)
-    }
+
     order.itemsPrice = addDecimals(
       order.orderItems.reduce((acc, item) => acc + item.price * item.qty, 0)
     )
@@ -150,6 +157,49 @@ const OrderScreen = () => {
     document.location.href = '/'
   }
 
+  const ps = cart.cartItems.map((item) => ({
+    name: item.name,
+    qty: item.qty,
+    price: item.price,
+  }))
+
+  // STRIPE PAYMENT
+
+  const makePayment = async () => {
+    const stripe = await stripePromise
+    const requestBody = {
+      userName: userInfo.name,
+      email: userInfo.email,
+      products: ps,
+      url: locationOrder,
+      totalPrice: order.totalPrice,
+      // products: cart.cartItems.map(({ name, qty, price }) => ({
+      //   name,
+      //   qty,
+      //   price,
+      // })),
+    }
+
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    }
+
+    const response = await axios.post(
+      '/api/create-stripe-checkout-session',
+      { requestBody },
+      config
+    )
+
+    console.log(response)
+    window.location.href = response.data
+    // const session = await response.json()
+    // await stripe.redirectToCheckout({
+    //   sessionId: session.id,
+    // })
+  }
+
   return loading ? (
     <Loader />
   ) : error ? (
@@ -216,9 +266,10 @@ const OrderScreen = () => {
               <h2>Platba</h2>
               <p>
                 <strong>Spôsob: </strong>
-                {order.paymentMethod === 'Hotovosť'
+                {order.paymentMethod}
+                {/* {order.paymentMethod === 'Hotovosť'
                   ? 'Hotovosť pri prevzatí'
-                  : 'PayPal alebo karta'}
+                  : 'PayPal alebo karta'} */}
               </p>
               {order.isPaid ? (
                 <Message variant='success'>Zaplatené {order.paidAt}</Message>
@@ -291,8 +342,7 @@ const OrderScreen = () => {
                   <div className='cart-box-right'>
                     Produkty:
                     <div className='ml-auto'>
-                      {cart.itemsPrice} €
-                      {/* {cart.itemsPrice.replace('.', ',')} € */}
+                      {order.itemsPrice.replace('.', ',')} €
                     </div>
                   </div>
                 </Row>
@@ -303,8 +353,7 @@ const OrderScreen = () => {
                     Poštovné:
                     <div className='ml-auto'>
                       {' '}
-                      {cart.shippingPrice} €
-                      {/* {cart.shippingPrice.replace('.', ',')} € */}
+                      {addDecimals(order.shippingPrice).replace('.', ',')} €
                     </div>
                   </div>
                 </Row>
@@ -316,8 +365,7 @@ const OrderScreen = () => {
                     Celkom:
                     <div className='ml-auto'>
                       {' '}
-                      {cart.totalPrice} €
-                      {/* {cart.totalPrice.replace('.', ',')} € */}
+                      {addDecimals(order.totalPrice).replace('.', ',')} €
                     </div>
                   </div>
                 </Row>
@@ -328,6 +376,9 @@ const OrderScreen = () => {
                   <Col>${order.taxPrice}</Col>
                 </Row>
               </ListGroup.Item> */}
+              <ListGroupItem>
+                <Button onClick={() => makePayment()}>Pay with Stripe</Button>
+              </ListGroupItem>
               {!order.isPaid &&
                 order.paymentMethod === 'PayPal alebo karta' && (
                   <ListGroup.Item>
@@ -355,6 +406,9 @@ const OrderScreen = () => {
                   //   )}
                   // </ListGroup.Item>
                 )}
+
+              {/* stripe button */}
+
               {loadingDeliver && <Loader />}
               {userInfo && userInfo.isAdmin && !order.isDelivered && (
                 <ListGroup.Item>

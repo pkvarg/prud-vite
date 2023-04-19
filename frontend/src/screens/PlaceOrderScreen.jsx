@@ -102,6 +102,16 @@ const PlaceOrderScreen = () => {
     setTradeRulesOrderChecked(!tradeRulesOrderChecked)
   }
 
+  // Payment method
+  console.log(cart.paymentMethod)
+  // if (cart.paymentMethod === 'Hotovosť') {
+  //   setCardTypeOrCash('Hotovosť pri prevzatí')
+  // } else if (cart.paymentMethod === 'PayPal alebo karta') {
+  //   setCardTypeOrCash('PayPal alebo karta')
+  // } else {
+  //   setCardTypeOrCash('Stripe')
+  // }
+
   return (
     <>
       <CheckoutSteps step1 step2 step3 step4 />
@@ -146,9 +156,8 @@ const PlaceOrderScreen = () => {
             <ListGroup.Item>
               <h2>Platba</h2>
               <strong>Spôsob platby: </strong>
-              {cart.paymentMethod === 'Hotovosť'
-                ? 'Hotovosť pri prevzatí'
-                : 'PayPal alebo karta'}
+
+              {cart.paymentMethod}
             </ListGroup.Item>
 
             <ListGroup.Item>

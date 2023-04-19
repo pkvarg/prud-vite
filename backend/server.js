@@ -14,6 +14,8 @@ import authRoutes from './routes/authRoutes.js'
 import audioRoutes from './routes/audioRoutes.js'
 import videoRoutes from './routes/videoRoutes.js'
 import bannerRoutes from './routes/bannerRoutes.js'
+import stripeRoutes from './routes/stripeRoutes.js'
+import stripe from 'stripe'
 
 dotenv.config()
 connectDB()
@@ -29,6 +31,7 @@ app.use(
   cors({
     origin: [
       'http://localhost:3000',
+      'http://localhost:5000',
       'http://localhost:5173',
       'https://pictusweb.art',
       'https://prud.onrender.com',
@@ -46,6 +49,7 @@ app.use('/api/auth', authRoutes)
 app.use('/api/audio', audioRoutes)
 app.use('/api/video', videoRoutes)
 app.use('/api/banner', bannerRoutes)
+app.use('/api/create-stripe-checkout-session', stripeRoutes)
 
 app.get('/api/config/paypal', (req, res) =>
   res.send(process.env.PAYPAL_CLIENT_ID)
@@ -70,6 +74,30 @@ if (process.env.NODE_ENV === 'production') {
 
 app.use(notFound)
 app.use(errorHandler)
+
+const Stripe = stripe(process.env.STRIPE_SECRET_KEY)
+
+const YOUR_DOMAIN = 'http://localhost:3000'
+
+// app.post('/create-stripe-checkout-session', async (req, res) => {
+
+//   const session = await Stripe.checkout.sessions.create({
+//     line_items: [
+//       {
+//         // Provide the exact Price ID (for example, pr_1234) of the product you want to sell
+//         currency: 'eur',
+//         price: '123',
+//         quantity: 1,
+//       },
+//     ],
+//     mode: 'payment',
+//     success_url: `${YOUR_DOMAIN}?success=true`,
+//     cancel_url: `${YOUR_DOMAIN}?canceled=true`,
+//   })
+
+//   res.redirect(303, session.url)
+// })
+
 // RENDER
 
 const PORT = process.env.PORT || 5000

@@ -29,6 +29,7 @@
     "nodemailer": "^6.8.0",
     "pdfkit": "^0.13.0",
     "pug": "^3.0.2",
+    "stripe": "^12.1.1",
     "util": "^0.12.5"
   },
   "devDependencies": {
