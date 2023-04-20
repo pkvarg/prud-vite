@@ -103,7 +103,7 @@ const PlaceOrderScreen = () => {
   }
 
   // Payment method
-  console.log(cart.paymentMethod)
+  //console.log(cart.paymentMethod)
   // if (cart.paymentMethod === 'Hotovosť') {
   //   setCardTypeOrCash('Hotovosť pri prevzatí')
   // } else if (cart.paymentMethod === 'PayPal alebo karta') {

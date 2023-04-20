@@ -4,8 +4,7 @@ import stripe from 'stripe'
 const router = express.Router()
 
 const createStripe = async (req, res) => {
-  const { products, email, url, totalPrice } = req.body.requestBody
-  const prices = products.map((price) => price.price)
+  const { products, email, url, shippingPrice } = req.body.requestBody
   const lineItems = products.map((product) => {
     const item = {
       price: product.price,
@@ -20,6 +19,7 @@ const createStripe = async (req, res) => {
         },
         unit_amount: item.price * 100,
       },
+
       quantity: item.quantity,
     }
   })
@@ -32,11 +32,20 @@ const createStripe = async (req, res) => {
     mode: 'payment',
     success_url: `http://localhost:3000${url.pathname}`,
     cancel_url: 'http://localhost:3000/cancell',
+    shipping_options: [
+      {
+        shipping_rate_data: {
+          type: 'fixed_amount',
+          fixed_amount: { amount: shippingPrice * 100, currency: 'eur' },
+          display_name: 'Poštovné',
+        },
+      },
+    ],
     line_items: lineItems,
   })
 
   //res.redirect(303, session.url)
-  res.send(session.url)
+  res.send(session)
 }
 
 router.post('/', createStripe)

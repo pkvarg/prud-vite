@@ -33,7 +33,7 @@ import {
 import { loadStripe } from '@stripe/stripe-js'
 import { addDecimals } from '../functions'
 
-const OrderScreen = () => {
+const OrderStripeSuccess = () => {
   const stripeApiKey = import.meta.env.VITE_STRIPE_API_KEY
 
   const stripePromise = loadStripe(stripeApiKey)
@@ -190,17 +190,12 @@ const OrderScreen = () => {
       config
     )
 
-    console.log('resp', response.data.id)
-
-    //window.location.href = response.data
-    const session = await response.data
-    await stripe.redirectToCheckout({
-      sessionId: session.id,
-    })
-
-    // console.log('sess:', session)
-
-    console.log('pstat:', stripe.payment_status)
+    console.log(response)
+    window.location.href = response.data
+    // const session = await response.json()
+    // await stripe.redirectToCheckout({
+    //   sessionId: session.id,
+    // })
   }
 
   return loading ? (
@@ -480,4 +475,4 @@ const OrderScreen = () => {
   )
 }
 
-export default OrderScreen
+export default OrderStripeSuccess
