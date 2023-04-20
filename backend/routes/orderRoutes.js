@@ -4,6 +4,7 @@ import {
   addOrderItems,
   getOrderByid,
   updateOrderToPaid,
+  updateOrderToPaidByStripe,
   updateOrderToDelivered,
   updateOrderToCancelled,
   getMyOrders,
@@ -19,6 +20,7 @@ router
   .get(protect, getOrderByid)
   .delete(protect, admin, deleteOrder)
 router.route('/:id/pay').put(protect, updateOrderToPaid)
+router.route('/:id/pay-stripe').put(protect, updateOrderToPaidByStripe)
 router.route('/:id/deliver').put(protect, admin, updateOrderToDelivered)
 router.route('/:id/cancell').put(protect, admin, updateOrderToCancelled)
 

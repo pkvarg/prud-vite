@@ -330,6 +330,98 @@ const updateOrderToPaid = asyncHandler(async (req, res) => {
   }
 })
 
+// @desc Update order to Paid by Stripe
+// @desc GET /api/orders/:id/pay-stripe
+// @access Private
+
+const updateOrderToPaidByStripe = asyncHandler(async (req, res) => {
+  const order = await Order.findById(req.params.id)
+
+  if (order) {
+    order.isPaid = true
+    order.paidAt = Date.now()
+    order.paymentResult = {
+      id: req.body._id,
+      status: 'Paid by Stripe',
+      update_time: Date.now(),
+      email_address: req.body.email,
+      address: req.body.shippingAddress,
+      name: req.body.name,
+    }
+
+    const updatedOrder = await order.save()
+    const discounts = order.discounts
+    const orderNumber = order.orderNumber
+
+    // send PaymentSuccessfull Email
+    const updatedOrderLoop = updatedOrder.orderItems
+    const updatedOrderProductsCount = updatedOrderLoop.length
+    let updatedOrderProductsObject = {}
+
+    updatedOrderLoop.map((item, i) => {
+      if (discounts[i].discount > 0) {
+        updatedOrderProductsObject[i] =
+          ' ' +
+          item.qty +
+          ' x ' +
+          item.name +
+          ' €' +
+          item.price.toFixed(2) +
+          ' zľava: ' +
+          discounts[i].discount +
+          ' %'
+      } else {
+        updatedOrderProductsObject[i] =
+          ' ' +
+          item.qty +
+          ' x ' +
+          item.name +
+          ' €' +
+          item.price.toFixed(2) +
+          '  '
+      }
+    })
+
+    // updatedOrderLoop.map((item, i) => {
+    //   updatedOrderProductsObject[i] =
+    //     item.qty + ' x ' + item.name + ' €' + item.price.toFixed(2)
+    // })
+
+    // object with address info
+    const updatedOrderAddressInfo = updatedOrder.shippingAddress
+
+    // ADD THESE LATER
+    updatedOrderProductsObject.email = updatedOrder.email
+    updatedOrderProductsObject.name = updatedOrder.name
+    updatedOrderProductsObject.paidByWhom = updatedOrder.paymentResult.name
+    updatedOrderProductsObject.orderNumber = orderNumber
+    updatedOrderProductsObject.taxPrice = updatedOrder.taxPrice
+    updatedOrderProductsObject.totalPrice = updatedOrder.totalPrice.toFixed(2)
+    updatedOrderProductsObject.shippingPrice =
+      updatedOrder.shippingPrice.toFixed(2)
+    updatedOrderProductsObject.isPaid = updatedOrder.isPaid
+    updatedOrderProductsObject.productsCount = updatedOrderProductsCount
+    updatedOrderProductsObject.orderId = updatedOrder._id
+    updatedOrderProductsObject.paymentMethod = updatedOrder.paymentMethod
+    updatedOrderProductsObject.addressinfo =
+      updatedOrderAddressInfo.address +
+      ', ' +
+      updatedOrderAddressInfo.city +
+      ', ' +
+      updatedOrderAddressInfo.postalCode +
+      ', ' +
+      updatedOrderAddressInfo.country
+    updatedOrderProductsObject.note = updatedOrder.shippingAddress.note
+
+    await new Email(updatedOrderProductsObject).sendPaymentSuccessfullToEmail()
+
+    res.json(updatedOrder)
+  } else {
+    res.status(404)
+    throw new Error('Order not found')
+  }
+})
+
 // @desc Update order to Delivered
 // @desc GET /api/orders/:id/deliver
 // @access Private/Admin
@@ -401,6 +493,7 @@ export {
   addOrderItems,
   getOrderByid,
   updateOrderToPaid,
+  updateOrderToPaidByStripe,
   updateOrderToDelivered,
   updateOrderToCancelled,
   getMyOrders,

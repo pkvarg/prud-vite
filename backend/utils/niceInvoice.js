@@ -4,6 +4,7 @@ import path from 'path'
 const __dirname = path.resolve()
 
 const niceInvoice = (invoice, path) => {
+  console.log('invoice:', invoice)
   let doc = new PDFDocument({ size: 'A4', margin: 40 })
 
   doc.registerFont('Cardo', __dirname + '/utils/fonts/Cardo-Regular.ttf')
@@ -90,10 +91,11 @@ let customerInformation = (doc, invoice) => {
   } else {
     doc
       .font('Cardo-Bold')
-      .text(invoice.shipping.name, 320, customerInformationTop)
+      //.text(invoice.shipping.name, 320, customerInformationTop)
+      .text('invoice.shipping.name', 320, customerInformationTop)
       .font('Cardo')
       .text(
-        invoice.shipping.address + ', ' + invoice.shipping.city,
+        'invoice.shipping.address' + ', ' + invoice.shipping.city,
         320,
         customerInformationTop + 15
       )
@@ -105,7 +107,7 @@ let customerInformation = (doc, invoice) => {
 
       .moveDown()
 
-    generateHr(doc, 272)
+    generateHr(doc, 282)
   }
 }
 

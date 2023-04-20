@@ -197,10 +197,6 @@ const OrderScreen = () => {
     await stripe.redirectToCheckout({
       sessionId: session.id,
     })
-
-    // console.log('sess:', session)
-
-    console.log('pstat:', stripe.payment_status)
   }
 
   return loading ? (

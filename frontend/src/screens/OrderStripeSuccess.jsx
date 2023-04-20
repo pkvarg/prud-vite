@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import axios from 'axios'
-import { PayPalButtons, usePayPalScriptReducer } from '@paypal/react-paypal-js'
 import { Link, useNavigate, useParams, useLocation } from 'react-router-dom'
 import {
   Button,
@@ -18,6 +16,7 @@ import Loader from '../components/Loader'
 import {
   getOrderDetails,
   payOrder,
+  payOrderStripe,
   // deleteOrder,
   deliverOrder,
   cancellOrder,
@@ -30,26 +29,18 @@ import {
   ORDER_CANCELL_RESET,
   ORDER_LIST_MY_RESET,
 } from '../constants/orderConstants'
-import { loadStripe } from '@stripe/stripe-js'
 import { addDecimals } from '../functions'
 
 const OrderStripeSuccess = () => {
-  const stripeApiKey = import.meta.env.VITE_STRIPE_API_KEY
-
-  const stripePromise = loadStripe(stripeApiKey)
-
   const cart = useSelector((state) => state.cart)
+  const [paidByStripe, setPaidByStripe] = useState(false)
 
   const dispatch = useDispatch()
   const params = useParams()
   const locationOrder = useLocation()
 
   const navigate = useNavigate()
-  const [paidByStripe, setPaidByStripe] = useState(false)
   const orderId = params.id
-  const [{ isPending, isResolved, isRejected }] = usePayPalScriptReducer()
-
-  // const [sdkReady, setSdkready] = useState(false)
 
   const orderDetails = useSelector((state) => state.orderDetails)
   const { order, loading, error } = orderDetails
@@ -65,9 +56,6 @@ const OrderStripeSuccess = () => {
 
   const userLogin = useSelector((state) => state.userLogin)
   const { userInfo } = userLogin
-
-  //const userDetails = useSelector((state) => state.userDetails)
-  // const {  user } = userDetails
 
   const orderDelete = useSelector((state) => state.orderDelete)
   const { success: successDelete } = orderDelete
@@ -94,28 +82,22 @@ const OrderStripeSuccess = () => {
     if (!userInfo) {
       navigate('/login')
     }
-    if (!order || order._id !== orderId || successPay || paidByStripe) {
+    if (!order || order._id !== orderId) {
       dispatch({ type: ORDER_PAY_RESET })
       dispatch(getOrderDetails(orderId))
     }
-    if (
-      !order ||
-      successPay ||
-      successDeliver ||
-      successCancell ||
-      order._id !== orderId
-    ) {
+    if (!order || successDeliver || successCancell || order._id !== orderId) {
       //     dispatch({ type: ORDER_PAY_RESET })
       dispatch({ type: ORDER_DELIVER_RESET })
       dispatch({ type: ORDER_CANCELL_RESET })
 
       dispatch(getOrderDetails(orderId))
     }
+    dispatch(payOrderStripe(order))
   }, [
     dispatch,
     order,
     orderId,
-    successPay,
     successDelete,
     successDeliver,
     successCancell,
@@ -139,11 +121,6 @@ const OrderStripeSuccess = () => {
     })
   }
 
-  // const successPaymentHandler = (paymentResult) => {
-  //   console.log(paymentResult)
-  //   dispatch(payOrder(orderId, paymentResult))
-  // }
-
   const deliverHandler = () => {
     dispatch(deliverOrder(order))
   }
@@ -158,44 +135,6 @@ const OrderStripeSuccess = () => {
     localStorage.removeItem('paymentMethod')
     dispatch({ type: ORDER_LIST_MY_RESET })
     document.location.href = '/'
-  }
-
-  const ps = cart.cartItems.map((item) => ({
-    name: item.name,
-    qty: item.qty,
-    price: item.price,
-  }))
-
-  // STRIPE PAYMENT
-
-  const makePayment = async () => {
-    const stripe = await stripePromise
-    const requestBody = {
-      userName: userInfo.name,
-      email: userInfo.email,
-      products: ps,
-      url: locationOrder,
-      shippingPrice,
-    }
-
-    const config = {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    }
-
-    const response = await axios.post(
-      '/api/create-stripe-checkout-session',
-      { requestBody },
-      config
-    )
-
-    console.log(response)
-    window.location.href = response.data
-    // const session = await response.json()
-    // await stripe.redirectToCheckout({
-    //   sessionId: session.id,
-    // })
   }
 
   return loading ? (
@@ -265,47 +204,9 @@ const OrderStripeSuccess = () => {
               <p>
                 <strong>Spôsob: </strong>
                 {order.paymentMethod}
-                {/* {order.paymentMethod === 'Hotovosť'
-                  ? 'Hotovosť pri prevzatí'
-                  : 'PayPal alebo karta'} */}
               </p>
-              {order.isPaid && (
-                <Message variant='success'>Zaplatené {order.paidAt}</Message>
-              )}
-              {order.paymentMethod !== 'Stripe' && !order.isPaid && (
-                <Message variant='danger'>
-                  Nezaplatené
-                  {/* {userInfo.isAdmin && (
-                    <Button
-                      variant='danger'
-                      className='w-100'
-                      onClick={() => deleteOrderHandler(order._id)}
-                    >
-                      ADMIN: Zmazať objednávku
-                    </Button>
-                  )} */}
-                </Message>
-              )}
 
-              {paidByStripe && (
-                <Message variant='success'>Zaplatené Stripe</Message>
-              )}
-              {order.paymentMethod === 'Stripe' &&
-                !paidByStripe &&
-                !order.isPaid && (
-                  <Message variant='danger'>
-                    Nezaplatené
-                    {/* {userInfo.isAdmin && (
-                    <Button
-                      variant='danger'
-                      className='w-100'
-                      onClick={() => deleteOrderHandler(order._id)}
-                    >
-                      ADMIN: Zmazať objednávku
-                    </Button>
-                  )} */}
-                  </Message>
-                )}
+              <Message variant='success'>Zaplatené Stripe</Message>
             </ListGroup.Item>
 
             <ListGroup.Item>
@@ -395,43 +296,6 @@ const OrderStripeSuccess = () => {
                   <Col>${order.taxPrice}</Col>
                 </Row>
               </ListGroup.Item> */}
-              {!order.isPaid && order.paymentMethod === 'Stripe' && (
-                <ListGroupItem>
-                  <Button
-                    className='btn w-100 btn-success'
-                    onClick={() => makePayment()}
-                  >
-                    Platba Stripe
-                  </Button>
-                </ListGroupItem>
-              )}
-              {!order.isPaid &&
-                order.paymentMethod === 'PayPal alebo karta' && (
-                  <ListGroup.Item>
-                    {loadingPay && <Loader />}
-                    {isPending && <Loader />}
-                    {isRejected && (
-                      <Message variant='danger'>SDK load error</Message>
-                    )}
-                    {isResolved && (
-                      <PayPalButtons
-                        createOrder={createOrder}
-                        onApprove={successPaymentHandler}
-                      />
-                    )}
-                  </ListGroup.Item>
-                  // <ListGroup.Item>
-                  //   {loadingPay && <Loader />}
-                  //   {!sdkReady ? (
-                  //     <Loader />
-                  //   ) : (
-                  //     <PayPalButton
-                  //       amount={order.totalPrice}
-                  //       onSuccess={successPaymentHandler}
-                  //     />
-                  //   )}
-                  // </ListGroup.Item>
-                )}
 
               {loadingDeliver && <Loader />}
               {userInfo && userInfo.isAdmin && !order.isDelivered && (
