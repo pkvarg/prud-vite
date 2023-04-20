@@ -91,11 +91,10 @@ let customerInformation = (doc, invoice) => {
   } else {
     doc
       .font('Cardo-Bold')
-      //.text(invoice.shipping.name, 320, customerInformationTop)
-      .text('invoice.shipping.name', 320, customerInformationTop)
+      .text(invoice.shipping.name, 320, customerInformationTop)
       .font('Cardo')
       .text(
-        'invoice.shipping.address' + ', ' + invoice.shipping.city,
+        invoice.shipping.address + ', ' + invoice.shipping.city,
         320,
         customerInformationTop + 15
       )

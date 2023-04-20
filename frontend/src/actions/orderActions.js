@@ -149,7 +149,6 @@ export const payOrderStripe = (order) => async (dispatch, getState) => {
     const {
       userLogin: { userInfo },
     } = getState()
-    console.log('pOs:', order)
 
     const config = {
       headers: {
