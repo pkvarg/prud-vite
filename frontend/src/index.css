@@ -321,8 +321,6 @@ a.dropdown-item:hover,
   margin-left: auto;
 }
 
-
-
 a.my-3.favorites-login h5 {
   color: #5e5d5d;
 }
@@ -431,7 +429,7 @@ span.page-link {
 
 .new-publications,
 .eshop-category {
-  color: #313131 !important;
+  color: #777777 !important;
   font-weight: 500 !important;
 }
 
@@ -557,8 +555,6 @@ h3.product-name {
 .product-price.list-group-item {
   border: none;
 }
-
-
 
 .btn-back {
   background-color: #2cb3e6;
@@ -834,7 +830,7 @@ i.fa-solid.fa-download:hover {
 .eshop-category {
   text-transform: uppercase;
   margin-bottom: 30px;
-  font-weight: 700 !important;
+  font-weight: 600 !important;
 }
 
 .eshop-link {
@@ -1121,6 +1117,10 @@ footer {
   line-height: 21.5px;
   font-size: 18px;
   color: #828282;
+}
+
+.dropdown-menu {
+  background-color: #f7f7f9 !important;
 }
 
 /* MOBILE MOBILE MOBILE MOBILE MOBILE MOBILE MOBILE MOBILE MOBILE MOBILE MOBILE MOBILE MOBILE MOBILE MOBILE MOBILE MOBILE MOBILE MOBILE MOBILE MOBILE MOBILE MOBILE MOBILE MOBILE MOBILE MOBILE MOBILE MOBILE MOBILE MOBILE MOBILE MOBILE MOBILE MOBILE MOBILE MOBILE MOBILE MOBILE MOBILE MOBILE MOBILE MOBILE MOBILE MOBILE MOBILE MOBILE MOBILE MOBILE MOBILE MOBILE MOBILE MOBILE MOBILE MOBILE MOBILE MOBILE MOBILE MOBILE MOBILE MOBILE MOBILE MOBILE MOBILE MOBILE MOBILE MOBILE MOBILE MOBILE MOBILE MOBILE MOBILE MOBILE MOBILE MOBILE MOBILE MOBILE MOBILE MOBILE MOBILE MOBILE MOBILE MOBILE MOBILE MOBILE MOBILE MOBILE MOBILE MOBILE MOBILE MOBILE MOBILE MOBILE MOBILE MOBILE MOBILE MOBILE MOBILE MOBILE MOBILE MOBILE MOBILE MOBILE MOBILE MOBILE MOBILE MOBILE MOBILE MOBILE MOBILE MOBILE MOBILE MOBILE MOBILE MOBILE MOBILE MOBILE MOBILE MOBILE MOBILE MOBILE*/
