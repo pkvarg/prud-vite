@@ -24,8 +24,10 @@ class Email {
     let paymentMethod
     if (user.paymentMethod === 'Hotovosť') {
       paymentMethod = 'Zaplatíte pri prevzatí'
-    } else {
+    } else if (user.paymentMethod === 'PayPal alebo karta') {
       paymentMethod = 'PayPal alebo platba kartou'
+    } else {
+      paymentMethod = 'Stripe'
     }
     this.paymentMethod = paymentMethod
     this.isPaid = user.isPaid ? 'Zaplatené' : 'Nezaplatené'

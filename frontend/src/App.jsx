@@ -50,6 +50,7 @@ import TradeRules from './screens/TradeRules'
 import Reviews from './screens/Reviews'
 import Favorites from './screens/Favorites'
 import OrderStripeSuccess from './screens/OrderStripeSuccess'
+import OrderStripeFail from './screens/OrderStripeFail'
 
 const App = () => {
   const [clientID, setClientID] = useState('')
@@ -79,6 +80,10 @@ const App = () => {
                   <Route
                     path='/order/:id/stripe-success'
                     element={<OrderStripeSuccess />}
+                  />
+                  <Route
+                    path='/order/:id/stripe-fail'
+                    element={<OrderStripeFail />}
                   />
                   <Route path='/shipping' element={<ShippingScreen />} />
                   <Route path='/payment' element={<PaymentScreen />} />

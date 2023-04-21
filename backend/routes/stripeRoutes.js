@@ -31,7 +31,7 @@ const createStripe = async (req, res) => {
     customer_email: email,
     mode: 'payment',
     success_url: `http://localhost:3000${url.pathname}/stripe-success`,
-    cancel_url: `http://localhost:3000${url.pathname}`,
+    cancel_url: `http://localhost:3000${url.pathname}/stripe-fail`,
     shipping_options: [
       {
         shipping_rate_data: {

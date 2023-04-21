@@ -40,7 +40,7 @@ const PaymentScreen = () => {
             <Col>
               <Form.Check
                 type='radio'
-                label='PayPal alebo karta'
+                label='Platba PayPal'
                 id='PayPal'
                 name='paymentMethod'
                 value='PayPal alebo karta'
@@ -49,7 +49,7 @@ const PaymentScreen = () => {
               ></Form.Check>
               <Form.Check
                 type='radio'
-                label='Platba kartou Stripe'
+                label='Platba kartou Stripe / Google Pay'
                 id='Stripe'
                 name='paymentMethod'
                 value='Stripe'

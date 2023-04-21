@@ -106,7 +106,7 @@ let customerInformation = (doc, invoice) => {
 
       .moveDown()
 
-    generateHr(doc, 282)
+    generateHr(doc, 272)
   }
 }
 
