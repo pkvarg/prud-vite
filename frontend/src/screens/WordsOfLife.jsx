@@ -28,7 +28,7 @@ const WordsOfLife = () => {
         </p>
       </div>
       <div className='subcategories'>
-        <div className='subcategories-frame'>Predmet</div>
+        <div className='subcategories-frame no-mobile'>Predmet</div>
         <button
           className='btn-subcategory'
           onClick={() => subHandler('Boh v liste Rimanom')}

@@ -427,6 +427,7 @@ h3.album_meta_title {
   /* text-transform: uppercase; */
   padding-top: 2.75px;
   text-align: left;
+  width: 100%;
   /* align-self: flex-start; */
 }
 
