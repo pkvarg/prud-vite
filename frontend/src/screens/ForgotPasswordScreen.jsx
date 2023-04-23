@@ -60,7 +60,11 @@ const ForgotPasswordScreen = () => {
             ></Form.Control>
           </Form.Group>
 
-          <Button type='submit' variant='primary' className='my-5 btn-blue'>
+          <Button
+            type='submit'
+            variant='primary'
+            className='my-5 btn-blue rounded'
+          >
             Poslať link pre obnovu hesla
           </Button>
         </Form>

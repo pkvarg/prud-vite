@@ -39,6 +39,8 @@ class Email {
     //this.subject = user.subject
     this.message = user.message
     this.note = user.note
+    // review
+    this.comment = user.comment
   }
 
   newTransport() {
@@ -84,6 +86,8 @@ class Email {
         emailSubject: this.subject,
         message: this.message,
         note: this.note,
+        // review
+        comment: this.comment,
       }
     )
 
@@ -154,6 +158,12 @@ class Email {
   // contact Form
   async sendContactForm() {
     await this.send('emailForm', 'Kontakt Eshop')
+  }
+
+  // new review notification
+
+  async sendReviewNotification() {
+    await this.send('reviewForm', 'Nová recenzia na Eshope')
   }
 }
 

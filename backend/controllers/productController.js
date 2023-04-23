@@ -1,5 +1,6 @@
 import asyncHandler from 'express-async-handler'
 import Product from '../models/productModel.js'
+import Email from '../utils/email.js'
 
 // @desc Fetch all NO LIMIT products
 // @desc GET /api/products/all
@@ -311,6 +312,7 @@ const createProductReview = asyncHandler(async (req, res) => {
       product.reviews.reduce((acc, item) => item.rating + acc, 0) /
       product.reviews.length
     await product.save()
+    await new Email(review).sendReviewNotification()
     res.status(201).json({ message: 'Review added' })
   } else {
     res.status(404)

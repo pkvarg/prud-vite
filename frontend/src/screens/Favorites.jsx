@@ -83,33 +83,6 @@ const Favorites = () => {
               <h5>Prihlásiť sa</h5>
             </Link>
           )}
-
-          {favoriteProducts.length > 0 ? (
-            favoriteProducts.map((product) => (
-              <Col
-                className='
-              align-items-stretch mobile-only
-              '
-                key={product._id}
-                sm={12}
-                md={6}
-                lg={4}
-                xl={3}
-              >
-                <div className='prod-and-button'>
-                  <Button
-                    onClick={() => removeFromFavoritesHandler(product._id)}
-                    className='remove-from-favorites-button'
-                  >
-                    X
-                  </Button>
-                </div>
-                <Product product={product} />
-              </Col>
-            ))
-          ) : (
-            <h4 className='mobile-only'>Nemáte žiadne oblúbené produkty</h4>
-          )}
         </>
       </Row>
       {/* <PaginateLibrary

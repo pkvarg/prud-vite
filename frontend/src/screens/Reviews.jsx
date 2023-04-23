@@ -49,21 +49,19 @@ const Reviews = () => {
   return (
     <>
       {hasReviews.map((product) => (
-        <>
-          <h2 key={product._id} className='manage-single-review-title'>
-            Titul: {product.name}
-          </h2>
-
+        <div key={product._id}>
+          <h2 className='manage-single-review-title'>Titul: {product.name}</h2>
           {product.reviews.map((review) => (
             <div
+              key={review._id}
               className={
                 review.isAcknowledged
                   ? 'manage-single-review green'
                   : 'manage-single-review red'
               }
             >
-              <div key='0' className='manage-single-review-comment'>
-                <p>"{review.comment}"</p>
+              <div className='manage-single-review-comment'>
+                <p>{review.comment}</p>
                 <p>{review.name}</p>
                 <p key='2'>{review.createdAt.substring(0, 10)}</p>
                 <p key='3' className='manage-single-review-isAck'>
@@ -96,13 +94,8 @@ const Reviews = () => {
               </div>
             </div>
           ))}
-        </>
+        </div>
       ))}
-      {/* <PaginateLibrary
-        pages={pages}
-        page={page}
-        keyword={'reviews'}
-      ></PaginateLibrary> */}
     </>
   )
 }

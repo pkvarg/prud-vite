@@ -1310,6 +1310,10 @@ footer {
     line-height: 15px !important;
   }
 
+  svg.header-user {
+    transform: translateY(16%);
+  }
+
   .mobile-sign-in.mobile-only {
     margin-left: 5px;
     display: block;

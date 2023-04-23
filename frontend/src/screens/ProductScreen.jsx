@@ -22,6 +22,7 @@ import {
   updateProductAnybody,
 } from '../actions/productActions'
 import { PRODUCT_CREATE_REVIEW_RESET } from '../constants/productConstants'
+import * as Icon from 'react-bootstrap-icons'
 
 const ProductScreen = () => {
   const [qty, setQty] = useState(1)
@@ -203,7 +204,7 @@ const ProductScreen = () => {
                                 }
                               >
                                 {isFavorite ? (
-                                  <i className='fa-solid fa-heart red'></i>
+                                  <Icon.HeartFill className='header-heart' />
                                 ) : (
                                   <p className='favorites-add'>
                                     Pridať k obľúbeným
