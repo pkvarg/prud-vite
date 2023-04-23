@@ -74,10 +74,6 @@ const PlayControls = (subcategory) => {
     return audio.subcategory === subcategory.subcategory
   })
 
-  console.log('PLC current:', currentSong)
-  console.log('PLC SongsList:', songslist)
-  console.log('PLC:', subcategory.subcategory)
-
   return (
     <>
       <div className='playlist no_drag'>
@@ -118,7 +114,7 @@ const PlayControls = (subcategory) => {
           onEnded={handleEnd}
           ref={audio}
           preload='true'
-          src={songslist[currentSong].mp3file}
+          src={songslist[currentSong]?.mp3file}
           type='audio/mpeg'
         />
         <div className='vlme'>

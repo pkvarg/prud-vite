@@ -5,7 +5,6 @@ import PlayerState from './AudioComponents/context/PlayerState'
 import PlayControls from './AudioComponents/PlayControls'
 
 let AudioPlayer = ({ category, subcategory }) => {
-  console.log(subcategory)
   return (
     <PlayerState>
       <div className='audioplayer'>

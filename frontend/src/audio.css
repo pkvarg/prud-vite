@@ -392,18 +392,24 @@ h3.album_meta_title {
 
 .subcategories {
   margin-bottom: 30px;
-  display: grid;
+  display: flex;
+  flex-direction: column;
+  color: #a74332;
+  border: 1px solid #c8c5bf;
+  /* display: grid;
   grid-template-columns: repeat(4, 1fr);
-  grid-template-rows: repeat(8, 55px);
-  /* gap: 10.5px; */
+  grid-template-rows: repeat(8, 55px); */
+}
 
-  /* display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  margin-bottom: 35px;
-  align-items: center;
-  gap: 15px;
-  justify-content: space-around; */
+.subcategories-frame {
+  background-color: #e3dbc3;
+  color: #a74332;
+  height: 30px;
+  font-size: 19px;
+  font-weight: 700;
+  line-height: 27.5px;
+  padding-left: 0.5%;
+  padding-top: 0.15%;
 }
 
 .playlist-subcategory h3 {
@@ -413,20 +419,24 @@ h3.album_meta_title {
 .btn-subcategory {
   background-color: none;
   color: inherit !important;
-  /* border-bottom: 1px solid #2a6586; */
+  border-bottom: 1px solid #c8c5bf;
   /* display: inline-block; */
   font-size: 19px;
   font-weight: 700;
   line-height: 27.5px;
-  text-transform: uppercase;
+  /* text-transform: uppercase; */
   padding-top: 2.75px;
   text-align: left;
   /* align-self: flex-start; */
 }
 
+.btn-subcategory:nth-child(odd) {
+  background-color: #f5f5f5;
+}
+
 .btn-subcategory:hover {
   color: #fff;
-  background-color: #4aa9de;
+  background-color: #e3dbc3;
   border: none;
 }
 

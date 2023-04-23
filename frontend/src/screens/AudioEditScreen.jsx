@@ -513,14 +513,45 @@ const AudioEditScreen = () => {
             {category === 'Štúdium života' && (
               <Form.Group controlId='subcategory' className='my-3'>
                 <Form.Label>Podkategória</Form.Label>
-
+                <Dropdown>
+                  <Dropdown.Toggle
+                    variant='success'
+                    id='dropdown-basic'
+                    className='category-dropdown rounded'
+                  >
+                    Podkategória
+                  </Dropdown.Toggle>
+                  <Dropdown.Menu>
+                    <Dropdown.Item
+                      key='Štúdium života'
+                      value='Štúdium života'
+                      onClick={() => setSubcategory('Štúdium života')}
+                    >
+                      <h5 className='language-dropdown-lang'>
+                        {' '}
+                        Štúdium života
+                      </h5>
+                    </Dropdown.Item>
+                  </Dropdown.Menu>
+                </Dropdown>
                 <Form.Control
-                  className='rounded-5'
                   type='text'
                   placeholder='Podkategória'
+                  value={subcategory}
                   onChange={(e) => setSubcategory(e.target.value)}
                 ></Form.Control>
               </Form.Group>
+              // <Form.Group controlId='subcategory' className='my-3'>
+              //   <Form.Label>Podkategória</Form.Label>
+
+              //   <Form.Control
+              //     className='rounded-5'
+              //     type='text'
+              //     placeholder='Podkategória'
+              //     value={subcategory}
+              //     onChange={(e) => setSubcategory(e.target.value)}
+              //   ></Form.Control>
+              // </Form.Group>
             )}
 
             <Button

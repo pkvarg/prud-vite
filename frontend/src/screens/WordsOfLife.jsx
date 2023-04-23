@@ -28,6 +28,7 @@ const WordsOfLife = () => {
         </p>
       </div>
       <div className='subcategories'>
+        <div className='subcategories-frame'>Predmet</div>
         <button
           className='btn-subcategory'
           onClick={() => subHandler('Boh v liste Rimanom')}
@@ -74,7 +75,7 @@ const WordsOfLife = () => {
           className='btn-subcategory'
           onClick={() => subHandler('KŘESŤANSKÝ ŽIVOT')}
         >
-          KŘESŤANSKÝ ŽIVOT
+          Křesťanský život
         </button>{' '}
         <button
           className='btn-subcategory'
@@ -146,7 +147,7 @@ const WordsOfLife = () => {
           className='btn-subcategory'
           onClick={() => subHandler('ŘADA PRO NOVÉ VĚŘÍCÍ')}
         >
-          ŘADA PRO NOVÉ VĚŘÍCÍ
+          Řada pro nové věřící
         </button>{' '}
         <button
           className='btn-subcategory'
@@ -208,7 +209,7 @@ const WordsOfLife = () => {
           className='btn-subcategory'
           onClick={() => subHandler('VĚČNÝ BOŽÍ PLÁN')}
         >
-          VĚČNÝ BOŽÍ PLÁN
+          Věčný Boží plán
         </button>
         <button
           className='btn-subcategory'
@@ -220,7 +221,7 @@ const WordsOfLife = () => {
           className='btn-subcategory'
           onClick={() => subHandler('ZÁKLADNÍ PRVKY KŘESŤANSKÉHO ŽIVOTA')}
         >
-          ZÁKLADNÍ PRVKY KŘESŤANSKÉHO ŽIVOTA
+          Základní prvky křesťanského života
         </button>
         <button
           className='btn-subcategory'
