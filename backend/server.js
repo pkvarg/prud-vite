@@ -35,6 +35,7 @@ app.use(
       'http://localhost:5173',
       'https://pictusweb.art',
       'https://prud.onrender.com',
+      'https://prud-vite-back.onrender.com',
     ],
   })
 )
