@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
-import { PayPalButtons, usePayPalScriptReducer } from '@paypal/react-paypal-js'
+// import { PayPalButtons, usePayPalScriptReducer } from '@paypal/react-paypal-js'
 import { Link, useNavigate, useParams, useLocation } from 'react-router-dom'
 import {
   Button,
@@ -47,7 +47,7 @@ const OrderScreen = () => {
   const navigate = useNavigate()
   const [paidByStripe, setPaidByStripe] = useState(false)
   const orderId = params.id
-  const [{ isPending, isResolved, isRejected }] = usePayPalScriptReducer()
+  // const [{ isPending, isResolved, isRejected }] = usePayPalScriptReducer()
 
   // const [sdkReady, setSdkready] = useState(false)
 
@@ -406,7 +406,7 @@ const OrderScreen = () => {
                   </Button>
                 </ListGroupItem>
               )}
-              {!order.isPaid &&
+              {/* {!order.isPaid &&
                 order.paymentMethod === 'PayPal alebo karta' && (
                   <ListGroup.Item>
                     {loadingPay && <Loader />}
@@ -432,7 +432,7 @@ const OrderScreen = () => {
                   //     />
                   //   )}
                   // </ListGroup.Item>
-                )}
+                )} */}
 
               {loadingDeliver && <Loader />}
               {userInfo && userInfo.isAdmin && !order.isDelivered && (

@@ -15,7 +15,7 @@ const PaymentScreen = () => {
     navigate('/shipping')
   }
 
-  const [paymentMethod, setPaymentMethod] = useState('PayPal alebo karta')
+  const [paymentMethod, setPaymentMethod] = useState('')
 
   const dispatch = useDispatch()
 
@@ -38,7 +38,7 @@ const PaymentScreen = () => {
           <Form.Group>
             <Form.Label as='legend'>Vyberte spôsob platby</Form.Label>
             <Col>
-              <Form.Check
+              {/* <Form.Check
                 type='radio'
                 label='Platba PayPal'
                 id='PayPal'
@@ -46,7 +46,7 @@ const PaymentScreen = () => {
                 value='PayPal alebo karta'
                 checked
                 onChange={(e) => setPaymentMethod(e.target.value)}
-              ></Form.Check>
+              ></Form.Check> */}
               <Form.Check
                 type='radio'
                 label='Platba kartou Stripe / Google Pay'

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
-import { PayPalScriptProvider } from '@paypal/react-paypal-js'
+// import { PayPalScriptProvider } from '@paypal/react-paypal-js'
 import { Container } from 'react-bootstrap'
 import Header from './components/Header'
 import Footer from './components/Footer'
@@ -53,23 +53,131 @@ import OrderStripeSuccess from './screens/OrderStripeSuccess'
 import OrderStripeFail from './screens/OrderStripeFail'
 
 const App = () => {
-  const [clientID, setClientID] = useState('')
+  // const [clientID, setClientID] = useState('')
 
-  useEffect(() => {
-    const getClientId = async () => {
-      const { data: clientId } = await axios.get('/api/config/paypal')
+  // useEffect(() => {
+  //   const getClientId = async () => {
+  //     const { data: clientId } = await axios.get('/api/config/paypal')
 
-      setClientID(clientId)
-    }
+  //     setClientID(clientId)
+  //   }
 
-    if (!window.paypal) {
-      getClientId()
-    }
-  }, [])
+  //   if (!window.paypal) {
+  //     getClientId()
+  //   }
+  // }, [])
 
   return (
     <>
-      {clientID && (
+      <Router>
+        <Header />
+        <main className='py-3'>
+          <Container>
+            <Routes>
+              <Route path='/order/:id' element={<OrderScreen />} />
+              <Route
+                path='/order/:id/stripe-success'
+                element={<OrderStripeSuccess />}
+              />
+              <Route
+                path='/order/:id/stripe-fail'
+                element={<OrderStripeFail />}
+              />
+              <Route path='/shipping' element={<ShippingScreen />} />
+              <Route path='/payment' element={<PaymentScreen />} />
+              <Route path='/placeorder' element={<PlaceOrderScreen />} />
+              <Route path='/login' element={<LoginScreen />} />
+              <Route path='/register' element={<RegisterScreen />} />
+              <Route
+                path='/reset-password/:token/:name/:email/:id/:genToken'
+                element={<ResetPasswordScreen />}
+              />
+              <Route path='/profile' element={<ProfileScreen />} />
+
+              <Route path='/product/:id' element={<ProductScreen />} />
+
+              <Route path='/cart'>
+                <Route path=':id' element={<CartScreen />} />
+                <Route path='' element={<CartScreen />} />
+              </Route>
+              <Route path='/contact' element={<ContactScreen />} />
+              <Route path='/create-discount' element={<CreateDiscount />} />
+              <Route path='/admin/userlist' element={<UserListScreen />} />
+              <Route path='/admin/user/:id/edit' element={<UserEditScreen />} />
+              <Route path='/search/:keyword' element={<HomeScreen />} />
+              <Route path='/page/:pageNumber' element={<HomeScreen />} />
+              <Route
+                path='/search/:keyword/page/:pageNumber'
+                element={<HomeScreen />}
+              />
+
+              <Route path='/' element={<HomeScreen />} />
+              <Route
+                path='/admin/productlist'
+                element={<ProductListScreen />}
+              />
+              <Route
+                path='/admin/productlist/:pageNumber'
+                element={<ProductListScreen />}
+              />
+              <Route
+                path='/admin/product/:id/edit'
+                element={<ProductEditScreen />}
+              />
+              <Route path='/admin/orderlist' element={<OrderListScreen />} />
+              <Route path='/admin/audio' element={<AudioListScreen />} />
+              <Route
+                path='/admin/audio/:id/edit'
+                element={<AudioEditScreen />}
+              />
+              <Route
+                path='/forgot-password'
+                element={<ForgotPasswordScreen />}
+              />
+              <Route path='/give2' element={<Give2 />} />
+              <Route path='/give2-physical' element={<Give2Physical />} />
+              <Route
+                path='/give2-physical-business'
+                element={<Give2PhysicalBusiness />}
+              />
+              <Route path='/give2-lawyer' element={<Give2Lawyer />} />
+              <Route path='/new-books/:year' element={<NewBooks />} />
+              <Route path='/words-of-life' element={<WordsOfLife />} />
+              <Route path='/life-study' element={<LifeStudy />} />
+
+              <Route path='/admin/banner' element={<BannerListScreen />} />
+              <Route
+                path='/admin/banner/:id/edit'
+                element={<BannerEditScreen />}
+              />
+              <Route path='/video' element={<Video />} />
+              <Route path='/eshop/:category' element={<Eshop />} />
+              <Route path='/admin/video' element={<VideoListScreen />} />
+              <Route
+                path='/admin/video/:id/edit'
+                element={<VideoEditScreen />}
+              />
+              <Route path='/library' element={<Library />} />
+              <Route path='/library/:id' element={<LibraryExcerpt />} />
+              <Route path='/library/page/:pageNumber' element={<Library />} />
+              <Route
+                path='/library/:id/page/:pageNumber'
+                element={<LibraryExcerpt />}
+              />
+              <Route path='/watchman-nee' element={<WatchmanNee />} />
+              <Route path='/witness-lee' element={<WitnessLee />} />
+              <Route path='/about' element={<About />} />
+              <Route path='/safety-privacy' element={<SafetyPrivacy />} />
+              <Route path='/trade-rules' element={<TradeRules />} />
+              <Route path='/admin/reviews' element={<Reviews />} />
+              <Route path='/favorites' element={<Favorites />} />
+            </Routes>
+          </Container>
+        </main>
+        <Footer />
+      </Router>
+
+      {/* {clientID && (
         <PayPalScriptProvider options={{ 'client-id': clientID }}>
           <Router>
             <Header />
@@ -188,7 +296,7 @@ const App = () => {
             <Footer />
           </Router>
         </PayPalScriptProvider>
-      )}
+      )} */}
     </>
   )
 }
