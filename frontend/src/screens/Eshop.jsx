@@ -22,11 +22,11 @@ const Eshop = () => {
 
   return (
     <>
-      <div className='eshop-row-mobile'>
+      <div className=''>
         <h1 className='new-publications'>Eshop</h1>
-        <h4 className='eshop-category'>
+        {/* <h4 className='eshop-category'>
           {category.replace('-', ' ').replace('-', ' ').replace('-', ' ')}
-        </h4>
+        </h4> */}
       </div>
       {loading ? (
         <Loader />
@@ -34,7 +34,7 @@ const Eshop = () => {
         <Message variant='danger'>{error}</Message>
       ) : (
         <>
-          <Row className='eshop-row-mobile'>
+          {/* <Row className='eshop-row-mobile'>
             {category !== 'abecedný-zoznam-kníh'
               ? products.map(
                   (product) =>
@@ -79,12 +79,56 @@ const Eshop = () => {
                     </p>
                   </Link>
                 ))}
+          </Row> */}
+          <Row className='eshop-abc'>
+            <h4 className='eshop-abc-frame'>
+              {category.replace('-', ' ').replace('-', ' ').replace('-', ' ')}
+            </h4>
+            {category !== 'abecedný-zoznam-kníh'
+              ? products.map(
+                  (product) =>
+                    product.category === category && (
+                      <>
+                        <Col
+                          className='
+            align-items-stretch d-flex no-mobile
+            '
+                          key={product._id}
+                          sm={12}
+                          md={6}
+                          lg={4}
+                          xl={3}
+                        >
+                          <Product product={product} />
+                        </Col>
+
+                        <Col
+                          className='
+                      align-items-stretch mobile-only
+                      '
+                          key={product._id}
+                          sm={12}
+                          md={6}
+                          lg={4}
+                          xl={3}
+                        >
+                          <Product product={product} />
+                        </Col>
+                      </>
+                    )
+                )
+              : products.map((product) => (
+                  <Link
+                    className='eshop-abc-product'
+                    to={`/product/${product._id}`}
+                    key={product._id}
+                  >
+                    <p className='eshop-mobile-link' key={product._id}>
+                      {product.name}
+                    </p>
+                  </Link>
+                ))}
           </Row>
-          {/* <Paginate
-            pages={pages}
-            page={page}
-            keyword={keyword ? keyword : ''}
-          ></Paginate> */}
         </>
       )}
     </>
