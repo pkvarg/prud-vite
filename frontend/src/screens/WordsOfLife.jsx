@@ -1,10 +1,13 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import AudioPlayer from '../components/AudioPlayer'
+import { useRef } from 'react'
 
 const WordsOfLife = () => {
   const [subcategory, setSubcategory] = useState('Boží evangelium')
+  const myRef = useRef(null)
   const subHandler = (sub) => {
+    myRef.current.scrollIntoView({ behavior: 'smooth' })
     setSubcategory(sub)
   }
 
@@ -231,6 +234,7 @@ const WordsOfLife = () => {
         </button>
       </div>
 
+      <div ref={myRef}></div>
       <AudioPlayer category={category} subcategory={subcategory} />
     </>
   )
