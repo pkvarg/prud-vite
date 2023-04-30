@@ -7,7 +7,7 @@ import Loader from '../components/Loader'
 import FormContainer from '../components/FormContainer'
 import { login, getGoogleUserInfo } from '../actions/userActions'
 
-import { auth, provider } from './../firebaseConfig'
+import { auth, provider } from './../App'
 import { signInWithPopup } from 'firebase/auth'
 import { GoogleButton } from 'react-google-button'
 
