@@ -170,7 +170,7 @@ h3.album_meta_title {
 }
 
 .songContainer {
-  cursor: pointer;
+  /* cursor: pointer; */
   user-select: none;
 }
 

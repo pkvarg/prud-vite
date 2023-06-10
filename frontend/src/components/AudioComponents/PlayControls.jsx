@@ -90,7 +90,8 @@ const PlayControls = (subcategory) => {
               onClick={() => SetCurrent(i)}
             >
               <div className='tmbn_song'>
-                <Icon.Play />
+                {/* <Icon.Play /> */}
+                <Icon.MusicNote />
               </div>
               <div className='songmeta_playlist'>
                 <span className='songname'>{song.audioTitle}</span>
