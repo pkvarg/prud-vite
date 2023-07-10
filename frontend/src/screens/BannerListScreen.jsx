@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
+import * as Icon from 'react-bootstrap-icons'
 
 import {
   listBanner,
@@ -121,7 +122,7 @@ const BannerListScreen = () => {
                   <td>
                     <LinkContainer to={`/admin/banner/${banner._id}/edit`}>
                       <Button variant='light' className='btn-sm'>
-                        <i className='fas fa-edit'></i>
+                        <Icon.Pencil />
                       </Button>
                     </LinkContainer>
                     <Button
@@ -129,7 +130,7 @@ const BannerListScreen = () => {
                       className='btn-sm'
                       onClick={() => deleteHandler(banner._id)}
                     >
-                      <i className='fas fa-trash'></i>
+                      <Icon.Trash />
                     </Button>
                   </td>
                 </tr>

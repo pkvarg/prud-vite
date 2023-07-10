@@ -12,7 +12,7 @@ const Video = () => {
       <div className='my-3'>
         <h1>Video</h1>
         {links.map((link) => (
-          <YoutubeEmbed key={link._id} embedId={link.code}  />
+          <YoutubeEmbed key={link._id} embedId={link.code} />
         ))}
       </div>
     </>

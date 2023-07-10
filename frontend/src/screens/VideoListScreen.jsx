@@ -9,6 +9,7 @@ import Loader from '../components/Loader'
 import { listVideo, deleteVideo, createVideo } from '../actions/videoActions'
 import { useNavigate } from 'react-router-dom'
 import { VIDEO_CREATE_RESET } from '../constants/videoConstants'
+import * as Icon from 'react-bootstrap-icons'
 
 const VideoListScreen = () => {
   const params = useParams()
@@ -120,7 +121,7 @@ const VideoListScreen = () => {
                   <td>
                     <LinkContainer to={`/admin/video/${video._id}/edit`}>
                       <Button variant='light' className='btn-sm'>
-                        <i className='fas fa-edit'></i>
+                        <Icon.Pencil />
                       </Button>
                     </LinkContainer>
                     <Button
@@ -128,7 +129,7 @@ const VideoListScreen = () => {
                       className='btn-sm'
                       onClick={() => deleteHandler(video._id)}
                     >
-                      <i className='fas fa-trash'></i>
+                      <Icon.Trash />
                     </Button>
                   </td>
                 </tr>

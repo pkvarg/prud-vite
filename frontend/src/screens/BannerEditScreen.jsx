@@ -93,6 +93,7 @@ const BannerEditScreen = () => {
       </Link>
       <FormContainer>
         <h1>Banner</h1>
+        <p>Obrázok musí mať rozmery 1296x382px</p>
         {loadingUpdate && <Loader />}
         {errorUpdate && <Message variant='danger'>{errorUpdate}</Message>}
         {loading ? (
