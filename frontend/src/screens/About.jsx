@@ -6,7 +6,7 @@ const About = () => {
   })
 
   return (
-    <>
+    <div className='margined'>
       <div className='my-3 info'>
         <h1>O nás</h1>
         <p>
@@ -77,7 +77,7 @@ const About = () => {
           dovŕšení Božej spásy Jeho vyvolených.
         </p>
       </div>
-    </>
+    </div>
   )
 }
 

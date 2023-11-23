@@ -10,7 +10,7 @@ const LifeStudy = () => {
   const category = 'ŠTÚDIUM ŽIVOTA'
 
   return (
-    <>
+    <div className='margined'>
       <Link className='btn btn-back my-3' to='/'>
         Naspäť
       </Link>
@@ -30,7 +30,7 @@ const LifeStudy = () => {
         </p>
       </div>
       <AudioPlayer category={category} subcategory={subcategory} />
-    </>
+    </div>
   )
 }
 

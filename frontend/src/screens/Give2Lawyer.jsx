@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 
 const Give2Lawyer = () => {
   return (
-    <>
+    <div className='margined'>
       <Link className='btn btn-back my-3' to='/'>
         Naspäť
       </Link>
@@ -71,7 +71,7 @@ const Give2Lawyer = () => {
           </li>
         </ul>
       </div>
-    </>
+    </div>
   )
 }
 

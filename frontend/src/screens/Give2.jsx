@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 
 const Give2 = () => {
   return (
-    <>
+    <div className='margined'>
       <Link className='btn btn-back my-3' to='/'>
         Naspäť
       </Link>
@@ -20,13 +20,13 @@ const Give2 = () => {
           www a iných služieb internetu.
         </p>
         <strong>Ďakujeme za vašu podporu!</strong>
-        <h3 className='my-3'>Údaje o prijímateľovi 2%</h3>
+        <h1 className='my-3'>Údaje o prijímateľovi 2%</h1>
         <p>Obchodné meno (názov): Prúd</p>
         <p>Právna forma: Občianske združenie</p>
         <p>IČO: 36076589</p>
         <p>Sídlo: Špieszova 5, 841 04 Bratislava </p>
       </div>
-    </>
+    </div>
   )
 }
 

@@ -6,11 +6,11 @@ const TradeRules = () => {
   })
 
   return (
-    <>
+    <div className='margined'>
       <div className='my-3 info'>
         <h1>Obchodné podmienky</h1>
       </div>
-    </>
+    </div>
   )
 }
 

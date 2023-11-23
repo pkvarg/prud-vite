@@ -6,7 +6,7 @@ const SafetyPrivacy = () => {
   })
 
   return (
-    <>
+    <div className='margined'>
       <div className='my-3 info'>
         <h1>Bezpečnosť a súkromie</h1>
         <h3>Ochrana osobných údajov na prud.sk</h3>
@@ -133,7 +133,7 @@ const SafetyPrivacy = () => {
         <p>Na zachovaní vášho súkromia nám záleží!</p>
         <p>Tím Prúd.sk</p>
       </div>
-    </>
+    </div>
   )
 }
 

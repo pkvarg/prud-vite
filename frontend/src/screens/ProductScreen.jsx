@@ -434,9 +434,9 @@ const ProductScreen = () => {
                         {userInfo ? (
                           <Form onSubmit={submitHandler}>
                             <Form.Group controlId='comment'>
-                              <Form.Label className='review-comment'>
+                              {/* <Form.Label className='review-comment'>
                                 Komentár
-                              </Form.Label>
+                              </Form.Label> */}
                               <Form.Control
                                 as='textarea'
                                 row='3'

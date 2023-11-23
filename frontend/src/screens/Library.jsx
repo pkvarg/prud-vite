@@ -21,7 +21,7 @@ const Library = () => {
   }, [dispatch, keyword, pageNumber])
 
   return (
-    <>
+    <div className='margined'>
       <Link className='btn btn-back my-3' onClick={() => navigate(-1)}>
         Naspäť
       </Link>
@@ -57,7 +57,7 @@ const Library = () => {
         page={page}
         keyword={'library'}
       ></PaginateLibrary>
-    </>
+    </div>
   )
 }
 

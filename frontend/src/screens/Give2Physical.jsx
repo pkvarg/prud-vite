@@ -23,7 +23,7 @@ const Give2Physical = () => {
   }
 
   return (
-    <>
+    <div className='margined'>
       <Link className='btn btn-back my-3' to='/'>
         Naspäť
       </Link>
@@ -139,7 +139,7 @@ const Give2Physical = () => {
           </Button>
         </div>
       </div>
-    </>
+    </div>
   )
 }
 

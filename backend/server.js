@@ -32,8 +32,9 @@ app.use(
     origin: [
       'http://localhost:3000',
       'http://localhost:5000',
+      'http://localhost:6000',
       'http://localhost:5173',
-      'https://pictusweb.art',
+      'https://pictusweb.com',
       'https://prud.onrender.com',
       'https://prud-vite-front.onrender.com',
     ],
@@ -101,7 +102,7 @@ const YOUR_DOMAIN = 'http://localhost:3000'
 
 // RENDER
 
-const PORT = process.env.PORT || 5000
+const PORT = process.env.PORT || 6000
 app.listen(
   PORT,
   console.log(

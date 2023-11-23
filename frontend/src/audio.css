@@ -421,7 +421,7 @@ h3.album_meta_title {
   color: inherit !important;
   border-bottom: 1px solid #c8c5bf;
   /* display: inline-block; */
-  font-size: 19px;
+  font-size: 16px;
   font-weight: 700;
   line-height: 27.5px;
   /* text-transform: uppercase; */
@@ -615,13 +615,11 @@ input[type='range']:focus::-ms-fill-upper {
 @media (min-width: 100px) and (max-width: 1180px) {
   .subcategories {
     margin-bottom: 30px;
-    gap: 10.5px;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     margin-bottom: 35px;
     align-items: center;
-    gap: 15px;
     justify-content: flex-start;
   }
 
@@ -629,7 +627,7 @@ input[type='range']:focus::-ms-fill-upper {
     background-color: none;
     /* border-bottom: 1px solid #2a6586; */
     display: inline-block;
-    font-size: 19px;
+    font-size: 16px;
     font-weight: 700;
     line-height: 35px;
     text-transform: uppercase;

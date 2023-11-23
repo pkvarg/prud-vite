@@ -52,6 +52,7 @@ import OrderStripeFail from './screens/OrderStripeFail'
 import { initializeApp } from 'firebase/app'
 import { getAuth, GoogleAuthProvider } from 'firebase/auth'
 import { firebaseConfiguration } from './firebaseConfig'
+import Mp3 from './screens/Mp3'
 
 // Initialize Firebase
 export const firebaseInitApp = initializeApp(firebaseConfiguration)
@@ -163,6 +164,7 @@ const App = () => {
               <Route path='/trade-rules' element={<TradeRules />} />
               <Route path='/admin/reviews' element={<Reviews />} />
               <Route path='/favorites' element={<Favorites />} />
+              <Route path='/mp3' element={<Mp3 />} />
             </Routes>
           </Container>
         </main>

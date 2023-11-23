@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 
 const Give2PhysicalBusiness = () => {
   return (
-    <>
+    <div className='margined'>
       <Link className='btn btn-back my-3' to='/'>
         Naspäť
       </Link>
@@ -61,7 +61,7 @@ const Give2PhysicalBusiness = () => {
           </li>
         </ul>
       </div>
-    </>
+    </div>
   )
 }
 
