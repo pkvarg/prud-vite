@@ -544,7 +544,6 @@ h5.place-order-discount {
 }
 
 .prod-list-name {
-  text-transform: uppercase;
   line-height: 27.5px;
 }
 
@@ -865,11 +864,14 @@ i.fa-solid.fa-download:hover {
   background-color: #e3dbc3;
   height: 40px;
   font-size: 19px;
+  font-weight: 700;
   line-height: 27.5px;
-  padding-left: 0.5%;
+  padding-left: 12.5px;
   padding-top: 0.45%;
   border-bottom: 1px solid #c8c5bf;
   margin-bottom: 0;
+  text-transform: capitalize;
+  letter-spacing: normal;
 }
 
 .eshop-abc-product {
