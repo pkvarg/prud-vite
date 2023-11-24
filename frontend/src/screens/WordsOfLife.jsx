@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
-import AudioPlayer from '../components/AudioPlayer'
 import { useRef } from 'react'
+import { wordsOflife } from '../components/AudioComponents/context/mp3s'
 
 const WordsOfLife = () => {
   const [subcategory, setSubcategory] = useState('Boží evangelium')
@@ -235,7 +235,24 @@ const WordsOfLife = () => {
       </div>
 
       <div ref={myRef}></div>
-      <AudioPlayer category={category} subcategory={subcategory} />
+      {wordsOflife.map(
+        (url) =>
+          url.subcategory === subcategory && (
+            <div key={url._id} className='iframe-w'>
+              <div className='mp3-frame-desc'>
+                <p className='sub'>{url.subcategory}</p>
+                <p className='tit'>{url.audioTitle}</p>
+                <p className='download'>Stiahnuť mp3</p>
+              </div>
+              <iframe
+                src={url.mp3file}
+                width='640'
+                height='60'
+                allow='autoplay'
+              ></iframe>
+            </div>
+          )
+      )}
     </>
   )
 }

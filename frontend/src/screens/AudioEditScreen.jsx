@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
-import axios from 'axios'
 import { Link, useParams, useNavigate } from 'react-router-dom'
-import { Form, Button, Dropdown } from 'react-bootstrap'
+import { Form, Button, Dropdown, Image } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
@@ -53,28 +52,28 @@ const AudioEditScreen = () => {
     }
   }, [dispatch, navigate, audioId, audio, successUpdate, audios])
 
-  const uploadFileHandler = async (e) => {
-    const file = e.target.files[0]
-    const formData = new FormData()
-    formData.append('upload', file)
-    setUploading(true)
+  // const uploadFileHandler = async (e) => {
+  //   const file = e.target.files[0]
+  //   const formData = new FormData()
+  //   formData.append('upload', file)
+  //   setUploading(true)
 
-    try {
-      const config = {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      }
+  //   try {
+  //     const config = {
+  //       headers: {
+  //         'Content-Type': 'multipart/form-data',
+  //       },
+  //     }
 
-      const { data } = await axios.post('/api/upload', formData, config)
+  //     const { data } = await axios.post('/api/upload', formData, config)
 
-      setMp3file(data)
-      setUploading(false)
-    } catch (error) {
-      console.error(error)
-      setUploading(false)
-    }
-  }
+  //     setMp3file(data)
+  //     setUploading(false)
+  //   } catch (error) {
+  //     console.error(error)
+  //     setUploading(false)
+  //   }
+  // }
 
   const submitHandler = (e) => {
     e.preventDefault()
@@ -105,10 +104,7 @@ const AudioEditScreen = () => {
         ) : (
           <Form onSubmit={submitHandler}>
             <Form.Group controlId='audio-title'>
-              <Form.Label>
-                Názov (napr. Boh v liste Rimanom I (bez bodiek a čiarok), tak sa
-                to zobrazí v mp3 prehrávači )
-              </Form.Label>
+              <Form.Label>Názov (napr. Boh v liste Rimanom I)</Form.Label>
               <Form.Control
                 type='text'
                 placeholder='Názov'
@@ -118,24 +114,23 @@ const AudioEditScreen = () => {
             </Form.Group>
 
             <Form.Group controlId='audio-file' className='mb-3'>
-              <Form.Label>
-                Mp3 súbor (aby bolo možné mp3 súbor stiahnuť, je nutné NAJPRV
-                SÚBOR premenovať podľa riadku vyššie, zachovať veľké a malé
-                písmená. Napr. Boh v liste Rimanom I. Až potom súbor nahrať
-                sem.){' '}
-              </Form.Label>
+              <Form.Label>Linka z Google drive (bez uvodzoviek)</Form.Label>
+              <Image
+                className='audio-edit-iframe'
+                src='/images/iframe.webp'
+                alt='iframe'
+              />
               <Form.Control
                 type='text'
-                placeholder='Mp3 súbor'
+                placeholder='Linka z Google drive'
                 value={mp3file}
-                readOnly
-                // onChange={(e) => setMp3file(e.target.value)}
+                onChange={(e) => setMp3file(e.target.value)}
               ></Form.Control>
-              <Form.Control
+              {/* <Form.Control
                 type='file'
                 onChange={uploadFileHandler}
               ></Form.Control>
-              {uploading && <Loader />}
+              {uploading && <Loader />} */}
             </Form.Group>
 
             <Form.Group controlId='category'>
@@ -181,7 +176,7 @@ const AudioEditScreen = () => {
                   <Dropdown.Toggle
                     variant='success'
                     id='dropdown-basic'
-                    className='category-dropdown'
+                    className='category-dropdown rounded'
                   >
                     Podkategória
                   </Dropdown.Toggle>

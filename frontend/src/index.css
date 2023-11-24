@@ -1137,6 +1137,79 @@ a.manage-single-review-link:hover {
   font-size: 20px;
 }
 
+.audio-edit-iframe {
+  margin: 15px 50px;
+  width: 400px;
+  height: 150px;
+}
+
+.subcategories {
+  margin-bottom: 30px;
+  display: flex;
+  flex-direction: column;
+  color: #a74332;
+  border: 1px solid #c8c5bf;
+}
+
+.subcategories-frame {
+  background-color: #e3dbc3;
+  color: #a74332;
+  height: 30px;
+  font-size: 19px;
+  font-weight: 700;
+  line-height: 27.5px;
+  padding-left: 0.5%;
+  padding-top: 0.15%;
+}
+
+.btn-subcategory {
+  background-color: #ffffff;
+  color: inherit !important;
+  border: none;
+  border-bottom: 0.5px solid #c8c5bf;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 27.5px;
+  padding-top: 2.75px;
+  text-align: left;
+  width: 100%;
+}
+
+.btn-subcategory:nth-child(odd) {
+  background-color: #f5f5f5;
+}
+
+.btn-subcategory:hover {
+  color: #fff;
+  background-color: #e3dbc3;
+}
+
+.mp3-frame-desc {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-left: 1%;
+  margin-right: 1%;
+}
+
+.iframe-w {
+  width: max-content;
+}
+
+.iframe-w .sub {
+  color: #a74332;
+  font-weight: 600;
+}
+
+.iframe-w .tit {
+  color: #4aa9de;
+  font-weight: 800;
+}
+
+.life-study-top {
+  margin-top: 25px;
+}
+
 /* FOOTER */
 footer {
   background-color: #edeae4;
@@ -1595,6 +1668,46 @@ footer {
   img.prod-img-excerpt-part {
     width: 100%;
     margin-top: 25px;
+  }
+
+  /* MOBILE */
+  /* Tablets and smaller */
+  @media (min-width: 100px) and (max-width: 1180px) {
+    .subcategories {
+      margin-bottom: 30px;
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      margin-bottom: 35px;
+      align-items: center;
+      justify-content: flex-start;
+    }
+
+    .btn-subcategory {
+      background-color: none;
+      display: inline-block;
+      font-size: 16px;
+      font-weight: 700;
+      line-height: 35px;
+      text-transform: uppercase;
+      padding-top: 2.75px;
+    }
+
+    .mp3-frame-desc {
+      flex-direction: column;
+    }
+
+    .mp3-frame-desc .tit,
+    .mp3-frame-desc .sub {
+      margin: 2.5px 0;
+    }
+
+    .iframe-w .download {
+      display: none;
+    }
+    iframe {
+      width: 90vw;
+    }
   }
 
   /* MOBILE FOOTER*/

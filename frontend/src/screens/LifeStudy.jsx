@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
-import AudioPlayer from '../components/AudioPlayer'
+import { lifeStudy } from '../components/AudioComponents/context/mp3s'
 
 const LifeStudy = () => {
   const [subcategory, setSubcategory] = useState('Štúdium života')
@@ -29,7 +29,21 @@ const LifeStudy = () => {
           výklady biblickej pravdy.
         </p>
       </div>
-      <AudioPlayer category={category} subcategory={subcategory} />
+      {lifeStudy.map((url) => (
+        <div key={url._id} className='iframe-w life-study-top'>
+          <div className='mp3-frame-desc'>
+            <p className='sub'>{url.subcategory}</p>
+            <p className='tit'>{url.audioTitle}</p>
+            <p className='download'>Stiahnuť mp3</p>
+          </div>
+          <iframe
+            src={url.mp3file}
+            width='640'
+            height='60'
+            allow='autoplay'
+          ></iframe>
+        </div>
+      ))}
     </div>
   )
 }
