@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import Message from '../components/Message'
 import CheckoutSteps from '../components/CheckoutSteps'
 import { createOrder } from '../actions/orderActions'
+import { addDecimals } from '../functions'
 
 const PlaceOrderScreen = () => {
   const dispatch = useDispatch()
@@ -12,9 +13,7 @@ const PlaceOrderScreen = () => {
   const cart = useSelector((state) => state.cart)
 
   // Calculate Prices
-  const addDecimals = (num) => {
-    return (Math.round(num * 100) / 100).toFixed(2)
-  }
+
   cart.itemsPrice = addDecimals(
     cart.cartItems.reduce((acc, item) => acc + item.price * item.qty, 0)
   )
@@ -26,12 +25,6 @@ const PlaceOrderScreen = () => {
   cart.totalPrice = (
     Number(cart.itemsPrice) + Number(cart.shippingPrice)
   ).toFixed(2)
-
-  // cart.totalPrice = (
-  //   Number(cart.itemsPrice) +
-  //   Number(cart.shippingPrice) +
-  //   Number(cart.taxPrice)
-  // ).toFixed(2)
 
   const orderCreate = useSelector((state) => state.orderCreate)
   const { order, success, error } = orderCreate
@@ -101,16 +94,6 @@ const PlaceOrderScreen = () => {
   const handleTradeRulesOrder = () => {
     setTradeRulesOrderChecked(!tradeRulesOrderChecked)
   }
-
-  // Payment method
-  //console.log(cart.paymentMethod)
-  // if (cart.paymentMethod === 'Hotovosť') {
-  //   setCardTypeOrCash('Hotovosť pri prevzatí')
-  // } else if (cart.paymentMethod === 'PayPal alebo karta') {
-  //   setCardTypeOrCash('PayPal alebo karta')
-  // } else {
-  //   setCardTypeOrCash('Stripe')
-  // }
 
   return (
     <>

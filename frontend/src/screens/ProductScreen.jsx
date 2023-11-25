@@ -11,7 +11,7 @@ import {
   Form,
   Button,
 } from 'react-bootstrap'
-// import Rating from '../components/Rating'
+
 import Message from '../components/Message'
 import Loader from '../components/Loader'
 import Meta from '../components/Meta'
@@ -23,6 +23,7 @@ import {
 } from '../actions/productActions'
 import { PRODUCT_CREATE_REVIEW_RESET } from '../constants/productConstants'
 import * as Icon from 'react-bootstrap-icons'
+import { addDecimals } from '../functions'
 
 const ProductScreen = () => {
   const [qty, setQty] = useState(1)
@@ -74,10 +75,6 @@ const ProductScreen = () => {
 
   const continueShopping = () => {
     navigate('/')
-  }
-
-  const addDecimals = (num) => {
-    return (Math.round(num * 100) / 100).toFixed(2)
   }
 
   const handleLink = (id) => {
@@ -210,13 +207,6 @@ const ProductScreen = () => {
                                     Pridať k obľúbeným
                                   </p>
                                 )}
-                                {/* <i
-                                className={
-                                  isFavorite === true
-                                    ? 'fa-solid fa-heart red'
-                                    : 'fa-solid fa-heart no-color'
-                                }
-                              ></i> */}
                               </button>
                             )}
                           </div>

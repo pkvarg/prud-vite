@@ -1,11 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { Card } from 'react-bootstrap'
-// import Rating from './Rating'
-
-const addDecimals = (num) => {
-  return (Math.round(num * 100) / 100).toFixed(2)
-}
+import { addDecimals } from '../functions'
 
 const Product = ({ product }) => {
   return (
@@ -23,12 +19,6 @@ const Product = ({ product }) => {
             <strong>{product.name}</strong>
           </Card.Title>
         </Link>
-        {/* <Card.Text as='div'>
-          <Rating
-          value={product.rating}
-          text={`${product.numReviews} reviews`}
-          />
-        </Card.Text> */}
 
         <div className='product-home-price'>
           {product.discount ? (
@@ -41,7 +31,6 @@ const Product = ({ product }) => {
           ) : (
             <h4>{addDecimals(product.price).replace('.', ',')}€</h4>
           )}
-          {/* € {product.price.toFixed(2)} */}
         </div>
       </Card.Body>
     </div>
