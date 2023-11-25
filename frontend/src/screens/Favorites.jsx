@@ -54,26 +54,28 @@ const Favorites = () => {
         <>
           {favoriteProducts.length > 0 ? (
             favoriteProducts.map((product) => (
-              <Col
-                className='
-              align-items-stretch d-flex no-mobile
+              <>
+                <Col
+                  className='
+              align-items-stretch d-flex 
               '
-                key={product._id}
-                sm={12}
-                md={6}
-                lg={4}
-                xl={3}
-              >
-                <div className='prod-and-button'>
-                  <Button
-                    onClick={() => removeFromFavoritesHandler(product._id)}
-                    className='remove-from-favorites-button'
-                  >
-                    X
-                  </Button>
-                </div>
-                <Product product={product} />
-              </Col>
+                  key={product._id}
+                  sm={12}
+                  md={6}
+                  lg={4}
+                  xl={3}
+                >
+                  <div className='prod-and-button'>
+                    <Button
+                      onClick={() => removeFromFavoritesHandler(product._id)}
+                      className='remove-from-favorites-button'
+                    >
+                      X
+                    </Button>
+                  </div>
+                  <Product product={product} />
+                </Col>
+              </>
             ))
           ) : (
             <h4>Nemáte žiadne oblúbené produkty</h4>
@@ -85,6 +87,7 @@ const Favorites = () => {
           )}
         </>
       </Row>
+
       {/* <PaginateLibrary
         pages={pages}
         page={page}
