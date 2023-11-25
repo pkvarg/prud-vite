@@ -8,7 +8,6 @@
 }
 
 body {
-  /* font-family: OpenSans, sans-serif; */
   font-family: Calibri, sans-serif;
   color: #313131;
   font-weight: 200;
@@ -345,7 +344,6 @@ a.my-3.favorites-login h5 {
 p.favorites-add {
   transform: translateY(20%);
   text-decoration: underline;
-  /* font-weight: 300 !important; */
 }
 
 .prod-and-button {
@@ -398,16 +396,6 @@ p.favorites-add {
 .carousel-caption-2 {
   margin-left: 33%;
 }
-
-/* the image in carousel */
-
-/* .carousel img {
-  height: 300px;
-  padding: 30px;
-  margin: 40px;
-  margin-left: -5%;
-  margin-right: auto;
-} */
 
 .carousel a {
   margin-left: 15%;
@@ -482,7 +470,6 @@ span.page-link {
 .product-see-also {
   margin-top: 30px;
   margin-left: 6%;
-  /* text-align: center; */
 }
 
 .product-see-also h5 {
@@ -785,7 +772,6 @@ sup {
   right: 10px;
   width: 4%;
   color: #071e46;
-  /* background-color: #ddd; */
 }
 
 i.fa-solid.fa-download::before {
@@ -804,8 +790,6 @@ i.fa-solid.fa-download:hover {
   justify-content: space-evenly;
   align-items: center;
   margin: 30px 0;
-
-  /* width: 90vw; */
 }
 
 .prods-by-year {
@@ -835,8 +819,6 @@ i.fa-solid.fa-download:hover {
 }
 
 .prod-by-year-description {
-  /* display: inline-block;
-  text-align: center; */
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
@@ -853,7 +835,6 @@ i.fa-solid.fa-download:hover {
 
 .video-responsive {
   overflow: hidden;
-  /* padding-bottom: 57%; */
   position: relative;
   height: 527px;
   width: auto;
@@ -878,7 +859,7 @@ i.fa-solid.fa-download:hover {
   background-color: #e3dbc3;
   height: 40px;
   font-size: 19px;
-  font-weight: 700;
+  font-weight: 700 !important;
   line-height: 27.5px;
   padding-left: 12.5px;
   padding-top: 0.45%;
@@ -1008,10 +989,6 @@ p.prod-excerpt-excerpt {
   overscroll-behavior: contain;
 }
 
-/* .review-stop.form-control {
-  border-radius: 35px;
-} */
-
 h2.review {
   margin-top: 10px;
   font-size: 15px;
@@ -1116,15 +1093,6 @@ a.manage-single-review-link:hover {
   color: #071e46;
 }
 
-/* Laptop ONLY*/
-
-/* @media (min-width: 100px) and (max-width: 1440px) {
-  .prod-img-year-width {
-     width: 50%;
-    margin-top: 7%; 
-  }
-} */
-
 .cart-box-right {
   display: flex;
   flex-direction: row;
@@ -1225,10 +1193,6 @@ a.manage-single-review-link:hover {
   color: #4aa9de;
   font-weight: 800;
 }
-
-/* .iframe-w .download {
-  font-size: 15px !important;
-} */
 
 .life-study-top {
   margin-top: 25px;
@@ -1389,21 +1353,10 @@ footer {
     transform: translateY(-3px);
   }
 
-  /* i.fa-solid.fa-heart.white.mobile::before {
-    background-color: #f1f1f1 !important;
-    border: none;
-  } */
-
   .remove-from-favorites-button {
     top: 26.5px;
     left: 82%;
   }
-
-  /* i.fa-solid.fa-heart.no-color {
-    color: #5e5d5d !important;
-    margin-left: 30px;
-    font-size: 30px !important;
-  } */
 
   /* MOBILE Hamburger */
 
@@ -1647,11 +1600,6 @@ footer {
     line-height: 35px;
   }
 
-  /* .new-publications,
-  .eshop-category {
-    color: #232323 !important;
-  }
- */
   img.ytcode-png {
     height: 50px;
     width: 100%;

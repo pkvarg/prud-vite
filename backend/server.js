@@ -53,10 +53,6 @@ app.use('/api/video', videoRoutes)
 app.use('/api/banner', bannerRoutes)
 app.use('/api/create-stripe-checkout-session', stripeRoutes)
 
-// app.get('/api/config/paypal', (req, res) =>
-//   res.send(process.env.PAYPAL_CLIENT_ID)
-// )
-
 const __dirname = path.resolve()
 app.use(
   '/uploads',

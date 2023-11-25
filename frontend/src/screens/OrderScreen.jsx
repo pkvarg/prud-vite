@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
-// import { PayPalButtons, usePayPalScriptReducer } from '@paypal/react-paypal-js'
 import { Link, useNavigate, useParams, useLocation } from 'react-router-dom'
 import {
   Button,
@@ -47,9 +46,6 @@ const OrderScreen = () => {
   const navigate = useNavigate()
   const [paidByStripe, setPaidByStripe] = useState(false)
   const orderId = params.id
-  // const [{ isPending, isResolved, isRejected }] = usePayPalScriptReducer()
-
-  // const [sdkReady, setSdkready] = useState(false)
 
   const orderDetails = useSelector((state) => state.orderDetails)
   const { order, loading, error } = orderDetails
@@ -266,9 +262,6 @@ const OrderScreen = () => {
               <p>
                 <strong>Spôsob: </strong>
                 {order.paymentMethod}
-                {/* {order.paymentMethod === 'Hotovosť'
-                  ? 'Hotovosť pri prevzatí'
-                  : 'PayPal alebo karta'} */}
               </p>
               {order.isPaid && (
                 <Message variant='success'>Zaplatené {order.paidAt}</Message>
@@ -409,33 +402,6 @@ const OrderScreen = () => {
                   </Button>
                 </ListGroupItem>
               )}
-              {/* {!order.isPaid &&
-                order.paymentMethod === 'PayPal alebo karta' && (
-                  <ListGroup.Item>
-                    {loadingPay && <Loader />}
-                    {isPending && <Loader />}
-                    {isRejected && (
-                      <Message variant='danger'>SDK load error</Message>
-                    )}
-                    {isResolved && (
-                      <PayPalButtons
-                        createOrder={createOrder}
-                        onApprove={successPaymentHandler}
-                      />
-                    )}
-                  </ListGroup.Item>
-                  // <ListGroup.Item>
-                  //   {loadingPay && <Loader />}
-                  //   {!sdkReady ? (
-                  //     <Loader />
-                  //   ) : (
-                  //     <PayPalButton
-                  //       amount={order.totalPrice}
-                  //       onSuccess={successPaymentHandler}
-                  //     />
-                  //   )}
-                  // </ListGroup.Item>
-                )} */}
 
               {loadingDeliver && <Loader />}
               {userInfo && userInfo.isAdmin && !order.isDelivered && (

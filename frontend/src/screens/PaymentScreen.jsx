@@ -38,15 +38,6 @@ const PaymentScreen = () => {
           <Form.Group>
             <Form.Label as='legend'>Vyberte spôsob platby</Form.Label>
             <Col>
-              {/* <Form.Check
-                type='radio'
-                label='Platba PayPal'
-                id='PayPal'
-                name='paymentMethod'
-                value='PayPal alebo karta'
-                checked
-                onChange={(e) => setPaymentMethod(e.target.value)}
-              ></Form.Check> */}
               <Form.Check
                 type='radio'
                 label='Platba kartou Stripe / Google Pay'

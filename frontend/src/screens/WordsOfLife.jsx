@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useRef } from 'react'
-import { wordsOflife } from '../components/AudioComponents/context/mp3s'
+import { wordsOflife } from '../functions'
 
 const WordsOfLife = () => {
   const [subcategory, setSubcategory] = useState('Boží evangelium')

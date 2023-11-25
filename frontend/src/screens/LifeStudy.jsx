@@ -1,12 +1,10 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { lifeStudy } from '../components/AudioComponents/context/mp3s'
+import { lifeStudy } from '../functions'
 
 const LifeStudy = () => {
   const [subcategory, setSubcategory] = useState('Štúdium života')
-  // const subHandler = (sub) => {
-  //   setSubcategory(sub)
-  // }
+
   const category = 'ŠTÚDIUM ŽIVOTA'
 
   return (

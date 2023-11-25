@@ -44,7 +44,6 @@ const ProductScreen = () => {
 
   const userLogin = useSelector((state) => state.userLogin)
   const { userInfo } = userLogin
-  // const userId = userInfo._id
 
   useLayoutEffect(() => {
     if (successProductReview) {
