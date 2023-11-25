@@ -227,7 +227,10 @@ const OrderStripeSuccess = () => {
                           />
                         </Col>
                         <Col>
-                          <Link to={`/product/${item.product}`}>
+                          <Link
+                            className='no-underline'
+                            to={`/product/${item.product}`}
+                          >
                             {item.name}
                           </Link>
                           {order.discounts[index].discount > 0 && (
@@ -237,7 +240,7 @@ const OrderStripeSuccess = () => {
                             </h5>
                           )}
                         </Col>
-                        <Col md={4}>
+                        <Col className='place-order-calc' md={4}>
                           {item.qty} x {''}
                           {item.price.toFixed(2).replace('.', ',')} € ={' '}
                           {(item.qty * item.price).toFixed(2).replace('.', ',')}{' '}

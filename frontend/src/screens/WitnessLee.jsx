@@ -3,7 +3,7 @@ import React from 'react'
 const WitnessLee = () => {
   return (
     <>
-      <div className='my-3 info'>
+      <div className='my-3 info margined'>
         <h1>Witness Lee</h1>
         <h3>O AUTOROVI</h3>
         <p>

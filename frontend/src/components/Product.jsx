@@ -36,10 +36,10 @@ const Product = ({ product }) => {
               <span className='discounted-price-span'>
                 Zľava {product.discount}%
               </span>
-              €{addDecimals(product.discountedPrice)}
+              {addDecimals(product.discountedPrice)}€
             </h5>
           ) : (
-            <h4>€{addDecimals(product.price).replace('.', ',')}</h4>
+            <h4>{addDecimals(product.price).replace('.', ',')}€</h4>
           )}
           {/* € {product.price.toFixed(2)} */}
         </div>

@@ -327,7 +327,10 @@ const OrderScreen = () => {
                           />
                         </Col>
                         <Col>
-                          <Link to={`/product/${item.product}`}>
+                          <Link
+                            className='no-underline'
+                            to={`/product/${item.product}`}
+                          >
                             {item.name}
                           </Link>
                           {order.discounts[index].discount > 0 && (
@@ -337,7 +340,7 @@ const OrderScreen = () => {
                             </h5>
                           )}
                         </Col>
-                        <Col md={4}>
+                        <Col md={4} className='place-order-calc'>
                           {item.qty} x {''}
                           {item.price.toFixed(2).replace('.', ',')} € ={' '}
                           {(item.qty * item.price).toFixed(2).replace('.', ',')}{' '}

@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Col, Image } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import { listAllProducts } from '../actions/productActions'
+import * as Icon from 'react-bootstrap-icons'
 
 const LibraryExcerpt = () => {
   const params = useParams()
@@ -55,7 +56,7 @@ const LibraryExcerpt = () => {
             window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })
           }}
         >
-          <i className='fa fa-arrow-circle-up' aria-hidden='true'></i>
+          <Icon.ArrowUp />
         </button>
       </div>
     </>

@@ -56,7 +56,7 @@ const Header = () => {
               </LinkContainer>
             )}
             {userInfo && userInfo.isAdmin && !userInfo.isAssistant && (
-              <NavDropdown title='Admin' id='adminmenu'>
+              <NavDropdown className='admin-menu' title='Admin' id='adminmenu'>
                 <LinkContainer to='/admin/userlist'>
                   <NavDropdown.Item>Používatelia</NavDropdown.Item>
                 </LinkContainer>
@@ -116,7 +116,6 @@ const Header = () => {
         <div className='red-navbar-container'>
           <Container>
             <Navbar.Brand>
-             
               <div className='mobile-navbar mobile-only'>
                 <div className='mobile-sign-in mobile-only'>
                   {userInfo ? (
@@ -184,7 +183,7 @@ const Header = () => {
                     </Nav.Link>
                   </LinkContainer>
                 </div>
-                <Link to='favorites' className=''>
+                <Link to='favorites' className='favorites-heart'>
                   <Icon.HeartFill className='header-heart' />
                 </Link>
               </div>
