@@ -17,6 +17,8 @@ const AudioListScreen = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const audioList = useSelector((state) => state.audioList)
+
+  console.log('audioList', audioList)
   const { loading, error, audios } = audioList
 
   const audioDelete = useSelector((state) => state.audioDelete)

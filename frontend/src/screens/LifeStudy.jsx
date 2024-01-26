@@ -27,21 +27,23 @@ const LifeStudy = () => {
           výklady biblickej pravdy.
         </p>
       </div>
-      {lifeStudy.map((url) => (
-        <div key={url._id} className='iframe-w life-study-top'>
-          <div className='mp3-frame-desc'>
-            <p className='sub'>{url.subcategory}</p>
-            <p className='tit'>{url.audioTitle}</p>
-            <p className='download'>Stiahnuť mp3</p>
+      <div className='iframes-grid'>
+        {lifeStudy.map((url) => (
+          <div key={url._id} className='iframe-w life-study-top'>
+            <div className='mp3-frame-desc'>
+              <p className='sub'>{url.subcategory}</p>
+              <p className='tit'>{url.audioTitle}</p>
+              <p className='download'>Stiahnuť</p>
+            </div>
+            <iframe
+              src={url.mp3file}
+              width='640'
+              height='480'
+              allow='autoplay'
+            ></iframe>
           </div>
-          <iframe
-            src={url.mp3file}
-            width='640'
-            height='60'
-            allow='autoplay'
-          ></iframe>
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
   )
 }

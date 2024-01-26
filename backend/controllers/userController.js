@@ -22,7 +22,7 @@ const authUser = asyncHandler(async (req, res) => {
     })
   } else {
     res.status(401)
-    throw new Error('Naplatný email alebo heslo')
+    throw new Error('Neplatný email alebo heslo')
   }
 })
 

@@ -1172,7 +1172,17 @@ a.manage-single-review-link:hover {
   background-color: #e3dbc3;
 }
 
+.iframes-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* Two equal-width columns */
+  grid-gap: 10px; /* Optional gap between grid items */
+}
+
 .mp3-frame-desc {
+  position: absolute;
+  top: 4%;
+  width: 90%;
+
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -1182,6 +1192,7 @@ a.manage-single-review-link:hover {
 
 .iframe-w {
   width: max-content;
+  position: relative;
 }
 
 .iframe-w .sub {
@@ -1190,8 +1201,12 @@ a.manage-single-review-link:hover {
 }
 
 .iframe-w .tit {
-  color: #4aa9de;
+  color: white;
   font-weight: 800;
+}
+
+.iframe-w .download {
+  color: greenyellow;
 }
 
 .life-study-top {
@@ -1675,6 +1690,12 @@ footer {
       padding-top: 2.75px;
     }
 
+    .iframes-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 10px; /* Optional gap between grid items */
+    }
+
     .mp3-frame-desc {
       flex-direction: column;
     }
@@ -1688,7 +1709,7 @@ footer {
       display: none;
     }
     iframe {
-      width: 90vw;
+      width: 92.5vw;
     }
   }
 

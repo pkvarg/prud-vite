@@ -200,6 +200,17 @@ const AudioEditScreen = () => {
                         Boží evangelium
                       </h5>
                     </Dropdown.Item>
+
+                    <Dropdown.Item
+                      key='Evanjelium kráľovstva'
+                      value='Evanjelium kráľovstva'
+                      onClick={() => setSubcategory('Evanjelium kráľovstva')}
+                    >
+                      <h5 className='language-dropdown-lang'>
+                        {' '}
+                        Evanjelium kráľovstva
+                      </h5>
+                    </Dropdown.Item>
                     <Dropdown.Item
                       key='Charakter Pánovho pracovníka'
                       value='Charakter Pánovho pracovníka'

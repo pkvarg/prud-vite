@@ -6,7 +6,7 @@ import Audio from '../models/audioModel.js'
 // @access Public
 
 const getAudio = asyncHandler(async (req, res) => {
-  const pageSize = 10
+  const pageSize = 1000
   const page = Number(req.query.pageNumber) || 1
   const keyword = req.query.keyword
     ? {
