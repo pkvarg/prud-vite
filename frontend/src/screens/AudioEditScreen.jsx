@@ -191,13 +191,13 @@ const AudioEditScreen = () => {
                       </h5>
                     </Dropdown.Item>
                     <Dropdown.Item
-                      key='Boží evangelium'
-                      value='Boží evangelium'
-                      onClick={() => setSubcategory('Boží evangelium')}
+                      key='Božie evanjelium'
+                      value='Božie evanjelium'
+                      onClick={() => setSubcategory('Božie evanjelium')}
                     >
                       <h5 className='language-dropdown-lang'>
                         {' '}
-                        Boží evangelium
+                        Božie evanjelium
                       </h5>
                     </Dropdown.Item>
 
@@ -244,23 +244,23 @@ const AudioEditScreen = () => {
                       </h5>
                     </Dropdown.Item>
                     <Dropdown.Item
-                      key='Fakt víra a prožitek'
-                      value='Fakt víra a prožitek'
-                      onClick={() => setSubcategory('Fakt víra a prožitek')}
+                      key='Fakt viera a skúsenosť'
+                      value='Fakt viera a skúsenosť'
+                      onClick={() => setSubcategory('Fakt viera a skúsenosť')}
                     >
                       <h5 className='language-dropdown-lang'>
                         {' '}
-                        Fakt víra a prožitek
+                        Fakt viera a skúsenosť
                       </h5>
                     </Dropdown.Item>
                     <Dropdown.Item
-                      key='KŘESŤANSKÝ ŽIVOT'
-                      value='KŘESŤANSKÝ ŽIVOT'
-                      onClick={() => setSubcategory('KŘESŤANSKÝ ŽIVOT')}
+                      key='Kresťanský život'
+                      value='Kresťanský život'
+                      onClick={() => setSubcategory('Kresťanský život')}
                     >
                       <h5 className='language-dropdown-lang'>
                         {' '}
-                        KŘESŤANSKÝ ŽIVOT
+                        Kresťanský život
                       </h5>
                     </Dropdown.Item>
                     <Dropdown.Item
@@ -347,33 +347,35 @@ const AudioEditScreen = () => {
                       </h5>
                     </Dropdown.Item>
                     <Dropdown.Item
-                      key='Poselství evangelia'
-                      value='Poselství evangelia'
-                      onClick={() => setSubcategory('Poselství evangelia')}
+                      key='Posolstvo evanjelia'
+                      value='Posolstvo evanjelia'
+                      onClick={() => setSubcategory('Posolstvo evanjelia')}
                     >
                       <h5 className='language-dropdown-lang'>
                         {' '}
-                        Poselství evangelia
+                        Posolstvo evanjelia
                       </h5>
                     </Dropdown.Item>
                     <Dropdown.Item
-                      key='Prožívání Krista'
-                      value='Prožívání Krista'
-                      onClick={() => setSubcategory('Prožívání Krista')}
+                      key='Prežívanie Krista'
+                      value='Prežívanie Krista'
+                      onClick={() => setSubcategory('Prežívanie Krista')}
                     >
                       <h5 className='language-dropdown-lang'>
                         {' '}
-                        Prožívání Krista
+                        Prežívanie Krista
                       </h5>
                     </Dropdown.Item>
                     <Dropdown.Item
-                      key='ŘADA PRO NOVÉ VĚŘÍCÍ'
-                      value='ŘADA PRO NOVÉ VĚŘÍCÍ'
-                      onClick={() => setSubcategory('ŘADA PRO NOVÉ VĚŘÍCÍ')}
+                      key='Rada pre nových veriacich'
+                      value='Rada pre nových veriacich'
+                      onClick={() =>
+                        setSubcategory('Rada pre nových veriacich')
+                      }
                     >
                       <h5 className='language-dropdown-lang'>
                         {' '}
-                        ŘADA PRO NOVÉ VĚŘÍCÍ
+                        Rada pre nových veriacich
                       </h5>
                     </Dropdown.Item>
                     <Dropdown.Item
@@ -464,13 +466,13 @@ const AudioEditScreen = () => {
                       </h5>
                     </Dropdown.Item>
                     <Dropdown.Item
-                      key='VĚČNÝ BOŽÍ PLÁN'
-                      value='VĚČNÝ BOŽÍ PLÁN'
-                      onClick={() => setSubcategory('VĚČNÝ BOŽÍ PLÁN')}
+                      key='Večný Boží plán'
+                      value='Večný Boží plán'
+                      onClick={() => setSubcategory('Večný Boží plán')}
                     >
                       <h5 className='language-dropdown-lang'>
                         {' '}
-                        VĚČNÝ BOŽÍ PLÁN
+                        Večný Boží plán
                       </h5>
                     </Dropdown.Item>
                     <Dropdown.Item
@@ -484,25 +486,25 @@ const AudioEditScreen = () => {
                       </h5>
                     </Dropdown.Item>
                     <Dropdown.Item
-                      key='Zjevení života'
-                      value='Zjevení života'
-                      onClick={() => setSubcategory('Zjevení života')}
+                      key='Zjavenie života'
+                      value='Zjavenie života'
+                      onClick={() => setSubcategory('Zjavenie života')}
                     >
                       <h5 className='language-dropdown-lang'>
                         {' '}
-                        Zjevení života
+                        Zjavenie života
                       </h5>
                     </Dropdown.Item>
                     <Dropdown.Item
-                      key='ZÁKLADNÍ PRVKY KŘESŤANSKÉHO ŽIVOTA'
-                      value='ZÁKLADNÍ PRVKY KŘESŤANSKÉHO ŽIVOTA'
+                      key='Základné prvky kresťanského života'
+                      value='Základné prvky kresťanského života'
                       onClick={() =>
-                        setSubcategory('ZÁKLADNÍ PRVKY KŘESŤANSKÉHO ŽIVOTA')
+                        setSubcategory('Základné prvky kresťanského života')
                       }
                     >
                       <h5 className='language-dropdown-lang'>
                         {' '}
-                        ZÁKLADNÍ PRVKY KŘESŤANSKÉHO ŽIVOTA
+                        Základné prvky kresťanského života
                       </h5>
                     </Dropdown.Item>
                   </Dropdown.Menu>

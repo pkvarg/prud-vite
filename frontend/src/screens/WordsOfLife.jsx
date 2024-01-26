@@ -4,7 +4,7 @@ import { useRef } from 'react'
 import { wordsOflife } from '../functions'
 
 const WordsOfLife = () => {
-  const [subcategory, setSubcategory] = useState('Boží evangelium')
+  const [subcategory, setSubcategory] = useState('Božie evanjelium')
   const myRef = useRef(null)
   const subHandler = (sub) => {
     myRef.current.scrollIntoView({ behavior: 'smooth' })
@@ -40,9 +40,9 @@ const WordsOfLife = () => {
         </button>
         <button
           className='btn-subcategory'
-          onClick={() => subHandler('Boží evangelium')}
+          onClick={() => subHandler('Božie evanjelium')}
         >
-          Boží evangelium
+          Božie evanjelium
         </button>{' '}
         <button
           className='btn-subcategory'
@@ -64,9 +64,9 @@ const WordsOfLife = () => {
         </button>{' '}
         <button
           className='btn-subcategory'
-          onClick={() => subHandler('Fakt víra a prožitek')}
+          onClick={() => subHandler('Fakt viera a skúsenosť')}
         >
-          Fakt víra a prožitek
+          Fakt viera a skúsenosť
         </button>{' '}
         <button
           className='btn-subcategory'
@@ -76,9 +76,9 @@ const WordsOfLife = () => {
         </button>{' '}
         <button
           className='btn-subcategory'
-          onClick={() => subHandler('KŘESŤANSKÝ ŽIVOT')}
+          onClick={() => subHandler('Kresťanský život')}
         >
-          Křesťanský život
+          Kresťanský život
         </button>{' '}
         <button
           className='btn-subcategory'
@@ -136,21 +136,21 @@ const WordsOfLife = () => {
         </button>{' '}
         <button
           className='btn-subcategory'
-          onClick={() => subHandler('Poselství evangelia')}
+          onClick={() => subHandler('Posolstvo evanjelia')}
         >
-          Poselství evangelia
+          Posolstvo evanjelia
         </button>{' '}
         <button
           className='btn-subcategory'
-          onClick={() => subHandler('Prožívání Krista')}
+          onClick={() => subHandler('Prežívanie Krista')}
         >
-          Prožívání Krista
+          Prežívanie Krista
         </button>{' '}
         <button
           className='btn-subcategory'
-          onClick={() => subHandler('ŘADA PRO NOVÉ VĚŘÍCÍ')}
+          onClick={() => subHandler('Rada pre nových veriacich')}
         >
-          Řada pro nové věřící
+          Rada pre nových veriacich
         </button>{' '}
         <button
           className='btn-subcategory'
@@ -210,9 +210,9 @@ const WordsOfLife = () => {
         </button>
         <button
           className='btn-subcategory'
-          onClick={() => subHandler('VĚČNÝ BOŽÍ PLÁN')}
+          onClick={() => subHandler('Večný Boží plán')}
         >
-          Věčný Boží plán
+          Večný Boží plán
         </button>
         <button
           className='btn-subcategory'
@@ -222,15 +222,15 @@ const WordsOfLife = () => {
         </button>
         <button
           className='btn-subcategory'
-          onClick={() => subHandler('ZÁKLADNÍ PRVKY KŘESŤANSKÉHO ŽIVOTA')}
+          onClick={() => subHandler('Základné prvky kresťanského života')}
         >
-          Základní prvky křesťanského života
+          Základné prvky kresťanského života
         </button>
         <button
           className='btn-subcategory'
-          onClick={() => subHandler('Zjevení života')}
+          onClick={() => subHandler('Zjavenie života')}
         >
-          Zjevení života
+          Zjavenie života
         </button>
       </div>
 
