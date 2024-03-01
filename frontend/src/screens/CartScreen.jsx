@@ -5,6 +5,7 @@ import { Row, Col, ListGroup, Image, Form, Button, Card } from 'react-bootstrap'
 import Message from '../components/Message'
 import { addToCart, removeFromCart } from '../actions/cartActions'
 import { addDecimals } from '../functions'
+import * as Icon from 'react-bootstrap-icons'
 
 const CartScreen = () => {
   const params = useParams()
@@ -92,7 +93,7 @@ const CartScreen = () => {
                       variant='light'
                       onClick={() => removeFromCartHandler(item.product)}
                     >
-                      <i className='fas fa-trash'></i>
+                      <Icon.Trash3 size={20} />
                     </Button>
                   </Col>
                 </Row>

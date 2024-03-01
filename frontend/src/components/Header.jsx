@@ -209,6 +209,18 @@ const Header = () => {
               </LinkContainer>
             </NavDropdown>
             <NavDropdown title='Nové' className='red-navbar-item'>
+              <LinkContainer to='new-books/2024'>
+                <NavDropdown.Item>Knihy 2024</NavDropdown.Item>
+              </LinkContainer>
+              <LinkContainer to='new-books/2023'>
+                <NavDropdown.Item>Knihy 2023</NavDropdown.Item>
+              </LinkContainer>
+              <LinkContainer to='new-books/2022'>
+                <NavDropdown.Item>Knihy 2022</NavDropdown.Item>
+              </LinkContainer>
+              <LinkContainer to='new-books/2021'>
+                <NavDropdown.Item>Knihy 2021</NavDropdown.Item>
+              </LinkContainer>
               <LinkContainer to='new-books/2020'>
                 <NavDropdown.Item>Knihy 2020</NavDropdown.Item>
               </LinkContainer>
