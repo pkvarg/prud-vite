@@ -1,6 +1,7 @@
 import asyncHandler from 'express-async-handler'
 import Product from '../models/productModel.js'
 import Email from '../utils/email.js'
+import removeAccents from 'remove-accents'
 
 // @desc Fetch all NO LIMIT products
 // @desc GET /api/products/all
@@ -10,6 +11,7 @@ const getAllProducts = asyncHandler(async (req, res) => {
   const products = await Product.find({})
     .collation({ locale: 'sk' })
     .sort({ name: 1 })
+
   res.json({ products })
 })
 
@@ -18,14 +20,16 @@ const getAllProducts = asyncHandler(async (req, res) => {
 // @access Public
 
 const getProducts = asyncHandler(async (req, res) => {
+  console.log('here..sss')
+
   const pageSize = req.query.pageSize
   const page = Number(req.query.pageNumber) || 1
   const keyword = req.query.keyword
     ? {
-        name: {
-          $regex: req.query.keyword,
-          $options: 'i',
-        },
+        $or: [
+          { searchName: { $regex: req.query.keyword, $options: 'i' } },
+          { name: { $regex: req.query.keyword, $options: 'i' } },
+        ],
       }
     : {}
 
