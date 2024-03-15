@@ -415,20 +415,17 @@ const OrderScreen = () => {
                   </Button>
                 </ListGroup.Item>
               )}
-              {userInfo &&
-                userInfo.isAdmin &&
-                !order.isCancelled &&
-                !order.isDelivered && (
-                  <ListGroup.Item>
-                    <Button
-                      typ='button'
-                      className='btn w-100 btn-danger'
-                      onClick={cancellHandler}
-                    >
-                      Zrušiť objednávku
-                    </Button>
-                  </ListGroup.Item>
-                )}
+              {userInfo && userInfo.isAdmin && !order.isCancelled && (
+                <ListGroup.Item>
+                  <Button
+                    typ='button'
+                    className='btn w-100 btn-danger'
+                    onClick={cancellHandler}
+                  >
+                    Zrušiť objednávku
+                  </Button>
+                </ListGroup.Item>
+              )}
               <ListGroup.Item>
                 <Button
                   className='w-100 btn-blue'

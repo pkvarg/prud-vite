@@ -99,6 +99,11 @@ const orderSchema = mongoose.Schema(
       required: true,
       default: false,
     },
+    isCancelledOrderNumberUsed: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
   },
   {
     timestamps: true,

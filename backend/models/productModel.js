@@ -88,6 +88,9 @@ const productSchema = mongoose.Schema(
     isbn: { type: String },
     year: { type: String },
     favoriteOf: [favoritesSchema],
+    searchName: {
+      type: String,
+    },
   },
   {
     timestamps: true,

@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 import { Form, Button } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import FormContainer from '../components/FormContainer'
@@ -96,181 +96,186 @@ const ShippingScreen = () => {
   }
 
   return (
-    <FormContainer>
-      <CheckoutSteps step1 step2 />
-      <h1>Doručenie</h1>
-      <h2>Doručovacia adresa:</h2>
-      <Form onSubmit={submitHandler}>
-        <Form.Group controlId='name'>
-          <Form.Label>
-            Meno a priezvisko<sup>*</sup>
-          </Form.Label>
-          <Form.Control
-            type='text'
-            placeholder='Meno a priezvisko'
-            value={name}
-            required
-            onChange={(e) => setName(e.target.value)}
-          ></Form.Control>
-        </Form.Group>
-        <Form.Group controlId='address'>
-          <Form.Label>
-            Adresa<sup>*</sup>
-          </Form.Label>
-          <Form.Control
-            type='text'
-            placeholder='Adresa'
-            value={address}
-            required
-            onChange={(e) => setAddress(e.target.value)}
-          ></Form.Control>
-        </Form.Group>
-        <Form.Group controlId='city'>
-          <Form.Label>
-            Mesto<sup>*</sup>
-          </Form.Label>
-          <Form.Control
-            type='text'
-            placeholder='Mesto'
-            value={city}
-            required
-            onChange={(e) => setCity(e.target.value)}
-          ></Form.Control>
-        </Form.Group>
-        <Form.Group controlId='postalCode'>
-          <Form.Label>
-            PSČ<sup>*</sup>
-          </Form.Label>
-          <Form.Control
-            type='text'
-            placeholder='PSČ'
-            value={postalCode}
-            required
-            onChange={(e) => setPostalCode(e.target.value)}
-          ></Form.Control>
-        </Form.Group>
-        <Form.Group controlId='country'>
-          <Form.Label>
-            Štát<sup>*</sup>
-          </Form.Label>
-          <Form.Control
-            type='text'
-            placeholder='Štát'
-            value={country}
-            required
-            onChange={(e) => setCountry(e.target.value)}
-          ></Form.Control>
-        </Form.Group>
-        <Form.Group controlId='note'>
-          <Form.Label>Poznámka</Form.Label>
-          <Form.Control
-            type='text'
-            placeholder='Poznámka'
-            value={note}
-            onChange={(e) => setNote(e.target.value)}
-          ></Form.Control>
-        </Form.Group>
+    <>
+      <Link to='/cart' className='btn btn-back my-3'>
+        Naspäť
+      </Link>
+      <FormContainer>
+        <CheckoutSteps step1 step2 />
+        <h1>Doručenie</h1>
+        <h2>Doručovacia adresa:</h2>
+        <Form onSubmit={submitHandler}>
+          <Form.Group controlId='name'>
+            <Form.Label>
+              Meno a priezvisko<sup>*</sup>
+            </Form.Label>
+            <Form.Control
+              type='text'
+              placeholder='Meno a priezvisko'
+              value={name}
+              required
+              onChange={(e) => setName(e.target.value)}
+            ></Form.Control>
+          </Form.Group>
+          <Form.Group controlId='address'>
+            <Form.Label>
+              Adresa<sup>*</sup>
+            </Form.Label>
+            <Form.Control
+              type='text'
+              placeholder='Adresa'
+              value={address}
+              required
+              onChange={(e) => setAddress(e.target.value)}
+            ></Form.Control>
+          </Form.Group>
+          <Form.Group controlId='city'>
+            <Form.Label>
+              Mesto<sup>*</sup>
+            </Form.Label>
+            <Form.Control
+              type='text'
+              placeholder='Mesto'
+              value={city}
+              required
+              onChange={(e) => setCity(e.target.value)}
+            ></Form.Control>
+          </Form.Group>
+          <Form.Group controlId='postalCode'>
+            <Form.Label>
+              PSČ<sup>*</sup>
+            </Form.Label>
+            <Form.Control
+              type='text'
+              placeholder='PSČ'
+              value={postalCode}
+              required
+              onChange={(e) => setPostalCode(e.target.value)}
+            ></Form.Control>
+          </Form.Group>
+          <Form.Group controlId='country'>
+            <Form.Label>
+              Štát<sup>*</sup>
+            </Form.Label>
+            <Form.Control
+              type='text'
+              placeholder='Štát'
+              value={country}
+              required
+              onChange={(e) => setCountry(e.target.value)}
+            ></Form.Control>
+          </Form.Group>
+          <Form.Group controlId='note'>
+            <Form.Label>Poznámka</Form.Label>
+            <Form.Control
+              type='text'
+              placeholder='Poznámka'
+              value={note}
+              onChange={(e) => setNote(e.target.value)}
+            ></Form.Control>
+          </Form.Group>
 
-        <Form.Group className='my-5 billing-flex'>
-          <Form.Check
-            type='checkbox'
-            // aria-label='radio 1'
-            name='billingCheck'
-            onChange={handleChange}
-          />
-          <h2 className='billing-address-title-check'>
-            Fakturačná adresa je iná ako doručovacia
-          </h2>
-        </Form.Group>
-        {checked ? (
-          <div>
-            <Form.Group controlId='billingName'>
-              <Form.Label>Meno a priezvisko / Firma</Form.Label>
-              <Form.Control
-                type='text'
-                placeholder='Meno a priezvisko / Firma'
-                value={billingName}
-                onChange={(e) => setBillingName(e.target.value)}
-              ></Form.Control>
-            </Form.Group>
-            <Form.Group controlId='billingAddress'>
-              <Form.Label>Fakturačná adresa</Form.Label>
-              <Form.Control
-                type='text'
-                placeholder='Fakturačná adresa'
-                value={billingAddress}
-                onChange={(e) => setBillingAddress(e.target.value)}
-              ></Form.Control>
-            </Form.Group>
-            <Form.Group controlId='billingCity'>
-              <Form.Label>Mesto</Form.Label>
-              <Form.Control
-                type='text'
-                placeholder='Mesto'
-                value={billingCity}
-                onChange={(e) => setBillingCity(e.target.value)}
-              ></Form.Control>
-            </Form.Group>
-            <Form.Group controlId='billingPostalCode'>
-              <Form.Label>PSČ</Form.Label>
-              <Form.Control
-                type='text'
-                placeholder='PSČ'
-                value={billingPostalCode}
-                onChange={(e) => setBillingPostalCode(e.target.value)}
-              ></Form.Control>
-            </Form.Group>
-            <Form.Group controlId='billingCountry'>
-              <Form.Label>Štát</Form.Label>
-              <Form.Control
-                type='text'
-                placeholder='Štát'
-                value={billingCountry}
-                onChange={(e) => setBillingCountry(e.target.value)}
-              ></Form.Control>
-            </Form.Group>
-            <Form.Group className='billing-flex'>
-              <Form.Check
-                type='checkbox'
-                name='billingCheck'
-                onChange={handleChangeICO}
-              />
-              <h2 className='my-5 billing-icodic-title-check'>IČO a DIČ</h2>
-            </Form.Group>
-            {checkedICO ? (
-              <div>
-                <Form.Group controlId='billingICO'>
-                  <Form.Label>IČO</Form.Label>
-                  <Form.Control
-                    type='text'
-                    placeholder='IČO'
-                    value={billingICO}
-                    onChange={(e) => setBillingICO(e.target.value)}
-                  ></Form.Control>
-                </Form.Group>
-                <Form.Group controlId='billingDIC'>
-                  <Form.Label>DIČ</Form.Label>
-                  <Form.Control
-                    type='text'
-                    placeholder='DIČ'
-                    value={billingDIC}
-                    onChange={(e) => setBillingDIC(e.target.value)}
-                  ></Form.Control>
-                </Form.Group>
-              </div>
-            ) : (
-              ''
-            )}
-          </div>
-        ) : (
-          ''
-        )}
+          <Form.Group className='my-5 billing-flex'>
+            <Form.Check
+              type='checkbox'
+              // aria-label='radio 1'
+              name='billingCheck'
+              onChange={handleChange}
+            />
+            <h2 className='billing-address-title-check'>
+              Fakturačná adresa je iná ako doručovacia
+            </h2>
+          </Form.Group>
+          {checked ? (
+            <div>
+              <Form.Group controlId='billingName'>
+                <Form.Label>Meno a priezvisko / Firma</Form.Label>
+                <Form.Control
+                  type='text'
+                  placeholder='Meno a priezvisko / Firma'
+                  value={billingName}
+                  onChange={(e) => setBillingName(e.target.value)}
+                ></Form.Control>
+              </Form.Group>
+              <Form.Group controlId='billingAddress'>
+                <Form.Label>Fakturačná adresa</Form.Label>
+                <Form.Control
+                  type='text'
+                  placeholder='Fakturačná adresa'
+                  value={billingAddress}
+                  onChange={(e) => setBillingAddress(e.target.value)}
+                ></Form.Control>
+              </Form.Group>
+              <Form.Group controlId='billingCity'>
+                <Form.Label>Mesto</Form.Label>
+                <Form.Control
+                  type='text'
+                  placeholder='Mesto'
+                  value={billingCity}
+                  onChange={(e) => setBillingCity(e.target.value)}
+                ></Form.Control>
+              </Form.Group>
+              <Form.Group controlId='billingPostalCode'>
+                <Form.Label>PSČ</Form.Label>
+                <Form.Control
+                  type='text'
+                  placeholder='PSČ'
+                  value={billingPostalCode}
+                  onChange={(e) => setBillingPostalCode(e.target.value)}
+                ></Form.Control>
+              </Form.Group>
+              <Form.Group controlId='billingCountry'>
+                <Form.Label>Štát</Form.Label>
+                <Form.Control
+                  type='text'
+                  placeholder='Štát'
+                  value={billingCountry}
+                  onChange={(e) => setBillingCountry(e.target.value)}
+                ></Form.Control>
+              </Form.Group>
+              <Form.Group className='billing-flex'>
+                <Form.Check
+                  type='checkbox'
+                  name='billingCheck'
+                  onChange={handleChangeICO}
+                />
+                <h2 className='my-5 billing-icodic-title-check'>IČO a DIČ</h2>
+              </Form.Group>
+              {checkedICO ? (
+                <div>
+                  <Form.Group controlId='billingICO'>
+                    <Form.Label>IČO</Form.Label>
+                    <Form.Control
+                      type='text'
+                      placeholder='IČO'
+                      value={billingICO}
+                      onChange={(e) => setBillingICO(e.target.value)}
+                    ></Form.Control>
+                  </Form.Group>
+                  <Form.Group controlId='billingDIC'>
+                    <Form.Label>DIČ</Form.Label>
+                    <Form.Control
+                      type='text'
+                      placeholder='DIČ'
+                      value={billingDIC}
+                      onChange={(e) => setBillingDIC(e.target.value)}
+                    ></Form.Control>
+                  </Form.Group>
+                </div>
+              ) : (
+                ''
+              )}
+            </div>
+          ) : (
+            ''
+          )}
 
-        <Button type='submit' className='my-3 btn-blue rounded'>
-          Pokračovať
-        </Button>
-      </Form>
-    </FormContainer>
+          <Button type='submit' className='my-3 btn-blue rounded'>
+            Pokračovať
+          </Button>
+        </Form>
+      </FormContainer>
+    </>
   )
 }
 

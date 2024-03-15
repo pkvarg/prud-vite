@@ -28,6 +28,8 @@ const addOrderItems = asyncHandler(async (req, res) => {
 
   /* orderNumber always 20220000 */
   const allOrders = await Order.find({}).populate('user', 'id name')
+  const cancelledOrderNumbers = []
+
   let allOrdersCount = allOrders.length
 
   /* Create OrderNumber in format 20220001 and increment */
@@ -39,8 +41,49 @@ const addOrderItems = asyncHandler(async (req, res) => {
   function addLeadingZeros(num, totalLength) {
     return String(num).padStart(totalLength, '0')
   }
-  let createOrderNumberWithLeadingZeros = addLeadingZeros(allOrdersCount, 4)
-  orderNumber = orderNumberPrefix + createOrderNumberWithLeadingZeros
+  // allOrders.find(async (order) => {
+  //   if (order.isCancelled && order.isCancelledOrderNumberUsed === false) {
+  //     console.log('order', order)
+  //     return
+  //     const cancelledOrderCreatedAt = order.createdAt
+  //     const date = new Date(cancelledOrderCreatedAt)
+  //     const cancelledOrderYear = date.getFullYear()
+  //     console.log(cancelledOrderYear)
+  //     if (orderNumberPrefix === cancelledOrderYear) {
+  //       cancelledOrderNumbers.push(order.orderNumber)
+  //     }
+  //     order.isCancelledOrderNumberUsed = true
+  //     await order.save()
+  //   }
+  // })
+
+  for (const order of allOrders) {
+    if (order.isCancelled && !order.isCancelledOrderNumberUsed) {
+      const cancelledOrderCreatedAt = order.createdAt
+      const date = new Date(cancelledOrderCreatedAt)
+      const cancelledOrderYear = date.getFullYear()
+      console.log(cancelledOrderYear)
+
+      if (orderNumberPrefix === cancelledOrderYear) {
+        cancelledOrderNumbers.push(order.orderNumber)
+      }
+
+      order.isCancelledOrderNumberUsed = true
+      await order.save()
+
+      // Break out of the loop once the first matching item is found
+      break
+    }
+  }
+
+  console.log('ccc1', cancelledOrderNumbers)
+
+  if (cancelledOrderNumbers.length > 0) {
+    orderNumber = cancelledOrderNumbers[0]
+  } else {
+    let createOrderNumberWithLeadingZeros = addLeadingZeros(allOrdersCount, 4)
+    orderNumber = orderNumberPrefix + createOrderNumberWithLeadingZeros
+  }
 
   /* Update Count in stock on purchased products */
   const qtys = req.body.qtys
