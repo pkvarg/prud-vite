@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import { Form, Button } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
@@ -9,50 +9,42 @@ import { saveShippingAddress } from '../actions/cartActions'
 const ShippingScreen = () => {
   const cart = useSelector((state) => state.cart)
   const { shippingAddress } = cart
-  const [name, setName] = useState(shippingAddress.name)
 
-  const [address, setAddress] = useState(shippingAddress.address)
-  const [city, setCity] = useState(shippingAddress.city)
-  const [postalCode, setPostalCode] = useState(shippingAddress.postalCode)
-  const [country, setCountry] = useState(shippingAddress.country)
+  const [name, setName] = useState('')
+
+  const [address, setAddress] = useState('')
+  const [city, setCity] = useState('')
+  const [postalCode, setPostalCode] = useState('')
+  const [country, setCountry] = useState('')
 
   // Billing Address
-  const [billingName, setBillingName] = useState(shippingAddress.billingName)
+  const [billingName, setBillingName] = useState('')
 
-  const [billingAddress, setBillingAddress] = useState(
-    shippingAddress.billingAddress
-  )
-  const [billingCity, setBillingCity] = useState(shippingAddress.billingCity)
-  const [billingPostalCode, setBillingPostalCode] = useState(
-    shippingAddress.billingPostalCode
-  )
-  const [billingCountry, setBillingCountry] = useState(
-    shippingAddress.billingCountry
-  )
+  const [billingAddress, setBillingAddress] = useState('')
+  const [billingCity, setBillingCity] = useState('')
+  const [billingPostalCode, setBillingPostalCode] = useState('')
+  const [billingCountry, setBillingCountry] = useState('')
 
-  const [billingICO, setBillingICO] = useState(shippingAddress.billingICO)
+  const [billingICO, setBillingICO] = useState('')
 
-  const [billingDIC, setBillingDIC] = useState(shippingAddress.billingDIC)
+  const [billingDIC, setBillingDIC] = useState('')
+
   const [note, setNote] = useState('')
 
-  // const [name, setName] = useState('')
-
-  // const [address, setAddress] = useState('')
-  // const [city, setCity] = useState('')
-  // const [postalCode, setPostalCode] = useState('')
-  // const [country, setCountry] = useState('')
-
-  // // Billing Address
-  // const [billingName, setBillingName] = useState('')
-
-  // const [billingAddress, setBillingAddress] = useState('')
-  // const [billingCity, setBillingCity] = useState('')
-  // const [billingPostalCode, setBillingPostalCode] = useState('')
-  // const [billingCountry, setBillingCountry] = useState('')
-
-  // const [billingICO, setBillingICO] = useState('')
-
-  // const [billingDIC, setBillingDIC] = useState('')
+  useEffect(() => {
+    setName(shippingAddress.name)
+    setAddress(shippingAddress.address)
+    setCity(shippingAddress.city)
+    setPostalCode(shippingAddress.postalCode)
+    setCountry(shippingAddress.country)
+    setBillingName(shippingAddress.billingName)
+    setAddress(shippingAddress.address)
+    setBillingCity(shippingAddress.billingCity)
+    setBillingPostalCode(shippingAddress.billingPostalCode)
+    setBillingICO(shippingAddress.billingICO)
+    setBillingDIC(shippingAddress.billingDIC)
+    setNote(shippingAddress.note)
+  }, [])
 
   const dispatch = useDispatch('')
   const navigate = useNavigate('')

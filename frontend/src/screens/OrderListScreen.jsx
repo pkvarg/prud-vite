@@ -37,6 +37,7 @@ const OrderListScreen = () => {
           <thead>
             <tr>
               <th>Číslo</th>
+              <th>Zrušená</th>
               <th>Užívateľ</th>
               <th>Dátum</th>
               <th>Cena</th>
@@ -48,6 +49,9 @@ const OrderListScreen = () => {
             {orders.map((order) => (
               <tr key={order._id}>
                 <td>{order.orderNumber}</td>
+                <td style={{ color: 'red' }}>
+                  {order.isCancelled && 'Zrušená'}
+                </td>
                 <td>{order.user && order.user.name}</td>
                 <td>{order.createdAt.substring(0, 10)}</td>
                 <td>€{order.totalPrice.toFixed(2)}</td>

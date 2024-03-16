@@ -6,6 +6,7 @@ import Message from '../components/Message'
 import CheckoutSteps from '../components/CheckoutSteps'
 import { createOrder } from '../actions/orderActions'
 import { addDecimals } from '../functions'
+import { removeFromAll } from '../actions/cartActions'
 
 const PlaceOrderScreen = () => {
   const dispatch = useDispatch()
@@ -31,6 +32,7 @@ const PlaceOrderScreen = () => {
 
   useEffect(() => {
     if (success) {
+      dispatch(removeFromAll())
       navigate(`/order/${order._id}`)
     }
     // eslint-disable-next-line
@@ -62,8 +64,11 @@ const PlaceOrderScreen = () => {
     })
   })
 
+  const [clicked, setClicked] = useState(false)
+
   const placeOrderhandler = () => {
     if (gdrpOrderChecked && tradeRulesOrderChecked) {
+      setClicked(true)
       dispatch(
         createOrder({
           orderItems: cart.cartItems,
@@ -263,7 +268,7 @@ const PlaceOrderScreen = () => {
                 <Button
                   type='button'
                   className='btn-block w-100 btn-blue'
-                  disabled={cart.items === 0}
+                  disabled={cart.items === 0 || clicked}
                   onClick={placeOrderhandler}
                 >
                   Záväzne objednať

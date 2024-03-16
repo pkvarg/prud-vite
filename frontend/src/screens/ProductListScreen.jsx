@@ -161,6 +161,7 @@ const ProductListScreen = () => {
             <thead>
               <tr>
                 <th>NÁZOV</th>
+                <th>Skladom ks</th>
                 <th>CENA</th>
                 <th>KATEGÓRIA</th>
                 <th>ZĽAVA</th>
@@ -173,6 +174,15 @@ const ProductListScreen = () => {
               {products.map((product) => (
                 <tr key={product._id}>
                   <td className='prod-list-name'>{product.name}</td>
+                  <td
+                    style={
+                      product.countInStock <= 10
+                        ? { color: 'red' }
+                        : { color: 'lightGreen' }
+                    }
+                  >
+                    {product.countInStock}
+                  </td>
                   <td>€{product.price.toFixed(2)}</td>
                   <td className='prod-list-name'>
                     {product.category
