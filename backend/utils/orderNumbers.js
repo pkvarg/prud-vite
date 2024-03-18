@@ -42,13 +42,13 @@ export const getOrderNumber = async () => {
         countOfReusedOrderNumbers++
       }
     }
-    let allOrdersCount = allOrders.length
+    let thisYearsOrdersCount = thisYearsOrders.length
     if (countOfReusedOrderNumbers > 0) {
-      allOrdersCount -= countOfReusedOrderNumbers
+      thisYearsOrdersCount -= countOfReusedOrderNumbers
     }
-    allOrdersCount++
-    allOrdersCount.toString()
-    let addedZeros = addLeadingZeros(allOrdersCount, 4)
+    thisYearsOrdersCount++
+    thisYearsOrdersCount.toString()
+    let addedZeros = addLeadingZeros(thisYearsOrdersCount, 4)
     orderNumber = thisYear + addedZeros
   }
 
