@@ -41,6 +41,7 @@ class Email {
     this.note = user.note
     // review
     this.comment = user.comment
+    this.orderId = user._id
   }
 
   newTransport() {
@@ -88,6 +89,7 @@ class Email {
         note: this.note,
         // review
         comment: this.comment,
+        orderId: this.orderId,
       }
     )
 
@@ -141,6 +143,13 @@ class Email {
 
   async sendOrderToEmail() {
     await this.send('orderToEmail', `Vaša objednávka ${this.orderNumber}`)
+  }
+
+  async sendDeliveredNotificationEmail() {
+    await this.send(
+      'deliveredOrderEmail',
+      `Vaša objednávka ${this.orderNumber} bola  odoslaná`
+    )
   }
 
   async sendPaymentSuccessfullToEmail() {

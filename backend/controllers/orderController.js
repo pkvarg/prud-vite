@@ -427,6 +427,14 @@ const updateOrderToDelivered = asyncHandler(async (req, res) => {
     order.deliveredAt = Date.now()
 
     const updatedOrder = await order.save()
+
+    try {
+      // send email notif
+      await new Email(order, '', '').sendDeliveredNotificationEmail()
+    } catch (error) {
+      console.log(error)
+    }
+
     res.json(updatedOrder)
   } else {
     res.status(404)

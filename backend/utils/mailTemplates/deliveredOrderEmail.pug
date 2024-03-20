@@ -1,0 +1,14 @@
+extends baseEmail 
+
+block content 
+                            
+  h3 Dobrý deň #{firstName},
+  
+  h2 Vaša objednávka #{orderNumber} bola odoslaná.
+
+  a(href='http://localhost:3000/order/' + orderId) Vaša objednávka
+  br
+  br
+  h3 Ďakujeme za Váš nákup!
+
+  
