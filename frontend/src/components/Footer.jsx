@@ -4,22 +4,43 @@ import { Link } from 'react-router-dom'
 import CookieConsent from 'react-cookie-consent'
 import { firebaseInitApp } from '../App'
 import { getAnalytics } from 'firebase/analytics'
+import axios from 'axios'
 
 const Footer = () => {
   const [cookieAccept, setCookieAccept] = useState(false)
 
-  if (cookieAccept) {
+  if (cookieAccept === true) {
     const analytics = getAnalytics(firebaseInitApp)
+  }
+
+  const config = {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  }
+
+  const increaseVisitors = async () => {
+    try {
+      const { data } = await axios.put(
+        //`https://prud.pictusweb.site/api/counter/increase`,
+        `api/counter/increase`,
+        config
+      )
+      console.log(data)
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   return (
     <>
+      {/* <button onClick={increaseVisitors}>Test</button> */}
       <CookieConsent
         location='bottom'
         style={{
           background: '#dadada',
-          color: '#000',
-          fontSize: '22.5px',
+          color: '#8a1b1f',
+          fontSize: '15px',
           textAlign: 'justify',
         }}
         buttonStyle={{
@@ -30,9 +51,8 @@ const Footer = () => {
         buttonText='Súhlasím'
         expires={365}
         enableDeclineButton
-        onDecline={() => {
-          setCookieAccept(false)
-          increaseVisitorsDeclined()
+        onAccept={() => {
+          setCookieAccept(true)
         }}
         declineButtonStyle={{
           background: 'red',
@@ -40,13 +60,23 @@ const Footer = () => {
           fontSize: '17.5px',
         }}
         declineButtonText='Nesúhlasím'
-        onAccept={() => {
-          setCookieAccept(true)
+        onDecline={() => {
+          increaseVisitors()
         }}
       >
         Táto stránka používa len analytické a pre fungovanie webu nevyhnutné
         cookies. Nepoužívame funkčné ani marketingové cookies.{' '}
-        <a href='/gdpr'> GDPR</a>
+        <a
+          style={{
+            color: '#8a1b1f',
+            fontSize: '15px',
+            //textDecoration: 'none',
+          }}
+          href='/gdpr'
+        >
+          {' '}
+          GDPR
+        </a>
       </CookieConsent>
 
       <footer>

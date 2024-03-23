@@ -35,11 +35,22 @@ const addOrderItems = asyncHandler(async (req, res) => {
     let purchasedProductId = `${qtys[key].product}`
     let purchasedProductQty = `${qtys[key].qty}`
     let product = await Product.findById(purchasedProductId)
-    let updatedCountInStockToDb = product.countInStock - purchasedProductQty
     if (product) {
+      let updatedCountInStockToDb = product.countInStock - purchasedProductQty
+      console.log('countStockInDB', updatedCountInStockToDb)
+      if (updatedCountInStockToDb <= 10) {
+        product.countInStock = updatedCountInStockToDb
+        try {
+          await new Email(product, '', '').sendLowStoragePiecesWarningEmail()
+        } catch (error) {
+          console.log(error)
+        }
+      }
+
       product.countInStock = updatedCountInStockToDb
+
+      await product.save()
     }
-    const prodNewCountInStock = await product.save()
   })
 
   if (orderItems && orderItems.length === 0) {

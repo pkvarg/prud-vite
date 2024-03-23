@@ -5,7 +5,7 @@ import path from 'path'
 
 class Email {
   constructor(user, url, file) {
-    console.log('user:', user)
+    console.log('Email:', user)
     this.user = user.user
     this.to = user.email
     this.firstName = user.name
@@ -42,6 +42,7 @@ class Email {
     // review
     this.comment = user.comment
     this.orderId = user._id
+    this.countInStock = user.countInStock
   }
 
   newTransport() {
@@ -90,6 +91,7 @@ class Email {
         // review
         comment: this.comment,
         orderId: this.orderId,
+        countInStock: this.countInStock,
       }
     )
 
@@ -143,6 +145,10 @@ class Email {
 
   async sendOrderToEmail() {
     await this.send('orderToEmail', `Vaša objednávka ${this.orderNumber}`)
+  }
+
+  async sendLowStoragePiecesWarningEmail() {
+    await this.send('lowStoragePieces', `Počet ${this.firstName} klesol pod 10`)
   }
 
   async sendDeliveredNotificationEmail() {

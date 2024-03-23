@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { LinkContainer } from 'react-router-bootstrap'
 import { Table, Button } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
@@ -7,6 +7,7 @@ import Loader from '../components/Loader'
 import { listUsers, deleteUser } from '../actions/userActions'
 import { useNavigate } from 'react-router-dom'
 import * as Icon from 'react-bootstrap-icons'
+import axios from 'axios'
 
 const UserListScreen = () => {
   const dispatch = useDispatch()
@@ -20,9 +21,28 @@ const UserListScreen = () => {
   const userDelete = useSelector((state) => state.userDelete)
   const { success: successDelete } = userDelete
 
+  const [visitorsCount, setVisitorsCount] = useState(0)
+
+  const config = {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  }
+
+  const getVisitors = async () => {
+    const { data } = await axios.get(
+      //`https://prud.pictusweb.site/api/visitors/io/counter`,
+      `/api/counter/count`,
+
+      config
+    )
+    setVisitorsCount(data)
+  }
+
   useEffect(() => {
     if (userInfo && userInfo.isAdmin) {
       dispatch(listUsers())
+      getVisitors()
     } else {
       navigate('/login')
     }
@@ -35,7 +55,18 @@ const UserListScreen = () => {
   }
   return (
     <>
-      <h1>Používatelia</h1>
+      <div
+        style={{
+          display: 'flex',
+          gap: '5px',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+        }}
+      >
+        <h1>Používatelia</h1>
+        <h2>Počet návštev: {visitorsCount}</h2>
+      </div>
+      {/* <button onClick={getVisitors}>Test</button> */}
       {loading ? (
         <Loader />
       ) : error ? (

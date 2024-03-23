@@ -14,6 +14,7 @@ import authRoutes from './routes/authRoutes.js'
 import audioRoutes from './routes/audioRoutes.js'
 import videoRoutes from './routes/videoRoutes.js'
 import bannerRoutes from './routes/bannerRoutes.js'
+import counterRoutes from './routes/counterRoutes.js'
 import stripeRoutes from './routes/stripeRoutes.js'
 import stripe from 'stripe'
 
@@ -51,6 +52,7 @@ app.use('/api/auth', authRoutes)
 app.use('/api/audio', audioRoutes)
 app.use('/api/video', videoRoutes)
 app.use('/api/banner', bannerRoutes)
+app.use('/api/counter', counterRoutes)
 app.use('/api/create-stripe-checkout-session', stripeRoutes)
 
 const __dirname = path.resolve()
