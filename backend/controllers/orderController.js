@@ -5,7 +5,7 @@ import Email from '../utils/email.js'
 import niceInvoice from '../utils/niceInvoice.js'
 import path from 'path'
 import { getOrderNumber } from '../utils/orderNumbers.js'
-import generateToken from '../utils/generateToken.js'
+import crypto from 'crypto'
 
 const __dirname = path.resolve()
 
@@ -498,10 +498,27 @@ const createInitPaymentId = asyncHandler(async (req, res) => {
   const order = await Order.findById(orderId)
 
   if (order) {
-    const token = generateToken(orderId)
+    const token = crypto.createHash('sha256').update(orderId).digest('hex')
+    console.log('tkcry', token)
     order.initPaymentId = token
     const savedOrder = await order.save()
     res.json(savedOrder)
+  } else {
+    res.status(404)
+    throw new Error('Order not found')
+  }
+})
+
+// @desc Get init payment Id from db
+// @desc GET /api/orders/:id/init-payment
+
+const getInitPaymentId = asyncHandler(async (req, res) => {
+  const orderId = req.params.id
+  const order = await Order.findById(orderId)
+
+  if (order) {
+    const initPaymentId = order.initPaymentId
+    res.json(initPaymentId)
   } else {
     res.status(404)
     throw new Error('Order not found')
@@ -520,6 +537,19 @@ const deleteOrder = asyncHandler(async (req, res) => {
   }
 })
 
+const failedPaymentNotification = asyncHandler(async (req, res) => {
+  const orderId = req.params.id
+  const order = await Order.findById(orderId)
+
+  try {
+    await new Email(order, '', '').sendFailedPaymentNotificationgEmail()
+  } catch (error) {
+    console.log(error)
+  }
+
+  res.json('failed-notif-sent')
+})
+
 export {
   addOrderItems,
   getOrderByid,
@@ -530,5 +560,7 @@ export {
   getMyOrders,
   getOrders,
   createInitPaymentId,
+  getInitPaymentId,
+  failedPaymentNotification,
   deleteOrder,
 }

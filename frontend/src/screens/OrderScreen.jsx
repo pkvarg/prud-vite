@@ -190,35 +190,39 @@ const OrderScreen = () => {
       }
     }
 
-    const stripe = await stripePromise
-    const requestBody = {
-      userName: userInfo.name,
-      email: userInfo.email,
-      products: ps,
-      url: locationOrder,
-      initPaymentId,
-      shippingPrice,
+    console.log(initPaymentId)
+
+    if (initPaymentId !== '') {
+      const stripe = await stripePromise
+      const requestBody = {
+        userName: userInfo.name,
+        email: userInfo.email,
+        products: ps,
+        url: locationOrder,
+        initPaymentId,
+        shippingPrice,
+      }
+
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }
+
+      const response = await axios.post(
+        '/api/create-stripe-checkout-session',
+        { requestBody },
+        config
+      )
+
+      console.log('resp', response.data.id)
+
+      //window.location.href = response.data
+      const session = await response.data
+      await stripe.redirectToCheckout({
+        sessionId: session.id,
+      })
     }
-
-    const config = {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    }
-
-    const response = await axios.post(
-      '/api/create-stripe-checkout-session',
-      { requestBody },
-      config
-    )
-
-    console.log('resp', response.data.id)
-
-    //window.location.href = response.data
-    const session = await response.data
-    await stripe.redirectToCheckout({
-      sessionId: session.id,
-    })
   }
 
   return loading ? (

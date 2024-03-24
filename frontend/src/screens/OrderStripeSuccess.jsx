@@ -29,7 +29,9 @@ import {
   ORDER_CANCELL_RESET,
   ORDER_LIST_MY_RESET,
 } from '../constants/orderConstants'
+import axios from 'axios'
 import { addDecimals } from '../functions'
+import { removeFromAll } from '../actions/cartActions'
 
 const OrderStripeSuccess = () => {
   const cart = useSelector((state) => state.cart)
@@ -37,10 +39,45 @@ const OrderStripeSuccess = () => {
 
   const dispatch = useDispatch()
   const params = useParams()
+  const orderId = params.id
+  const initId = params.init
+
+  const userLogin = useSelector((state) => state.userLogin)
+  const { userInfo } = userLogin
+
+  const [initPaymentId, setInitPaymentId] = useState('')
+
+  const configBearer = {
+    headers: {
+      Authorization: `Bearer ${userInfo.token}`,
+    },
+  }
+
+  useEffect(() => {
+    const getInitPaymentId = async (orderId) => {
+      if (userInfo.token) {
+        console.log(userInfo.token)
+        try {
+          const { data } = await axios.get(
+            `
+          /api/orders/${orderId}/init-payment`,
+
+            configBearer
+          )
+
+          setInitPaymentId(data)
+        } catch (error) {
+          console.log(error)
+        }
+      }
+    }
+    getInitPaymentId(orderId)
+    dispatch(removeFromAll())
+  }, [orderId])
+
   const locationOrder = useLocation()
 
   const navigate = useNavigate()
-  const orderId = params.id
 
   const orderDetails = useSelector((state) => state.orderDetails)
   const { order, loading, error } = orderDetails
@@ -53,9 +90,6 @@ const OrderStripeSuccess = () => {
 
   const orderCancell = useSelector((state) => state.orderCancell)
   const { success: successCancell } = orderCancell
-
-  const userLogin = useSelector((state) => state.userLogin)
-  const { userInfo } = userLogin
 
   const orderDelete = useSelector((state) => state.orderDelete)
   const { success: successDelete } = orderDelete
@@ -93,7 +127,9 @@ const OrderStripeSuccess = () => {
 
       dispatch(getOrderDetails(orderId))
     }
-    dispatch(payOrderStripe(order))
+    if (initId === initPaymentId) {
+      dispatch(payOrderStripe(order))
+    }
   }, [
     dispatch,
     order,
@@ -141,6 +177,8 @@ const OrderStripeSuccess = () => {
     <Loader />
   ) : error ? (
     <Message variant='danger'>{error}</Message>
+  ) : initId !== initPaymentId ? (
+    <h1>Error</h1>
   ) : (
     <>
       <h1>Objednávka {order.orderNumber}</h1>

@@ -76,6 +76,29 @@ const OrderStripeFail = () => {
   let shippingPrice
   order?.totalPrice > 100 ? (shippingPrice = 0) : (shippingPrice = 3.5)
 
+  const configBearer = {
+    headers: {
+      Authorization: `Bearer ${userInfo.token}`,
+    },
+  }
+
+  useEffect(() => {
+    const sendFailedNotif = async () => {
+      console.log(orderId)
+      try {
+        const res = await axios.put(
+          `/api/orders/${orderId}/failed-payment-notif`,
+          {},
+          configBearer
+        )
+        console.log('failedres', res)
+      } catch (error) {
+        console.log(error)
+      }
+    }
+    sendFailedNotif()
+  }, [orderId])
+
   //useEffect becomes shorter
   useEffect(() => {
     if (!userInfo) {
@@ -224,7 +247,16 @@ const OrderStripeFail = () => {
 
               <Message variant='danger'>Platba zlyhala!</Message>
               <Message variant='danger'>
-                Skúste platbu opakovať alebo nás kontaktujte.
+                <h3>Prosím zvážte nasledovné možnosti</h3>
+                <p>
+                  1. Skúste platbu opakovať / overte si v internet bankingu, či
+                  vaša platba odišla
+                </p>
+                <p>
+                  2. Uhraďte platbu na účet číslo: IBAN.... Variabilný symbol je{' '}
+                  {order.orderNumber}
+                </p>
+                {/* <p>3. Kontaktujte nás.</p> */}
               </Message>
             </ListGroup.Item>
 

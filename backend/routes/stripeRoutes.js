@@ -4,7 +4,9 @@ import stripe from 'stripe'
 const router = express.Router()
 
 const createStripe = async (req, res) => {
-  const { products, email, url, shippingPrice } = req.body.requestBody
+  const { products, email, url, initPaymentId, shippingPrice } =
+    req.body.requestBody
+
   const lineItems = products.map((product) => {
     const item = {
       price: product.price,
@@ -24,28 +26,32 @@ const createStripe = async (req, res) => {
     }
   })
 
-  const session = await stripe(
-    process.env.STRIPE_SECRET_KEY
-  ).checkout.sessions.create({
-    payment_method_types: ['card'],
-    customer_email: email,
-    mode: 'payment',
-    success_url: `https://prud.pictusweb.com${url.pathname}/stripe-success`,
-    cancel_url: `https://prud.pictusweb.com${url.pathname}/stripe-fail`,
-    shipping_options: [
-      {
-        shipping_rate_data: {
-          type: 'fixed_amount',
-          fixed_amount: { amount: shippingPrice * 100, currency: 'eur' },
-          display_name: 'Poštovné',
+  try {
+    const session = await stripe(
+      process.env.STRIPE_SECRET_KEY
+    ).checkout.sessions.create({
+      payment_method_types: ['card'],
+      customer_email: email,
+      mode: 'payment',
+      success_url: `http://localhost:3000${url.pathname}/stripe-success/${initPaymentId}`,
+      cancel_url: `http://localhost:3000${url.pathname}/stripe-fail`,
+      shipping_options: [
+        {
+          shipping_rate_data: {
+            type: 'fixed_amount',
+            fixed_amount: { amount: shippingPrice * 100, currency: 'eur' },
+            display_name: 'Poštovné',
+          },
         },
-      },
-    ],
-    line_items: lineItems,
-  })
+      ],
+      line_items: lineItems,
+    })
 
-  //res.redirect(303, session.url)
-  res.send(session)
+    //res.redirect(303, session.url)
+    res.send(session)
+  } catch (error) {
+    console.log(error)
+  }
 }
 
 router.post('/', createStripe)

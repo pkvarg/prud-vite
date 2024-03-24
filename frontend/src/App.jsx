@@ -68,7 +68,7 @@ const App = () => {
             <Routes>
               <Route path='/order/:id' element={<OrderScreen />} />
               <Route
-                path='/order/:id/stripe-success'
+                path='/order/:id/stripe-success/:init'
                 element={<OrderStripeSuccess />}
               />
               <Route

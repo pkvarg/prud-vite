@@ -151,6 +151,13 @@ class Email {
     await this.send('lowStoragePieces', `Počet ${this.firstName} klesol pod 10`)
   }
 
+  async sendFailedPaymentNotificationgEmail() {
+    await this.send(
+      'failedPaymentNotification',
+      `Platba ${this.orderNumber} zlyhala`
+    )
+  }
+
   async sendDeliveredNotificationEmail() {
     await this.send(
       'deliveredOrderEmail',
