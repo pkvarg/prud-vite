@@ -104,6 +104,10 @@ const orderSchema = mongoose.Schema(
       required: false,
       default: false,
     },
+    initPaymentId: {
+      type: String,
+      required: false,
+    },
   },
   {
     timestamps: true,

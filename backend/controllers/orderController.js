@@ -5,6 +5,7 @@ import Email from '../utils/email.js'
 import niceInvoice from '../utils/niceInvoice.js'
 import path from 'path'
 import { getOrderNumber } from '../utils/orderNumbers.js'
+import generateToken from '../utils/generateToken.js'
 
 const __dirname = path.resolve()
 
@@ -489,6 +490,24 @@ const getOrders = asyncHandler(async (req, res) => {
   res.json(orders)
 })
 
+// @desc Create init payment Id in db
+// @desc PUT /api/orders/:id/init-payment
+
+const createInitPaymentId = asyncHandler(async (req, res) => {
+  const orderId = req.params.id
+  const order = await Order.findById(orderId)
+
+  if (order) {
+    const token = generateToken(orderId)
+    order.initPaymentId = token
+    const savedOrder = await order.save()
+    res.json(savedOrder)
+  } else {
+    res.status(404)
+    throw new Error('Order not found')
+  }
+})
+
 // DELETE ORDER
 const deleteOrder = asyncHandler(async (req, res) => {
   const order = await Order.findOneAndDelete({ _id: req.params.id })
@@ -510,5 +529,6 @@ export {
   updateOrderToCancelled,
   getMyOrders,
   getOrders,
+  createInitPaymentId,
   deleteOrder,
 }

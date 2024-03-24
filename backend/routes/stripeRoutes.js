@@ -30,8 +30,8 @@ const createStripe = async (req, res) => {
     payment_method_types: ['card'],
     customer_email: email,
     mode: 'payment',
-    success_url: `http://localhost:3000${url.pathname}/stripe-success`,
-    cancel_url: `http://localhost:3000${url.pathname}/stripe-fail`,
+    success_url: `https://prud.pictusweb.com${url.pathname}/stripe-success`,
+    cancel_url: `https://prud.pictusweb.com${url.pathname}/stripe-fail`,
     shipping_options: [
       {
         shipping_rate_data: {

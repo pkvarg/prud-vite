@@ -52,7 +52,7 @@ export const getOrderNumber = async () => {
     orderNumber = thisYear + addedZeros
   }
 
-  console.log('ooo1', orderNumber)
+  console.log('orderNo', orderNumber)
 
   return orderNumber
 }

@@ -32,7 +32,9 @@ const PlaceOrderScreen = () => {
 
   useEffect(() => {
     if (success) {
-      dispatch(removeFromAll())
+      if (cart.paymentMethod === 'Hotovosť') {
+        dispatch(removeFromAll())
+      }
       navigate(`/order/${order._id}`)
     }
     // eslint-disable-next-line

@@ -164,13 +164,39 @@ const OrderScreen = () => {
 
   // STRIPE PAYMENT
 
+  const configBearer = {
+    headers: {
+      Authorization: `Bearer ${userInfo.token}`,
+    },
+  }
+
+  const [initPaymentId, setInitPaymentId] = useState('')
+
   const makePayment = async () => {
+    // create a unique init payment ID in db
+
+    if (order._id) {
+      try {
+        const { data } = await axios.put(
+          `
+        /api/orders/${order._id}/init-payment`,
+          {},
+          configBearer
+        )
+
+        setInitPaymentId(data.initPaymentId)
+      } catch (error) {
+        console.log(error)
+      }
+    }
+
     const stripe = await stripePromise
     const requestBody = {
       userName: userInfo.name,
       email: userInfo.email,
       products: ps,
       url: locationOrder,
+      initPaymentId,
       shippingPrice,
     }
 
