@@ -5,7 +5,7 @@ import path from 'path'
 
 class Email {
   constructor(user, url, file) {
-    console.log('Email:', user)
+    console.log('Email:', user, url)
     this.user = user.user
     this.to = user.email
     this.firstName = user.name
@@ -174,7 +174,11 @@ class Email {
   }
 
   async sendWelcome() {
-    await this.send('welcome', 'Úspešná registrácia')
+    await this.send('welcome', 'Vaša registrácia na prud.sk')
+  }
+
+  async sendWelcomeGoogle() {
+    await this.send('welcomeGoogle', 'Vaša registrácia na prud.sk')
   }
 
   // contact Form

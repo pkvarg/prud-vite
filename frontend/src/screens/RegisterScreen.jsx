@@ -33,9 +33,12 @@ const RegisterScreen = () => {
   const submitHandler = (e) => {
     e.preventDefault()
     if (password !== confirmPassword) {
-      setMessage('Passwords do not match')
+      setMessage('Heslá nesúhlasia')
     } else {
       dispatch(register(name, email, password))
+      setMessage(
+        `Registračný link Vám bol odoslaný na ${email}. Potvrďte prosím svoju registráciu kliknutím na prijatý link.`
+      )
     }
   }
 
@@ -47,7 +50,7 @@ const RegisterScreen = () => {
 
       <FormContainer>
         <h1>Zaregistrujte sa</h1>
-        {message && <Message variant='danger'>{message}</Message>}
+        {message && <Message variant='success'>{message}</Message>}
 
         {error && <Message variant='danger'>{error}</Message>}
         {loading && <Loader />}

@@ -32,11 +32,12 @@ router.post('/currentUser', async (req, res) => {
       name: dataInfo.name,
       email: dataInfo.email,
       googleId: dataInfo.googleId,
+      isRegistered: true,
     })
     // send welcome to new G user
     const url = `${req.protocol}://${req.get('host')}`
 
-    await new Email(createdUser, url).sendWelcome()
+    await new Email(createdUser, url).sendWelcomeGoogle()
 
     res.json({
       _id: createdUser._id,

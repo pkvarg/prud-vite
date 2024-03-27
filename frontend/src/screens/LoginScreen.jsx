@@ -23,11 +23,16 @@ const LoginScreen = () => {
   const { loading, error, userInfo } = userLogin
   const location = useLocation()
   const redirect = location.search ? location.search.split('=')[1] : '/'
+
+  const goToProfile = location.pathname.includes('profile')
+
   useEffect(() => {
-    if (userInfo) {
+    if (userInfo && goToProfile) {
+      navigate('/profile')
+    } else if (userInfo) {
       navigate(redirect)
     }
-  }, [navigate, userInfo, redirect])
+  }, [navigate, userInfo, redirect, goToProfile])
 
   const submitHandler = (e) => {
     e.preventDefault()

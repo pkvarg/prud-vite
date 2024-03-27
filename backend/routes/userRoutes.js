@@ -10,6 +10,7 @@ import {
   getUserById,
   updateUser,
   addToFavorites,
+  checkRegistrationToken,
 } from '../controllers/userController.js'
 import { protect, admin } from '../middleware/authMiddleware.js'
 
@@ -25,5 +26,6 @@ router
   .get(protect, admin, getUserById)
   .put(protect, admin, updateUser)
 router.route('/:id/favorites').put(protect, addToFavorites)
+router.route('/:email/:token').get(checkRegistrationToken)
 
 export default router

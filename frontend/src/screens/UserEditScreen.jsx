@@ -17,6 +17,7 @@ const UserEditScreen = () => {
   const [email, setEmail] = useState('')
   const [isAdmin, setIsAdmin] = useState(false)
   const [isAssistant, setIsAssistant] = useState(false)
+  const [isRegistered, setIsRegistered] = useState(false)
 
   const dispatch = useDispatch()
 
@@ -42,13 +43,23 @@ const UserEditScreen = () => {
         setEmail(user.email)
         setIsAdmin(user.isAdmin)
         setIsAssistant(user.isAssistant)
+        setIsRegistered(user.isRegistered)
       }
     }
   }, [dispatch, navigate, userId, user, successUpdate])
 
   const submitHandler = (e) => {
     e.preventDefault()
-    dispatch(updateUser({ _id: userId, name, email, isAdmin, isAssistant }))
+    dispatch(
+      updateUser({
+        _id: userId,
+        name,
+        email,
+        isAdmin,
+        isAssistant,
+        isRegistered,
+      })
+    )
   }
 
   return (
@@ -103,6 +114,16 @@ const UserEditScreen = () => {
                 label='Asistent? (zaškrtnutím sa prístup obmedzí na Audio, Video a Bannery)'
                 checked={isAssistant}
                 onChange={(e) => setIsAssistant(e.target.checked)}
+              ></Form.Check>
+            </Form.Group>
+
+            <Form.Group controlId='isregistered'>
+              <Form.Check
+                className='my-2'
+                type='checkbox'
+                label='Dokončená registrácia?'
+                checked={isRegistered}
+                onChange={(e) => setIsRegistered(e.target.checked)}
               ></Form.Check>
             </Form.Group>
 

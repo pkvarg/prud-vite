@@ -17,6 +17,16 @@ const userSchema = mongoose.Schema(
       type: String,
       required: false,
     },
+    isRegistered: {
+      type: Boolean,
+      required: true,
+      default: false,
+    },
+    registerToken: {
+      type: String,
+      required: false,
+    },
+
     isAdmin: {
       type: Boolean,
       required: true,

@@ -1,7 +1,9 @@
 import asyncHandler from 'express-async-handler'
 import User from '../models/userModel.js'
 import generateToken from '../utils/generateToken.js'
+import createRegisterToken from '../utils/createRegisterToken.js'
 import Email from '../utils/email.js'
+import { json } from 'express'
 
 // @desc Auth user & get token
 // @desc POST /api/users/login
@@ -10,7 +12,12 @@ import Email from '../utils/email.js'
 const authUser = asyncHandler(async (req, res) => {
   const { email, password } = req.body
   const user = await User.findOne({ email })
-  if (user && (await user.matchPassword(password))) {
+  if (!user.isRegistered) {
+    res.status(401)
+    throw new Error(
+      'Nedokončená registrácia. Skontrolujte svoj registračný email a potvrďte svoju registráciu kliknutím na poslaný link.'
+    )
+  } else if (user && (await user.matchPassword(password))) {
     res.json({
       _id: user._id,
       name: user.name,
@@ -32,6 +39,15 @@ const authUser = asyncHandler(async (req, res) => {
 
 const registerUser = asyncHandler(async (req, res) => {
   const { name, email, password } = req.body
+
+  const url = `${req.protocol}://${req.get('host')}`
+
+  console.log('rU', url)
+  // add reg
+  const { registerToken, registerURL } = await createRegisterToken(email, url)
+
+  console.log('regB', registerToken, registerURL)
+
   const userExists = await User.findOne({ email })
   if (userExists) {
     res.status(400)
@@ -41,25 +57,60 @@ const registerUser = asyncHandler(async (req, res) => {
     name,
     email,
     password,
+    isRegistered: false,
+    registerToken,
   })
 
-  const url = `${req.protocol}://${req.get('host')}`
-
   if (user) {
-    await new Email(user, url).sendWelcome()
+    await new Email(user, registerURL).sendWelcome()
 
-    res.status(201).json({
-      _id: user._id,
-      name: user.name,
-      email: user.email,
-      isAdmin: user.isAdmin,
-      isAssistant: user.isAssistant,
+    res.status(201).json('OK')
 
-      token: generateToken(user._id),
-    })
+    // res.status(201).json({
+    //   _id: user._id,
+    //   name: user.name,
+    //   email: user.email,
+    //   isAdmin: user.isAdmin,
+    //   isAssistant: user.isAssistant,
+
+    //   token: generateToken(user._id),
+    // })
   } else {
     res.status(400)
     throw new ErrorEvent('Naplatné dáta užívateľa')
+  }
+})
+
+// @descRegister a new user
+// @desc POST /api/users/
+// @access Public
+
+const checkRegistrationToken = asyncHandler(async (req, res) => {
+  const { email, token } = req.params
+  const user = await User.findOne({
+    email,
+  })
+
+  console.log(token, user.registerToken)
+
+  const checkToken = user.registerToken === token
+  // let expiry
+  // const date = new Date()
+  // const dateISO = date.toISOString()
+  // const tokenExpiry = user.registerTokenExpires.toISOString()
+
+  // if (tokenExpiry !== undefined && tokenExpiry > dateISO) {
+  //   expiry = true
+  // } else {
+  //   expiry = false
+  // }
+
+  if (checkToken) {
+    user.isRegistered = true
+    await user.save()
+    res.json('ok')
+  } else {
+    res.json('Neplatný link!')
   }
 })
 
@@ -173,6 +224,7 @@ const updateUser = asyncHandler(async (req, res) => {
     user.email = req.body.email || user.email
     user.isAdmin = req.body.isAdmin
     user.isAssistant = req.body.isAssistant
+    user.isRegistered = req.body.isRegistered
 
     const updatedUser = await user.save()
     console.log('UU:', updatedUser)
@@ -184,6 +236,7 @@ const updateUser = asyncHandler(async (req, res) => {
       favorites: updatedUser.favorites,
       isAdmin: updatedUser.isAdmin,
       isAssistant: updatedUser.isAssistant,
+      isRegistered: updatedUser.isRegistered,
     })
   } else {
     res.status(404)
@@ -217,5 +270,6 @@ export {
   deleteUser,
   getUserById,
   updateUser,
+  checkRegistrationToken,
   addToFavorites,
 }
