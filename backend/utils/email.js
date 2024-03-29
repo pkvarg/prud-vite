@@ -47,8 +47,6 @@ class Email {
   }
 
   newTransport() {
-    // if (process.env.NODE_ENV === 'production') {
-    // nodejs@pictusweb.sk
     return nodemailer.createTransport({
       pool: true,
       host: 'smtp.titan.email',
@@ -62,7 +60,7 @@ class Email {
   }
 
   // send the actual email
-  async send(template, subject) {
+  async send(template, subject, adminOnly) {
     const __dirname = path.resolve()
     // 1) Render HTML based on a pug template
     const html = pug.renderFile(
@@ -101,19 +99,11 @@ class Email {
       console.log('no file')
       let mailOptions = {
         from: this.from,
-        to: this.to,
-        bcc: 'info@pictusweb.sk',
+        to: !adminOnly ? this.to : process.env.NODEJS_BCC,
+        bcc: !adminOnly && process.env.NODEJS_BCC,
         subject,
         html,
         text: htmlToText(html),
-        // file attachment
-        // attachments: [
-        //   {
-        //     filename: this.file,
-        //     path: __dirname + `/${this.file}`,
-        //     cid: `uniq-${this.file}`,
-        //   },
-        // ],
       }
 
       // 3) Create a transport and send email
@@ -125,8 +115,8 @@ class Email {
       // 2) Define email options
       let mailOptions = {
         from: this.from,
-        to: this.to,
-        bcc: 'info@pictusweb.sk',
+        to: !adminOnly ? this.to : process.env.NODEJS_BCC,
+        bcc: !adminOnly && process.env.NODEJS_BCC,
         subject,
         html,
         text: htmlToText(html),
@@ -146,56 +136,66 @@ class Email {
   }
 
   async sendOrderToEmail() {
-    await this.send('orderToEmail', `Vaša objednávka ${this.orderNumber}`)
+    await this.send(
+      'orderToEmail',
+      `Vaša objednávka ${this.orderNumber}`,
+      false
+    )
   }
 
   async sendLowStoragePiecesWarningEmail() {
-    await this.send('lowStoragePieces', `Počet ${this.firstName} klesol pod 10`)
+    await this.send(
+      'lowStoragePieces',
+      `Počet ${this.firstName} klesol pod 10`,
+      true
+    )
   }
 
   async sendFailedPaymentNotificationgEmail() {
     await this.send(
       'failedPaymentNotification',
-      `Platba ${this.orderNumber} zlyhala`
+      `Platba ${this.orderNumber} zlyhala`,
+      true
     )
   }
 
   async sendPaymentErrorEmail() {
-    await this.send('paymentError', `Platba ${this.to} zlyhala`)
+    await this.send('paymentError', `Platba ${this.to} zlyhala`, true)
   }
 
   async sendDeliveredNotificationEmail() {
     await this.send(
       'deliveredOrderEmail',
-      `Vaša objednávka ${this.orderNumber} bola  odoslaná`
+      `Vaša objednávka ${this.orderNumber} bola  odoslaná`,
+      false
     )
   }
 
   async sendPaymentSuccessfullToEmail() {
-    await this.send('paymentSuccessfull', `Objednávka zaplatená`)
+    await this.send('paymentSuccessfull', `Objednávka zaplatená`, false)
   }
 
   async sendPasswordReset() {
-    await this.send('passwordReset', 'Zmeňte si Vaše heslo')
+    await this.send('passwordReset', 'Zmeňte si Vaše heslo', false)
   }
 
   async sendWelcome() {
-    await this.send('welcome', 'Vaša registrácia na prud.sk')
+    await this.send('welcome', 'Vaša registrácia na prud.sk', false)
   }
 
   async sendWelcomeGoogle() {
-    await this.send('welcomeGoogle', 'Vaša registrácia na prud.sk')
+    await this.send('welcomeGoogle', 'Vaša registrácia na prud.sk', false)
   }
 
   // contact Form
   async sendContactForm() {
-    await this.send('emailForm', 'Kontakt Eshop')
+    await this.send('emailForm', 'Kontakt Eshop', false)
   }
 
   // new review notification
 
   async sendReviewNotification() {
-    await this.send('reviewForm', 'Nová recenzia na Eshope')
+    await this.send('reviewForm', 'Nová recenzia na Eshope', true)
   }
 }
 
