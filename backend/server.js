@@ -35,8 +35,9 @@ app.use(
       'http://localhost:6000',
       'http://localhost:5173',
       'https://pictusweb.com',
-      'https://prud.onrender.com',
-      'https://prud-vite-front.onrender.com',
+      'https://pictusweb.site',
+      'https://prud.sk',
+      'https://proudzivota.cz',
     ],
   })
 )
