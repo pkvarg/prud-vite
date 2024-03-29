@@ -72,7 +72,7 @@ const Footer = () => {
             fontSize: '15px',
             //textDecoration: 'none',
           }}
-          href='/gdpr'
+          href='/safety-privacy'
         >
           {' '}
           GDPR

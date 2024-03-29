@@ -1,15 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Link, useNavigate, useParams, useLocation } from 'react-router-dom'
-import {
-  Button,
-  Row,
-  Col,
-  ListGroup,
-  Image,
-  Card,
-  ListGroupItem,
-  // ListGroupItem,
-} from 'react-bootstrap'
+import { Button, Row, Col, ListGroup, Image, Card } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
@@ -17,10 +8,6 @@ import {
   getOrderDetails,
   payOrder,
   payOrderStripe,
-  // deleteOrder,
-  deliverOrder,
-  cancellOrder,
-  // createOrder,
 } from '../actions/orderActions'
 
 import {
@@ -56,7 +43,6 @@ const OrderStripeSuccess = () => {
   useEffect(() => {
     const getInitPaymentId = async (orderId) => {
       if (userInfo.token) {
-        console.log(userInfo.token)
         try {
           const { data } = await axios.get(
             `
@@ -75,8 +61,6 @@ const OrderStripeSuccess = () => {
     dispatch(removeFromAll())
   }, [orderId])
 
-  const locationOrder = useLocation()
-
   const navigate = useNavigate()
 
   const orderDetails = useSelector((state) => state.orderDetails)
@@ -84,22 +68,6 @@ const OrderStripeSuccess = () => {
 
   const orderPay = useSelector((state) => state.orderPay)
   const { loading: loadingPay, success: successPay } = orderPay
-
-  const orderDeliver = useSelector((state) => state.orderDeliver)
-  const { loading: loadingDeliver, success: successDeliver } = orderDeliver
-
-  const orderCancell = useSelector((state) => state.orderCancell)
-  const { success: successCancell } = orderCancell
-
-  const orderDelete = useSelector((state) => state.orderDelete)
-  const { success: successDelete } = orderDelete
-
-  // const deleteOrderHandler = (id) => {
-  //   if (window.confirm('Ste si istý?')) {
-  //     dispatch(deleteOrder(id))
-  //     navigate('/admin/orderlist')
-  //   }
-  // }
 
   if (!loading) {
     // Calculate Prices
@@ -120,50 +88,23 @@ const OrderStripeSuccess = () => {
       dispatch({ type: ORDER_PAY_RESET })
       dispatch(getOrderDetails(orderId))
     }
-    if (!order || successDeliver || successCancell || order._id !== orderId) {
-      //     dispatch({ type: ORDER_PAY_RESET })
-      dispatch({ type: ORDER_DELIVER_RESET })
-      dispatch({ type: ORDER_CANCELL_RESET })
+    // if (!order || successDeliver || successCancell || order._id !== orderId) {
+    //   //     dispatch({ type: ORDER_PAY_RESET })
+    //   dispatch({ type: ORDER_DELIVER_RESET })
+    //   dispatch({ type: ORDER_CANCELL_RESET })
 
-      dispatch(getOrderDetails(orderId))
-    }
+    //   dispatch(getOrderDetails(orderId))
+    // }
     if (initId === initPaymentId) {
       dispatch(payOrderStripe(order))
     }
-  }, [
-    dispatch,
-    order,
-    orderId,
-    successDelete,
-    successDeliver,
-    successCancell,
-    navigate,
-    userInfo,
-  ])
+  }, [dispatch, order, orderId, navigate, userInfo])
 
-  const createOrder = (data, actions) => {
-    return actions.order.create({
-      purchase_units: [
-        {
-          amount: { value: order.totalPrice },
-        },
-      ],
-    })
-  }
-
-  const successPaymentHandler = (data, actions) => {
-    return actions.order.capture().then((details) => {
-      dispatch(payOrder(orderId, details))
-    })
-  }
-
-  const deliverHandler = () => {
-    dispatch(deliverOrder(order))
-  }
-
-  const cancellHandler = () => {
-    dispatch(cancellOrder(order))
-  }
+  // const successPaymentHandler = (data, actions) => {
+  //   return actions.order.capture().then((details) => {
+  //     dispatch(payOrder(orderId, details))
+  //   })
+  // }
 
   const newOrderHandler = () => {
     localStorage.removeItem('cartItems')
@@ -338,32 +279,6 @@ const OrderStripeSuccess = () => {
                 </Row>
               </ListGroup.Item> */}
 
-              {loadingDeliver && <Loader />}
-              {userInfo && userInfo.isAdmin && !order.isDelivered && (
-                <ListGroup.Item>
-                  <Button
-                    typ='button'
-                    className='btn w-100 btn-red'
-                    onClick={deliverHandler}
-                  >
-                    Označiť ako odoslané
-                  </Button>
-                </ListGroup.Item>
-              )}
-              {userInfo &&
-                userInfo.isAdmin &&
-                !order.isCancelled &&
-                !order.isDelivered && (
-                  <ListGroup.Item>
-                    <Button
-                      typ='button'
-                      className='btn w-100 btn-danger'
-                      onClick={cancellHandler}
-                    >
-                      Zrušiť objednávku
-                    </Button>
-                  </ListGroup.Item>
-                )}
               <ListGroup.Item>
                 <Button
                   className='w-100 btn-blue'

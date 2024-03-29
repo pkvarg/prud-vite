@@ -6,6 +6,7 @@ import Message from '../components/Message'
 import Loader from '../components/Loader'
 import FormContainer from '../components/FormContainer'
 import { register } from '../actions/userActions'
+import GoogleSignIn from '../components/GoogleSignIn'
 
 const RegisterScreen = () => {
   const navigate = useNavigate()
@@ -22,13 +23,7 @@ const RegisterScreen = () => {
   const userRegister = useSelector((state) => state.userRegister)
   const { loading, error, userInfo } = userRegister
   const location = useLocation()
-  // const { search } = useLocation()
   const redirect = location.search ? location.search.split('=')[1] : '/'
-  useEffect(() => {
-    if (userInfo) {
-      navigate(redirect)
-    }
-  }, [navigate, userInfo, redirect])
 
   const submitHandler = (e) => {
     e.preventDefault()
@@ -39,6 +34,11 @@ const RegisterScreen = () => {
       setMessage(
         `Registračný link Vám bol odoslaný na ${email}. Potvrďte prosím svoju registráciu kliknutím na prijatý link.`
       )
+      setName('')
+      setEmail('')
+      setPassword('')
+      setConfirmPassword('')
+      window.scrollTo(0, 200)
     }
   }
 
@@ -100,6 +100,9 @@ const RegisterScreen = () => {
             Registrovať
           </Button>
         </Form>
+
+        <h2 className='my-3'>Registrácia účtom Google</h2>
+        <GoogleSignIn />
 
         <Row className='py-3 sign-in-forgot'>
           <Col>

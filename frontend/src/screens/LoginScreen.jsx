@@ -5,11 +5,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
 import FormContainer from '../components/FormContainer'
-import { login, getGoogleUserInfo } from '../actions/userActions'
-
-import { auth, provider } from './../App'
-import { signInWithPopup } from 'firebase/auth'
-import { GoogleButton } from 'react-google-button'
+import { login } from '../actions/userActions'
+import GoogleSignIn from '../components/GoogleSignIn'
 
 const LoginScreen = () => {
   const navigate = useNavigate()
@@ -44,31 +41,6 @@ const LoginScreen = () => {
   const handleSignOut = (event) => {
     setUser({})
     localStorage.removeItem('userInfo')
-  }
-
-  // Google Firebase
-  const signInWithGoogle = () => {
-    signInWithPopup(auth, provider).then((result) => {
-      let userObject = result.user
-      setUser(userObject)
-      const data = {
-        name: userObject.displayName,
-        email: userObject.email,
-        googleId: userObject.uid,
-
-        isAdmin: false,
-      }
-
-      dispatch(getGoogleUserInfo(data))
-    })
-  }
-
-  const handleGoogleSignIn = () => {
-    try {
-      signInWithGoogle()
-    } catch (error) {
-      console.log(error)
-    }
   }
 
   return (
@@ -118,24 +90,7 @@ const LoginScreen = () => {
           </Col>
         </Row>
         <h2 className='my-3'>Prihlásenie účtom Google</h2>
-        <GoogleButton onClick={handleGoogleSignIn} />
-
-        {/* {user && (
-          <div className=''>
-            <img src={user.picture} alt={user.picture}></img>
-            <h3>{user.name}</h3>
-          </div>
-        )} */}
-
-        {Object.keys(user).length !== 0 && (
-          <Button
-            className='my-1'
-            variant='primary'
-            onClick={(e) => handleSignOut(e)}
-          >
-            Google Sign Out
-          </Button>
-        )}
+        <GoogleSignIn />
       </Form>
 
       <Row className='my-5 sign-in-forgot'>

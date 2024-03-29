@@ -1,5 +1,6 @@
 import express from 'express'
 import stripe from 'stripe'
+import Email from '../utils/email.js'
 
 const router = express.Router()
 
@@ -7,26 +8,26 @@ const createStripe = async (req, res) => {
   const { products, email, url, initPaymentId, shippingPrice } =
     req.body.requestBody
 
-  const lineItems = products.map((product) => {
-    const item = {
-      price: product.price,
-      name: product.name,
-      quantity: product.qty,
-    }
-    return {
-      price_data: {
-        currency: 'eur',
-        product_data: {
-          name: item.name,
-        },
-        unit_amount: item.price * 100,
-      },
-
-      quantity: item.quantity,
-    }
-  })
-
   try {
+    const lineItems = products.map((product) => {
+      const item = {
+        price: product.price,
+        name: product.name,
+        quantity: product.qty,
+      }
+      return {
+        price_data: {
+          currency: 'eur',
+          product_data: {
+            name: item.name,
+          },
+          unit_amount: Math.round(item.price * 100),
+        },
+
+        quantity: item.quantity,
+      }
+    })
+
     const session = await stripe(
       process.env.STRIPE_SECRET_KEY
     ).checkout.sessions.create({
@@ -50,7 +51,9 @@ const createStripe = async (req, res) => {
     //res.redirect(303, session.url)
     res.send(session)
   } catch (error) {
-    console.log(error)
+    console.log('2this', error)
+    const order = { email: email, error: error }
+    await new Email(order, '', '').sendPaymentErrorEmail()
   }
 }
 

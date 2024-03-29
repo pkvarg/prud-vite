@@ -38,7 +38,7 @@ const ShippingScreen = () => {
     setPostalCode(shippingAddress.postalCode)
     setCountry(shippingAddress.country)
     setBillingName(shippingAddress.billingName)
-    setAddress(shippingAddress.address)
+    setBillingAddress(shippingAddress.billingAddress)
     setBillingCity(shippingAddress.billingCity)
     setBillingPostalCode(shippingAddress.billingPostalCode)
     setBillingICO(shippingAddress.billingICO)

@@ -16,7 +16,6 @@ import videoRoutes from './routes/videoRoutes.js'
 import bannerRoutes from './routes/bannerRoutes.js'
 import counterRoutes from './routes/counterRoutes.js'
 import stripeRoutes from './routes/stripeRoutes.js'
-import stripe from 'stripe'
 
 dotenv.config()
 connectDB()
@@ -74,31 +73,6 @@ if (process.env.NODE_ENV === 'production') {
 
 app.use(notFound)
 app.use(errorHandler)
-
-const Stripe = stripe(process.env.STRIPE_SECRET_KEY)
-
-const YOUR_DOMAIN = 'http://localhost:3000'
-
-// app.post('/create-stripe-checkout-session', async (req, res) => {
-
-//   const session = await Stripe.checkout.sessions.create({
-//     line_items: [
-//       {
-//         // Provide the exact Price ID (for example, pr_1234) of the product you want to sell
-//         currency: 'eur',
-//         price: '123',
-//         quantity: 1,
-//       },
-//     ],
-//     mode: 'payment',
-//     success_url: `${YOUR_DOMAIN}?success=true`,
-//     cancel_url: `${YOUR_DOMAIN}?canceled=true`,
-//   })
-
-//   res.redirect(303, session.url)
-// })
-
-// RENDER
 
 const PORT = process.env.PORT || 6000
 app.listen(
