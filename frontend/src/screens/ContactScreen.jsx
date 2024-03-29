@@ -1,10 +1,11 @@
 import React, { useState, useLayoutEffect } from 'react'
 import { Form, Button } from 'react-bootstrap'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
 import FormContainer from '../components/FormContainer'
-import { sendContactFormAction } from '../actions/contactActions'
+
+import axios from 'axios'
 
 const ContactScreen = () => {
   const x = import.meta.env.VITE_PASSWORD_GROUP_ONE
@@ -20,8 +21,6 @@ const ContactScreen = () => {
   const [message, setMessage] = useState(null)
   const [messageSuccess, setMessageSuccess] = useState(null)
 
-  const dispatch = useDispatch()
-
   const forgotPassword = useSelector((state) => state.forgotPassword)
   const { loading, error } = forgotPassword
 
@@ -35,7 +34,13 @@ const ContactScreen = () => {
     subject,
     emailMessage,
   }
-  const submitHandler = (e) => {
+
+  const config = {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  }
+  const submitHandler = async (e) => {
     e.preventDefault()
     if (passwordGroupOne !== x || passwordGroupTwo !== y) {
       setMessage(
@@ -46,12 +51,24 @@ const ContactScreen = () => {
       setSubject('')
       setEmailMessage('')
     } else {
-      dispatch(sendContactFormAction(contactForm))
-      setMessageSuccess('Správa úspešne odoslaná')
-      setName('')
-      setEmail('')
-      setSubject('')
-      setEmailMessage('')
+      try {
+        const { data } = await axios.post(
+          '/api/auth/contact',
+          { contactForm },
+          config
+        )
+        console.log(data)
+        if (data === 'ok') {
+          setMessageSuccess('Správa úspešne odoslaná')
+          setName('')
+          setEmail('')
+          setSubject('')
+          setEmailMessage('')
+        }
+      } catch (error) {
+        console.log(error)
+        setMessage(error.message)
+      }
     }
   }
 

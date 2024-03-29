@@ -213,8 +213,8 @@ const addOrderItems = asyncHandler(async (req, res) => {
     date.setHours(date.getHours() + 1) // Increase the hour by 1
     const formattedDate = date.toISOString().replace(/:/g, '-').substring(0, 19) // Format the date as YYYY-MM-DDTHH-MM-SS
 
-    niceInvoice(invoiceDetails, `${orderNumber}_${formattedDate}.pdf`)
-    const fileTosend = `${orderNumber}_${formattedDate}.pdf`
+    niceInvoice(invoiceDetails, `invoices/${orderNumber}_${formattedDate}.pdf`)
+    const fileTosend = `invoices/${orderNumber}_${formattedDate}.pdf`
 
     await new Email(productsObject, '', fileTosend).sendOrderToEmail()
 

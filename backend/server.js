@@ -30,6 +30,8 @@ app.use(express.json())
 app.use(
   cors({
     origin: [
+      'http://localhost:2001',
+      'http://localhost:2003',
       'http://localhost:3000',
       'http://localhost:5000',
       'http://localhost:6000',

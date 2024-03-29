@@ -63,7 +63,13 @@ router.post('/contact', async (req, res) => {
     subject: data.subject,
     message: data.emailMessage,
   }
-  await new Email(emailForm).sendContactForm()
+  try {
+    await new Email(emailForm).sendContactForm()
+    res.status(200).json('ok')
+  } catch (error) {
+    console.log(error)
+    res.status(400).json(error)
+  }
 })
 
 export default router

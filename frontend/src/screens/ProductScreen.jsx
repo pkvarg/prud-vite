@@ -298,7 +298,7 @@ const ProductScreen = () => {
                               onClick={addToCartHandler}
                               className='w-100 btn-red'
                               type='button'
-                              disabled={product.countInStock === 0}
+                              disabled={product.countInStock <= 0}
                             >
                               Pridať do košíka
                             </Button>
