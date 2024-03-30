@@ -585,10 +585,12 @@ h3.product-name {
 
 .btn-blue {
   background-color: #2cb3e6;
+  border-radius: 10px !important;
 }
 
 .btn-blue.rounded {
-  border-radius: 35px !important;
+  /* border-radius: 35px !important; */
+  /* border-radius: 10px !important; */
 }
 
 .btn-blue:hover {
@@ -604,6 +606,11 @@ h3.product-name {
 
 .related-dropdown.rounded .btn-red {
   background-color: #8a1c1f;
+}
+
+.btn-red,
+.btn-success {
+  border-radius: 10px !important;
 }
 
 .btn-red:hover {

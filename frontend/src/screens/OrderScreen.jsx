@@ -496,7 +496,7 @@ const OrderScreen = () => {
                 <ListGroup.Item>
                   <Button
                     typ='button'
-                    className='btn w-100 btn-danger'
+                    className='btn w-100 btn-danger btn-red'
                     onClick={cancellHandler}
                   >
                     Zrušiť objednávku

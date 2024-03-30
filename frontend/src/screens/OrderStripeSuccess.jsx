@@ -42,21 +42,20 @@ const OrderStripeSuccess = () => {
 
   useEffect(() => {
     const getInitPaymentId = async (orderId) => {
-      if (userInfo.token) {
-        try {
-          const { data } = await axios.get(
-            `
+      try {
+        const { data } = await axios.get(
+          `
           /api/orders/${orderId}/init-payment`,
 
-            configBearer
-          )
+          configBearer
+        )
 
-          setInitPaymentId(data)
-        } catch (error) {
-          console.log(error)
-        }
+        setInitPaymentId(data)
+      } catch (error) {
+        console.log(error)
       }
     }
+
     getInitPaymentId(orderId)
     dispatch(removeFromAll())
   }, [orderId])

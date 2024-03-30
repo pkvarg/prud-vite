@@ -53,6 +53,7 @@ const Footer = () => {
         enableDeclineButton
         onAccept={() => {
           setCookieAccept(true)
+          increaseVisitors()
         }}
         declineButtonStyle={{
           background: 'red',
