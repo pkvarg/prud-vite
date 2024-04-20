@@ -588,11 +588,6 @@ h3.product-name {
   border-radius: 10px !important;
 }
 
-.btn-blue.rounded {
-  /* border-radius: 35px !important; */
-  /* border-radius: 10px !important; */
-}
-
 .btn-blue:hover {
   background-color: #fefefe;
   color: #2cb3e6;

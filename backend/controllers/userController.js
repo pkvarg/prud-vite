@@ -3,7 +3,6 @@ import User from '../models/userModel.js'
 import generateToken from '../utils/generateToken.js'
 import createRegisterToken from '../utils/createRegisterToken.js'
 import Email from '../utils/email.js'
-import { json } from 'express'
 
 // @desc Auth user & get token
 // @desc POST /api/users/login
@@ -65,25 +64,13 @@ const registerUser = asyncHandler(async (req, res) => {
     await new Email(user, registerURL).sendWelcome()
 
     res.status(201).json('OK')
-
-    // res.status(201).json({
-    //   _id: user._id,
-    //   name: user.name,
-    //   email: user.email,
-    //   isAdmin: user.isAdmin,
-    //   isAssistant: user.isAssistant,
-
-    //   token: generateToken(user._id),
-    // })
   } else {
     res.status(400)
     throw new ErrorEvent('Naplatné dáta užívateľa')
   }
 })
 
-// @descRegister a new user
-// @desc POST /api/users/
-// @access Public
+// @desc GET /api/users/:email/:token/
 
 const checkRegistrationToken = asyncHandler(async (req, res) => {
   const { email, token } = req.params

@@ -1,7 +1,6 @@
 import asyncHandler from 'express-async-handler'
 import Product from '../models/productModel.js'
 import Email from '../utils/email.js'
-import removeAccents from 'remove-accents'
 
 // @desc Fetch all NO LIMIT products
 // @desc GET /api/products/all

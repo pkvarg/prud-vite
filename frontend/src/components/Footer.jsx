@@ -163,15 +163,16 @@ const Footer = () => {
 
               <div className='footer-copyright mobile-only'>
                 <p>Copyright &copy; {Date().substring(11, 15)} PRÚD,</p>
-                <p>všetky práva vyhradené, s povolením</p>
+                <p>všetky práva vyhradené,</p>
                 {/* <p> s povolením</p> */}
                 <a
                   href='https://www.lsm.org'
                   target='_blank'
                   rel='noreferrer'
                   className='footer-link'
+                  style={{ marginLeft: '2px' }}
                 >
-                  LIVING STREAM MINISTRY
+                  s povolením LIVING STREAM MINISTRY
                 </a>
                 <a
                   href='https://www.pictusweb.sk'

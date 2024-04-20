@@ -166,7 +166,7 @@ class Email {
   async sendDeliveredNotificationEmail() {
     await this.send(
       'deliveredOrderEmail',
-      `Vaša objednávka ${this.orderNumber} bola  odoslaná`,
+      `Vaša objednávka ${this.orderNumber} bola odoslaná`,
       false
     )
   }

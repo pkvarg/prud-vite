@@ -170,58 +170,6 @@ const OrderScreen = () => {
     },
   }
 
-  //const [initPaymentId, setInitPaymentId] = useState('')
-
-  // const makePayment = async () => {
-  //   console.log('clicked stripe')
-  //   // create a unique init payment ID in db
-
-  //   if (order._id) {
-  //     try {
-  //       const { data } = await axios.put(
-  //         `
-  //       /api/orders/${order._id}/init-payment`,
-  //         {},
-  //         configBearer
-  //       )
-
-  //       setInitPaymentId(data.initPaymentId)
-  //     } catch (error) {
-  //       console.log(error)
-  //     }
-  //   }
-
-  //   const stripe = await stripePromise
-  //   const requestBody = {
-  //     userName: userInfo.name,
-  //     email: userInfo.email,
-  //     products: ps,
-  //     url: locationOrder,
-  //     initPaymentId,
-  //     shippingPrice,
-  //   }
-
-  //   const config = {
-  //     headers: {
-  //       'Content-Type': 'application/json',
-  //     },
-  //   }
-
-  //   const response = await axios.post(
-  //     '/api/create-stripe-checkout-session',
-  //     { requestBody },
-  //     config
-  //   )
-
-  //   //console.log('resp', response.data.id)
-
-  //   //window.location.href = response.data
-  //   const session = await response.data
-  //   await stripe.redirectToCheckout({
-  //     sessionId: session.id,
-  //   })
-  // }
-
   const makePayment = async () => {
     console.log('clicked stripe')
     // create a unique init payment ID in db
