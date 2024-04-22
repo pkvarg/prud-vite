@@ -11,6 +11,10 @@ import Email from '../utils/email.js'
 const authUser = asyncHandler(async (req, res) => {
   const { email, password } = req.body
   const user = await User.findOne({ email })
+  if (!user) {
+    res.status(401)
+    throw new Error('Užívateľ neexistuje.')
+  }
   if (!user.isRegistered) {
     res.status(401)
     throw new Error(

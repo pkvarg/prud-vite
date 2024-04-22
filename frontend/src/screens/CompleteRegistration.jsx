@@ -17,7 +17,7 @@ const CompleteRegistration = () => {
     const checkToken = async () => {
       try {
         const res = await axios.get(`/api/users/${email}/${token}`)
-        console.log('tokok', res)
+
         if (res.data === 'ok') {
           setMessage('Registrácia bola úspešne dokončená! Môžete sa prihlásiť.')
           setTimeout(goToLogin, 3000)

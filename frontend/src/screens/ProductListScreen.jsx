@@ -43,26 +43,6 @@ const ProductListScreen = () => {
   const userLogin = useSelector((state) => state.userLogin)
   const { userInfo } = userLogin
 
-  // useEffect(() => {
-  //   dispatch({ type: PRODUCT_CREATE_RESET })
-  //   if (!userInfo.isAdmin) {
-  //     navigate('/login')
-  //   }
-  //   if (successCreate) {
-  //     navigate(`/admin/product/${createdProduct._id}/edit`)
-  //   } else {
-  //     dispatch(listProducts('', pageNumber))
-  //   }
-  // }, [
-  //   dispatch,
-  //   userInfo,
-  //   navigate,
-  //   successDelete,
-  //   successCreate,
-  //   createdProduct,
-  //   pageNumber,
-  // ])
-
   const deleteHandler = (id) => {
     if (window.confirm('Are you sure?')) {
       dispatch(deleteProduct(id))
