@@ -66,7 +66,7 @@ let customerInformation = (doc, invoice) => {
     //
     .text('Spôsob platby:', 50, customerInformationTop + 30)
     .text(invoice.paymentMethod, 175, customerInformationTop + 30)
-  if (invoice.billing.name !== undefined) {
+  if (invoice.billing.name !== '') {
     doc
       .font('Cardo-Bold')
       .text(invoice.billing.name, 320, customerInformationTop)
