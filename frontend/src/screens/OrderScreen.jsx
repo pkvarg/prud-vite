@@ -83,7 +83,7 @@ const OrderScreen = () => {
   }
 
   let shippingPrice
-  order?.totalPrice > 100 ? (shippingPrice = 0) : (shippingPrice = 3.5)
+  order?.totalPrice > 100 ? (shippingPrice = 0) : (shippingPrice = 4.5)
 
   //useEffect becomes shorter
   useEffect(() => {
@@ -243,7 +243,7 @@ const OrderScreen = () => {
                 <strong>Adresa: </strong>
                 {order.shippingAddress.address}, {order.shippingAddress.city},{' '}
                 {order.shippingAddress.postalCode},{' '}
-                {order.shippingAddress.country}
+                {order.shippingAddress.country}, {order.shippingAddress.phone}
               </p>
               {cart.shippingAddress.billingName && (
                 <div>

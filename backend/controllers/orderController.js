@@ -126,7 +126,10 @@ const addOrderItems = asyncHandler(async (req, res) => {
       ', ' +
       addressInfo.postalCode +
       ', ' +
-      addressInfo.country
+      addressInfo.country +
+      ', ' +
+      shippingAddress.phone
+
     productsObject.billinginfo =
       addressInfo.billingName +
       ', ' +
@@ -175,6 +178,7 @@ const addOrderItems = asyncHandler(async (req, res) => {
         address: createdOrder.shippingAddress.address,
         city: createdOrder.shippingAddress.city,
         country: createdOrder.shippingAddress.country,
+        phone: createdOrder.shippingAddress.phone,
         postalCode: createdOrder.shippingAddress.postalCode,
       },
       billing: {
@@ -200,6 +204,7 @@ const addOrderItems = asyncHandler(async (req, res) => {
       },
       ico: 'IČO: 36076589',
       dic: 'DIČ: 2022028173',
+      invoice_produced_by: 'Vyhotovil: LG',
       footer: {
         text: 'Faktúra zároveň slúži ako dodací list',
       },

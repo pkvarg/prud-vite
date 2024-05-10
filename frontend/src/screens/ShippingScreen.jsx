@@ -31,6 +31,8 @@ const ShippingScreen = () => {
 
   const [note, setNote] = useState('')
 
+  const [phone, setPhone] = useState('')
+
   useEffect(() => {
     setName(shippingAddress.name)
     setAddress(shippingAddress.address)
@@ -44,6 +46,7 @@ const ShippingScreen = () => {
     setBillingICO(shippingAddress.billingICO)
     setBillingDIC(shippingAddress.billingDIC)
     setNote(shippingAddress.note)
+    setPhone(shippingAddress.phone)
   }, [])
 
   const dispatch = useDispatch('')
@@ -66,6 +69,7 @@ const ShippingScreen = () => {
         billingICO,
         billingDIC,
         note,
+        phone,
       })
     )
     navigate('/payment')
@@ -115,7 +119,7 @@ const ShippingScreen = () => {
             </Form.Label>
             <Form.Control
               type='text'
-              placeholder='Adresa'
+              placeholder='Ulica a číslo'
               value={address}
               required
               onChange={(e) => setAddress(e.target.value)}
@@ -157,6 +161,17 @@ const ShippingScreen = () => {
               onChange={(e) => setCountry(e.target.value)}
             ></Form.Control>
           </Form.Group>
+
+          <Form.Group controlId='phone'>
+            <Form.Label>Telefón</Form.Label>
+            <Form.Control
+              type='text'
+              placeholder='Telefón'
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
+            ></Form.Control>
+          </Form.Group>
+
           <Form.Group controlId='note'>
             <Form.Label>Poznámka</Form.Label>
             <Form.Control
@@ -193,7 +208,7 @@ const ShippingScreen = () => {
                 <Form.Label>Fakturačná adresa</Form.Label>
                 <Form.Control
                   type='text'
-                  placeholder='Fakturačná adresa'
+                  placeholder='Ulica a číslo'
                   value={billingAddress}
                   onChange={(e) => setBillingAddress(e.target.value)}
                 ></Form.Control>

@@ -76,7 +76,7 @@ const OrderStripeSuccess = () => {
   }
 
   let shippingPrice
-  order?.totalPrice > 100 ? (shippingPrice = 0) : (shippingPrice = 3.5)
+  order?.totalPrice > 100 ? (shippingPrice = 0) : (shippingPrice = 4.5)
 
   //useEffect becomes shorter
   useEffect(() => {

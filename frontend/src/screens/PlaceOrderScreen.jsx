@@ -117,7 +117,7 @@ const PlaceOrderScreen = () => {
                 <strong>Príjemca: </strong>
                 {cart.shippingAddress.name}, {cart.shippingAddress.address},{' '}
                 {cart.shippingAddress.city}, {cart.shippingAddress.postalCode},{' '}
-                {cart.shippingAddress.country}
+                {cart.shippingAddress.country}, {cart.shippingAddress.phone}
               </p>
               {cart.shippingAddress.billingName && (
                 <div>

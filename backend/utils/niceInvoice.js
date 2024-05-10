@@ -71,20 +71,19 @@ let customerInformation = (doc, invoice) => {
       .font('Cardo-Bold')
       .text(invoice.billing.name, 320, customerInformationTop)
       .font('Cardo')
-      .text(
-        invoice.billing.address + ', ' + invoice.billing.city,
-        320,
-        customerInformationTop + 15
-      )
+      .text(invoice.billing.address, 320, customerInformationTop + 15)
+      .text(invoice.billing.city, 320, customerInformationTop + 30)
       .text(
         invoice.billing.postalCode + ', ' + invoice.billing.country,
         320,
-        customerInformationTop + 30
+        customerInformationTop + 45
       )
-      .text('IČO:', 320, customerInformationTop + 45)
-      .text(invoice.billing.ICO, 350, customerInformationTop + 45)
-      .text('DIČ:', 320, customerInformationTop + 60)
-      .text(invoice.billing.DIC, 350, customerInformationTop + 60)
+      .text('IČO:', 320, customerInformationTop + 60)
+      .text(
+        invoice.billing.ICO + ', ' + 'DIČ: ' + invoice.billing.DIC,
+        353,
+        customerInformationTop + 60
+      )
       .moveDown()
 
     generateHr(doc, 282)
@@ -189,6 +188,11 @@ let invoiceTable = (doc, invoice) => {
 let footer = (doc, invoice) => {
   if (invoice.footer.text.length !== 0) {
     doc
+      .fontSize(12.5)
+      .text(invoice.invoice_produced_by, 50, 760, {
+        align: 'center',
+        width: 500,
+      })
       .fontSize(15)
       .text(invoice.footer.text, 50, 780, { align: 'center', width: 500 })
   }
