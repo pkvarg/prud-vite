@@ -129,6 +129,7 @@ const initialState = {
       city: '',
       postalCode: '',
       country: '',
+      phone: '',
       billingName: '',
       billingAddress: '',
       billingCity: '',
