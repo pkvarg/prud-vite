@@ -184,7 +184,7 @@ const CartScreen = () => {
                         .toFixed(2)
                         .replace('.', ',') > 100
                         ? 0
-                        : addDecimals(3.5).replace('.', ',')}{' '}
+                        : addDecimals(4.5).replace('.', ',')}{' '}
                       €
                     </div>
                   </div>
@@ -211,7 +211,7 @@ const CartScreen = () => {
                               0
                             ) > 100
                               ? 0
-                              : 3.5
+                              : 4.5
                           )
                       ).replace('.', ',')}{' '}
                       €

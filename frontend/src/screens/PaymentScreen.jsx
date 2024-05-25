@@ -15,7 +15,7 @@ const PaymentScreen = () => {
     navigate('/shipping')
   }
 
-  const [paymentMethod, setPaymentMethod] = useState('')
+  const [paymentMethod, setPaymentMethod] = useState('Hotovosť')
 
   const dispatch = useDispatch()
 
@@ -36,23 +36,24 @@ const PaymentScreen = () => {
         <h1>Spôsob platby</h1>
         <Form onSubmit={submitHandler}>
           <Form.Group>
-            <Form.Label as='legend'>Vyberte spôsob platby</Form.Label>
+            {/* <Form.Label as='legend'>Vyberte spôsob platby</Form.Label> */}
             <Col>
-              <Form.Check
+              {/* <Form.Check
                 type='radio'
                 label='Platba kartou Stripe / Google Pay'
                 id='Stripe'
                 name='paymentMethod'
                 value='Stripe'
                 onChange={(e) => setPaymentMethod(e.target.value)}
-              ></Form.Check>
+              ></Form.Check> */}
               <Form.Check
                 type='radio'
                 label='Hotovosť pri prevzatí'
                 id='Cash'
                 name='paymentMethod'
                 value='Hotovosť'
-                onChange={(e) => setPaymentMethod(e.target.value)}
+                defaultChecked
+                // onChange={(e) => setPaymentMethod(e.target.value)}
               ></Form.Check>
             </Col>
           </Form.Group>

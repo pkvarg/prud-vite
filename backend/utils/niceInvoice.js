@@ -23,41 +23,41 @@ let header = (doc, invoice) => {
   if (fs.existsSync(invoice.header.company_logo)) {
     doc
       .image(invoice.header.company_logo, 50, 45, { width: 100 })
-      .fontSize(18)
+      .fontSize(15)
       .font('Cardo-Bold')
-      .text(invoice.header.company_name, 515, 31)
+      .text(invoice.header.company_name, 520, 31)
       .moveDown()
   } else {
-    doc.fontSize(18).font('Cardo-Bold')
-    text(invoice.header.company_name, 515, 31).moveDown()
+    doc.fontSize(13).font('Cardo-Bold')
+    text(invoice.header.company_name, 520, 31).moveDown()
   }
 
   if (invoice.header.company_address.length !== 0) {
+    doc.fontSize(12).font('Cardo-Bold')
     companyAddress(doc, invoice.header.company_address)
   }
   // ico dic
   if (invoice.ico.length !== 0) {
-    doc.font('Cardo-Bold').fontSize(15).text(invoice.ico, 454, 85)
+    doc.font('Cardo-Bold').fontSize(11).text(invoice.ico, 480, 80)
   }
   if (invoice.dic.length !== 0) {
-    doc.font('Cardo-Bold').fontSize(15).text(invoice.dic, 439.5, 105)
+    doc.font('Cardo-Bold').fontSize(11).text(invoice.dic, 469.5, 95)
   }
-  doc.font('Cardo').fontSize(12).text('MVSR VUS/1-900/90-26215-1', 395, 125)
+  doc.font('Cardo').fontSize(10).text('MVSR VUS/1-900/90-26215-1', 422, 110)
 }
 
 let customerInformation = (doc, invoice) => {
   doc
     .fillColor('#444444')
-    .fontSize(20)
-    .text('Faktúra - Daňový doklad:', 50, 160)
     .fontSize(15)
-    .text(invoice.orderNumber, 275, 165)
+    .text('Faktúra - Daňový doklad:', 50, 160)
+    .text(invoice.orderNumber, 235, 160)
   generateHr(doc, 185)
 
-  const customerInformationTop = 200
+  const customerInformationTop = 187.5
 
   doc
-    .fontSize(14)
+    .fontSize(13)
     .font('Cardo')
     .text('Dátum vystavenia:', 50, customerInformationTop)
     .text(invoice.date.billing_date, 175, customerInformationTop)
@@ -66,46 +66,93 @@ let customerInformation = (doc, invoice) => {
     //
     .text('Spôsob platby:', 50, customerInformationTop + 30)
     .text(invoice.paymentMethod, 175, customerInformationTop + 30)
-  if (invoice.billing.name !== '') {
-    doc
-      .font('Cardo-Bold')
-      .text(invoice.billing.name, 320, customerInformationTop)
-      .font('Cardo')
-      .text(invoice.billing.address, 320, customerInformationTop + 15)
-      .text(invoice.billing.city, 320, customerInformationTop + 30)
-      .text(
-        invoice.billing.postalCode + ', ' + invoice.billing.country,
-        320,
-        customerInformationTop + 45
-      )
-      .text('IČO:', 320, customerInformationTop + 60)
-      .text(
-        invoice.billing.ICO + ', ' + 'DIČ: ' + invoice.billing.DIC,
-        353,
-        customerInformationTop + 60
-      )
-      .moveDown()
 
-    generateHr(doc, 282)
-  } else {
+  doc
+    .font('Cardo-Bold')
+    .text('Doručovacie údaje', 320, customerInformationTop)
+    .font('Cardo')
+    .text(invoice.shipping.name, 320, customerInformationTop + 15)
+
+    .text(
+      invoice.shipping.address + ', ' + invoice.shipping.city,
+      320,
+      customerInformationTop + 30
+    )
+    .text(
+      invoice.shipping.postalCode + ', ' + invoice.shipping.country,
+      320,
+      customerInformationTop + 45
+    )
+
+    .moveDown()
+
+  generateHr(doc, 250)
+  // fakturacne udaje
+  if (invoice.billing.name === undefined || invoice.billing.name === '') {
     doc
       .font('Cardo-Bold')
-      .text(invoice.shipping.name, 320, customerInformationTop)
+      .fontSize(12)
+      .text('Fakturačné údaje', 50, customerInformationTop + 65)
+      .font('Cardo')
+      .text(invoice.shipping.name, 50, customerInformationTop + 77.5)
       .font('Cardo')
       .text(
         invoice.shipping.address + ', ' + invoice.shipping.city,
-        320,
-        customerInformationTop + 15
+        50,
+        customerInformationTop + 90
       )
       .text(
         invoice.shipping.postalCode + ', ' + invoice.shipping.country,
-        320,
-        customerInformationTop + 30
+        50,
+        customerInformationTop + 102.5
       )
-
-      .moveDown()
-
-    generateHr(doc, 272)
+    if (invoice.note) {
+      doc
+        .fontSize(10)
+        .text(
+          'Poznámka:' + ' ' + invoice.note,
+          50,
+          customerInformationTop + 117.5
+        )
+    }
+    doc.moveDown()
+  } else {
+    doc
+      .font('Cardo-Bold')
+      .fontSize(13)
+      .text('Fakturačné údaje', 50, customerInformationTop + 65)
+      .font('Cardo')
+      .fontSize(12)
+      .text(invoice.billing.name, 50, customerInformationTop + 77.5)
+      .font('Cardo')
+      .text(
+        invoice.billing.address + ', ' + invoice.billing.city,
+        50,
+        customerInformationTop + 90
+      )
+      .text(
+        invoice.billing.postalCode +
+          ', ' +
+          invoice.billing.country +
+          ', ' +
+          'IČO:' +
+          +invoice.billing.ICO +
+          ', ' +
+          'DIČ: ' +
+          invoice.billing.DIC,
+        50,
+        customerInformationTop + 102.5
+      )
+    if (invoice.note) {
+      doc
+        .fontSize(10)
+        .text(
+          'Poznámka:' + ' ' + invoice.note,
+          50,
+          customerInformationTop + 117.5
+        )
+    }
+    doc.moveDown()
   }
 }
 
@@ -116,7 +163,7 @@ let invoiceTable = (doc, invoice) => {
 
   doc.font('Cardo-Bold')
   tableRow(doc, invoiceTableTop, 'Produkty', '', 'Cena/ks', 'Počet', 'Spolu')
-  generateHr(doc, invoiceTableTop + 20)
+  generateHr(doc, invoiceTableTop + 15)
   doc.font('Cardo')
 
   let productsTotalPrice = 0
@@ -139,7 +186,7 @@ let invoiceTable = (doc, invoice) => {
       discount = ''
     }
 
-    const position = invoiceTableTop + (i + 1) * 30
+    const position = invoiceTableTop + (i + 1) * 15
     tableRow(
       doc,
       position,
@@ -149,7 +196,7 @@ let invoiceTable = (doc, invoice) => {
       item.qty,
       formatCurrency(currencySymbol, total.toFixed(2).replace('.', ','))
     ),
-      generateHr(doc, position + 20)
+      generateHr(doc, position + 15)
   }
 
   let shippingPrice = invoice.shippingPrice
@@ -157,7 +204,7 @@ let invoiceTable = (doc, invoice) => {
   let totalPrice = invoice.total
   productsTotalPrice = addDecimals(productsTotalPrice)
 
-  const productsTotalPosition = invoiceTableTop + (i + 1) * 30
+  const productsTotalPosition = invoiceTableTop + (i + 1) * 15
   doc.font('Cardo-Bold')
   totalTable(
     doc,
@@ -166,7 +213,7 @@ let invoiceTable = (doc, invoice) => {
     formatCurrency(currencySymbol, productsTotalPrice.replace('.', ','))
   )
 
-  const shippingPosition = productsTotalPosition + 20
+  const shippingPosition = productsTotalPosition + 10
   doc.font('Cardo-Bold')
   totalTable(
     doc,
@@ -175,7 +222,7 @@ let invoiceTable = (doc, invoice) => {
     formatCurrency(currencySymbol, shippingPrice.replace('.', ','))
   )
 
-  const paidToDatePosition = shippingPosition + 20
+  const paidToDatePosition = shippingPosition + 10
   doc.font('Cardo-Bold')
   totalTable(
     doc,
@@ -188,19 +235,19 @@ let invoiceTable = (doc, invoice) => {
 let footer = (doc, invoice) => {
   if (invoice.footer.text.length !== 0) {
     doc
-      .fontSize(12.5)
-      .text(invoice.invoice_produced_by, 50, 760, {
+      .fontSize(10)
+      .text(invoice.invoice_produced_by, 50, 770, {
         align: 'center',
         width: 500,
       })
-      .fontSize(15)
+      .fontSize(12)
       .text(invoice.footer.text, 50, 780, { align: 'center', width: 500 })
   }
 }
 
 let totalTable = (doc, y, name, description) => {
   doc
-    .fontSize(15)
+    .fontSize(10)
     .text(name, 400, y, { width: 90, align: 'right' })
     .text(description, 500, y, { align: 'right' })
 }
@@ -208,7 +255,7 @@ let totalTable = (doc, y, name, description) => {
 let tableRow = (doc, y, item, discount, price, quantity, lineTotal) => {
   doc
   doc
-    .fontSize(12.5)
+    .fontSize(10)
     .text(item, 50, y)
     .text(discount, 300, y)
     .text(price, 337, y, { width: 90, align: 'right' })
@@ -234,7 +281,7 @@ let companyAddress = (doc, address) => {
   let chunks = str.match(/.{0,25}(\s|$)/g)
   let first = 50
   chunks.forEach(function (i, x) {
-    doc.fontSize(15).text(chunks[x], 200, first, { align: 'right' })
+    doc.text(chunks[x], 200, first, { align: 'right' })
     first = +first + 15
   })
 }

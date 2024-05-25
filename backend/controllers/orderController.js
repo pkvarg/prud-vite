@@ -204,6 +204,7 @@ const addOrderItems = asyncHandler(async (req, res) => {
       },
       ico: 'IČO: 36076589',
       dic: 'DIČ: 2022028173',
+      note: productsObject.note,
       invoice_produced_by: 'Vyhotovil: LG',
       footer: {
         text: 'Faktúra zároveň slúži ako dodací list',

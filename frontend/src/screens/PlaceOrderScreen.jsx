@@ -20,7 +20,7 @@ const PlaceOrderScreen = () => {
   )
 
   // DEFINE SHIPPING PRICE and TAX HERE
-  cart.shippingPrice = addDecimals(cart.itemsPrice > 100 ? 0 : addDecimals(3.5))
+  cart.shippingPrice = addDecimals(cart.itemsPrice > 100 ? 0 : addDecimals(4.5))
   // cart.taxPrice = addDecimals(Number((0.15 * cart.itemsPrice).toFixed(2)))
 
   cart.totalPrice = (

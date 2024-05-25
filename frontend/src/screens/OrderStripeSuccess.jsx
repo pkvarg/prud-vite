@@ -12,8 +12,6 @@ import {
 
 import {
   ORDER_PAY_RESET,
-  ORDER_DELIVER_RESET,
-  ORDER_CANCELL_RESET,
   ORDER_LIST_MY_RESET,
 } from '../constants/orderConstants'
 import axios from 'axios'
