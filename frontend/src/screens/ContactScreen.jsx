@@ -13,7 +13,7 @@ const ContactScreen = () => {
 
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
-  const [subject, setSubject] = useState('')
+  //const [subject, setSubject] = useState('')
   const [emailMessage, setEmailMessage] = useState('')
   const [passwordGroupOne, setPasswordGroupOne] = useState(x)
   const [passwordGroupTwo, setPasswordGroupTwo] = useState(y)
@@ -31,7 +31,7 @@ const ContactScreen = () => {
   const contactForm = {
     name,
     email,
-    subject,
+    //subject,
     emailMessage,
   }
 
@@ -48,7 +48,7 @@ const ContactScreen = () => {
       )
       setName('')
       setEmail('')
-      setSubject('')
+      //setSubject('')
       setEmailMessage('')
     } else {
       try {
@@ -62,7 +62,7 @@ const ContactScreen = () => {
           setMessageSuccess('Správa úspešne odoslaná')
           setName('')
           setEmail('')
-          setSubject('')
+          //setSubject('')
           setEmailMessage('')
         }
       } catch (error) {
@@ -108,7 +108,7 @@ const ContactScreen = () => {
               onChange={(e) => setEmail(e.target.value)}
             ></Form.Control>
           </Form.Group>
-          <Form.Group controlId='subject'>
+          {/* <Form.Group controlId='subject'>
             <Form.Label>Predmet</Form.Label>
             <Form.Control
               type='subject'
@@ -116,7 +116,7 @@ const ContactScreen = () => {
               value={subject}
               onChange={(e) => setSubject(e.target.value)}
             ></Form.Control>
-          </Form.Group>
+          </Form.Group> */}
           <Form.Group controlId='message'>
             <Form.Label>
               Správa<sup>*</sup>

@@ -56,7 +56,7 @@ router.post('/contact', async (req, res) => {
   const emailForm = {
     name: data.name,
     email: data.email,
-    subject: data.subject,
+    //subject: data.subject,
     message: data.emailMessage,
   }
   try {
