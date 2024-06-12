@@ -212,7 +212,7 @@ const Header = () => {
               <LinkContainer to='new-books/2024'>
                 <NavDropdown.Item>Knihy 2024</NavDropdown.Item>
               </LinkContainer>
-              <LinkContainer to='new-books/2023'>
+              {/* <LinkContainer to='new-books/2023'>
                 <NavDropdown.Item>Knihy 2023</NavDropdown.Item>
               </LinkContainer>
               <LinkContainer to='new-books/2022'>
@@ -220,7 +220,7 @@ const Header = () => {
               </LinkContainer>
               <LinkContainer to='new-books/2021'>
                 <NavDropdown.Item>Knihy 2021</NavDropdown.Item>
-              </LinkContainer>
+              </LinkContainer> */}
               <LinkContainer to='new-books/2020'>
                 <NavDropdown.Item>Knihy 2020</NavDropdown.Item>
               </LinkContainer>

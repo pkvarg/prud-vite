@@ -793,6 +793,7 @@ i.fa-solid.fa-download:hover {
   justify-content: space-evenly;
   align-items: center;
   margin: 30px 0;
+  flex-wrap: wrap;
 }
 
 .prods-by-year {
@@ -819,6 +820,11 @@ i.fa-solid.fa-download:hover {
 
 .price-box {
   font-weight: 300;
+}
+
+.prod-img-year-width {
+  width: 100%;
+  margin-left: 0.25%;
 }
 
 .prod-by-year-description {

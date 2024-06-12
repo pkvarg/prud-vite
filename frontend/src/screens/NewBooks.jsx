@@ -4,6 +4,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Image } from 'react-bootstrap'
 import { listProductDetails } from '../actions/productActions'
 import { listAllProducts } from '../actions/productActions'
+import Product from '../components/Product'
+import { Row, Col } from 'react-bootstrap'
 
 const NewBooks = () => {
   const params = useParams()
@@ -34,7 +36,7 @@ const NewBooks = () => {
       </Link>
       <div>
         <h1>Knihy {year}</h1>
-        <div className='prods-by-year-container'>
+        {/* <div className='prods-by-year-container'>
           {byYear.map((product) => (
             <div className='prods-by-year'>
               {product.year === year && (
@@ -68,7 +70,37 @@ const NewBooks = () => {
               )}
             </div>
           ))}
-        </div>
+        </div> */}
+        <Row>
+          {byYear.map((product) => (
+            <Col
+              className='
+            align-items-stretch d-flex no-mobile
+            '
+              key={product._id}
+              sm={12}
+              md={6}
+              lg={4}
+              xl={3}
+            >
+              <Product product={product} />
+            </Col>
+          ))}
+          {byYear.map((product) => (
+            <Col
+              className='
+            align-items-stretch mobile-only
+            '
+              key={product._id}
+              sm={12}
+              md={6}
+              lg={4}
+              xl={3}
+            >
+              <Product product={product} />
+            </Col>
+          ))}
+        </Row>
       </div>
     </>
   )
