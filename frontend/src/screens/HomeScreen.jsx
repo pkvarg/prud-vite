@@ -74,7 +74,7 @@ const HomeScreen = () => {
           Naspäť
         </Link>
       )}
-      <h1 className='new-publications'>Nové publikácie</h1>
+      <h1 className='new-publications'>Naše publikácie</h1>
       <hr></hr>
       {loading ? (
         <Loader />
