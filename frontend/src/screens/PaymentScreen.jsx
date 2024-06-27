@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
-import { Form, Button, Col } from 'react-bootstrap'
+import { Form, Button, Col, Image } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import FormContainer from '../components/FormContainer'
 import CheckoutSteps from '../components/CheckoutSteps'
@@ -57,6 +57,14 @@ const PaymentScreen = () => {
               ></Form.Check>
             </Col>
           </Form.Group>
+          <div style={{ display: 'flex', flexDirection: 'column' }}>
+            <Image
+              style={{ width: '25%', marginLeft: '-3%' }}
+              src='/images/slovenska_posta.webp'
+              alt='posta'
+              fluid
+            ></Image>
+          </div>
           <Button type='submit' className='my-3 btn-blue rounded'>
             Pokračovať
           </Button>

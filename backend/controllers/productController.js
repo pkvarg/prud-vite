@@ -19,8 +19,6 @@ const getAllProducts = asyncHandler(async (req, res) => {
 // @access Public
 
 const getProducts = asyncHandler(async (req, res) => {
-  console.log('here..sss')
-
   const pageSize = req.query.pageSize
   const page = Number(req.query.pageNumber) || 1
   const keyword = req.query.keyword

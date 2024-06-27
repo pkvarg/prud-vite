@@ -192,7 +192,10 @@ const addOrderItems = asyncHandler(async (req, res) => {
       },
       items: createdOrder.orderItems,
       discounts: discounts,
-      paymentMethod: createdOrder.paymentMethod,
+      paymentMethod:
+        createdOrder.paymentMethod === 'Hotovosť'
+          ? 'Na dobierku'
+          : createdOrder.paymentMethod,
       total: createdOrder.totalPrice.toFixed(2),
       taxPrice: createdOrder.taxPrice,
       shippingPrice: createdOrder.shippingPrice.toFixed(2),

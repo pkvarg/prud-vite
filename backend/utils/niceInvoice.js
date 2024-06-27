@@ -4,7 +4,7 @@ import path from 'path'
 const __dirname = path.resolve()
 
 const niceInvoice = (invoice, path) => {
-  console.log('invoice:', invoice)
+  //console.log('invoice:', invoice)
   let doc = new PDFDocument({ size: 'A4', margin: 40 })
 
   doc.registerFont('Cardo', __dirname + '/utils/fonts/Cardo-Regular.ttf')
