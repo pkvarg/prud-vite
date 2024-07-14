@@ -18,6 +18,7 @@ const UserEditScreen = () => {
   const [isAdmin, setIsAdmin] = useState(false)
   const [isAssistant, setIsAssistant] = useState(false)
   const [isRegistered, setIsRegistered] = useState(false)
+  const [isSubscribed, setIsSubscribed] = useState(false)
 
   const dispatch = useDispatch()
 
@@ -44,6 +45,7 @@ const UserEditScreen = () => {
         setIsAdmin(user.isAdmin)
         setIsAssistant(user.isAssistant)
         setIsRegistered(user.isRegistered)
+        setIsSubscribed(user.isSubscribed)
       }
     }
   }, [dispatch, navigate, userId, user, successUpdate])
@@ -58,6 +60,7 @@ const UserEditScreen = () => {
         isAdmin,
         isAssistant,
         isRegistered,
+        isSubscribed,
       })
     )
   }
@@ -124,6 +127,16 @@ const UserEditScreen = () => {
                 label='Dokončená registrácia?'
                 checked={isRegistered}
                 onChange={(e) => setIsRegistered(e.target.checked)}
+              ></Form.Check>
+            </Form.Group>
+
+            <Form.Group controlId='isSubscibed'>
+              <Form.Check
+                className='my-2'
+                type='checkbox'
+                label='Odberateľ noviniek?'
+                checked={isSubscribed}
+                onChange={(e) => setIsSubscribed(e.target.checked)}
               ></Form.Check>
             </Form.Group>
 

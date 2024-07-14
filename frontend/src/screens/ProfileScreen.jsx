@@ -18,6 +18,7 @@ const ProfileScreen = () => {
   const [confirmPassword, setConfirmPassword] = useState('')
   const [message, setMessage] = useState(null)
   const [messageSuccess, setMessageSuccess] = useState(null)
+  const [isSubscribed, setIsSubscribed] = useState(false)
 
   const dispatch = useDispatch()
 
@@ -49,6 +50,8 @@ const ProfileScreen = () => {
       } else {
         setName(user.name)
         setEmail(user.email)
+        setIsSubscribed(user.isSubscribed)
+
         // G
         dispatch(listMyOrders())
       }
@@ -60,8 +63,16 @@ const ProfileScreen = () => {
     if (password !== confirmPassword) {
       setMessage('Heslá nesúhlasia')
     } else {
-      dispatch(updateUserProfile({ id: user._id, name, email, password }))
-      setMessageSuccess('Heslo úspešne zmenené')
+      dispatch(
+        updateUserProfile({
+          id: user._id,
+          name,
+          email,
+          password,
+          isSubscribed,
+        })
+      )
+      setMessageSuccess('Údaje úspešne zmenené')
     }
   }
 
@@ -123,6 +134,20 @@ const ProfileScreen = () => {
                 onChange={(e) => setConfirmPassword(e.target.value)}
               ></Form.Control>
             </Form.Group>
+
+            <Form.Group className='billing-flex' controlId='newsletter'>
+              <Form.Check
+                type='checkbox'
+                name='newsletter'
+                checked={isSubscribed}
+                onChange={(e) => setIsSubscribed((prev) => !prev)}
+              />
+              <Form.Label>
+                Želáte si odoberať informácie o novinkách a akciách (cca 2x
+                ročne)?
+              </Form.Label>
+            </Form.Group>
+
             <Button type='submit' className='my-5 btn-blue rounded'>
               Upraviť profil
             </Button>
