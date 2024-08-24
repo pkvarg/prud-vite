@@ -29,9 +29,6 @@ const ProfileScreen = () => {
   const userUpdateProfile = useSelector((state) => state.userUpdateProfile)
   const { success } = userUpdateProfile
 
-  // const location = useLocation()
-  // const { search } = useLocation()
-
   useLayoutEffect(() => {
     window.scrollTo(0, 200)
   })
@@ -47,6 +44,8 @@ const ProfileScreen = () => {
         dispatch({ type: USER_UPDATE_PROFILE_RESET })
         dispatch(getUserDetails('profile'))
         dispatch(listMyOrders())
+      } else if (user._id !== userInfo._id) {
+        dispatch(getUserDetails(userInfo._id))
       } else {
         setName(user.name)
         setEmail(user.email)

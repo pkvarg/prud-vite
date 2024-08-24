@@ -1,4 +1,5 @@
 import nodemailer from 'nodemailer'
+import { google } from 'googleapis'
 import { htmlToText } from 'html-to-text'
 import pug from 'pug'
 import path from 'path'
@@ -46,17 +47,37 @@ class Email {
     this.error = user.error
   }
 
-  newTransport() {
+  // 1. Create OAuth2 client
+  async createTransporter() {
+    const oAuth2Client = new google.auth.OAuth2(
+      process.env.GOOGLE_CLIENT_ID,
+      process.env.GOOGLE_CLIENT_SECRET,
+      process.env.REDIRECT_URI
+    )
+
+    oAuth2Client.setCredentials({
+      refresh_token: process.env.GOOGLE_REFRESH_TOKEN,
+    })
+
+    const accessToken = await oAuth2Client.getAccessToken()
+
+    // 2. Return the transporter object using OAuth2
     return nodemailer.createTransport({
-      pool: true,
-      host: 'smtp.gmail.com',
-      port: 465,
-      secure: true, // use TLS
+      service: 'gmail',
       auth: {
+        type: 'OAuth2',
         user: process.env.ADMIN_USERNAME,
-        pass: process.env.ADMIN_PASSWORD,
+        clientId: process.env.GOOGLE_CLIENT_ID,
+        clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+        refreshToken: process.env.GOOGLE_REFRESH_TOKEN,
+        accessToken: accessToken.token, // Ensure it's token here, not the full object
       },
     })
+  }
+
+  // 3. Create transport method
+  async newTransport() {
+    return await this.createTransporter()
   }
 
   // send the actual email
@@ -114,7 +135,9 @@ class Email {
 
       // 3) Create a transport and send email
 
-      await this.newTransport().sendMail(mailOptions)
+      await this.newTransport().then((transporter) =>
+        transporter.sendMail(mailOptions)
+      )
     }
     if (this.file) {
       console.log('is file')
@@ -138,7 +161,9 @@ class Email {
       }
       // 3) Create a transport and send email
 
-      await this.newTransport().sendMail(mailOptions)
+      await this.newTransport().then((transporter) =>
+        transporter.sendMail(mailOptions)
+      )
     }
   }
 
