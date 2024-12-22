@@ -1,0 +1,24 @@
+extends baseEmail 
+
+block content 
+                            
+  h3 Dobrý deň #{user},
+  
+  h1 Vaša objednávka 
+
+  h2 #{products}
+  h2 #{firstName}
+  h2 #{address}
+  h2 Spôsob platby: #{paymentMethod}
+  h2 Status: #{paid}
+  h2 Produkty: #{productsOnlyPrice.replace('.', ',') } €
+  h2 Poštovné: #{shippingPrice.replace('.', ',') } €
+  h2 Celkom: #{totalPrice.replace('.', ',') } €
+  h2 IBAN: SK38 1100 0000 0026 2075 3192
+  h2 Variabilný symbol: Použite číslo objednávky #{orderNumber}
+  h2 Poznámka: #{note}
+ 
+
+  h3 Ďakujeme za Váš nákup!
+
+  

@@ -17,16 +17,14 @@ const PlaceOrderScreen = () => {
   // Calculate Prices
 
   cart.itemsPrice = addDecimals(
-    cart.cartItems.reduce((acc, item) => acc + item.price * item.qty, 0)
+    cart.cartItems.reduce((acc, item) => acc + item.price * item.qty, 0),
   )
 
   // DEFINE SHIPPING PRICE and TAX HERE
   cart.shippingPrice = addDecimals(cart.itemsPrice > 100 ? 0 : addDecimals(4.5))
   // cart.taxPrice = addDecimals(Number((0.15 * cart.itemsPrice).toFixed(2)))
 
-  cart.totalPrice = (
-    Number(cart.itemsPrice) + Number(cart.shippingPrice)
-  ).toFixed(2)
+  cart.totalPrice = (Number(cart.itemsPrice) + Number(cart.shippingPrice)).toFixed(2)
 
   const orderCreate = useSelector((state) => state.orderCreate)
   const { order, success, error } = orderCreate
@@ -86,13 +84,13 @@ const PlaceOrderScreen = () => {
           email: orderEmailToEmail,
           qtys: prodsQtys,
           discounts: prodsDiscounts,
-        })
+        }),
       )
       dispatch(
         updateUserProfile({
           id: userInfo._id,
           isSubscribed: newsletterChecked,
-        })
+        }),
       )
     } else {
       setMessage('Potvrďte súhlas nižšie')
@@ -117,12 +115,12 @@ const PlaceOrderScreen = () => {
   return (
     <>
       <CheckoutSteps step1 step2 step3 step4 />
-      <Link className='btn btn-back my-3' to='/payment'>
+      <Link className="btn btn-back my-3" to="/payment">
         Naspäť na Spôsob platby
       </Link>
       <Row>
         <Col md={8}>
-          <ListGroup variant='flush'>
+          <ListGroup variant="flush">
             <ListGroup.Item>
               <h2>Doručenie</h2>
               <p>
@@ -135,10 +133,8 @@ const PlaceOrderScreen = () => {
                 <div>
                   <h4>Fakturačné údaje</h4>
                   <p>
-                    {cart.shippingAddress.billingName},{' '}
-                    {cart.shippingAddress.billingAddress},{' '}
-                    {cart.shippingAddress.billingPostalCode},{' '}
-                    {cart.shippingAddress.billingCity},{' '}
+                    {cart.shippingAddress.billingName}, {cart.shippingAddress.billingAddress},{' '}
+                    {cart.shippingAddress.billingPostalCode}, {cart.shippingAddress.billingCity},{' '}
                     {cart.shippingAddress.billingCountry}
                     {cart.shippingAddress.billingICO && (
                       <div>
@@ -150,9 +146,7 @@ const PlaceOrderScreen = () => {
                   </p>
                 </div>
               )}
-              {cart.shippingAddress.note && (
-                <h5>Poznámka: {cart.shippingAddress.note}</h5>
-              )}
+              {cart.shippingAddress.note && <h5>Poznámka: {cart.shippingAddress.note}</h5>}
             </ListGroup.Item>
 
             <ListGroup.Item>
@@ -167,38 +161,27 @@ const PlaceOrderScreen = () => {
               {cart.cartItems.length === 0 ? (
                 <Message>Váš košík je prázdny</Message>
               ) : (
-                <ListGroup variant='flush'>
+                <ListGroup variant="flush">
                   {cart.cartItems.map((item, index) => (
                     <ListGroup.Item key={index}>
-                      <Row className='items-center'>
+                      <Row className="items-center">
                         <Col md={1}>
-                          <Image
-                            src={item.image}
-                            alt={item.name}
-                            fluid
-                            rounded
-                          />
+                          <Image src={item.image} alt={item.name} fluid rounded />
                         </Col>
                         <Col>
-                          <Link
-                            className='no-underline'
-                            to={`/product/${item.product}`}
-                          >
+                          <Link className="no-underline" to={`/product/${item.product}`}>
                             {item.name}
                           </Link>
                           {item.discount > 0 ? (
-                            <h5 className='place-order-discount'>
-                              Zľava {item.discount}%
-                            </h5>
+                            <h5 className="place-order-discount">Zľava {item.discount}%</h5>
                           ) : (
                             ''
                           )}
                         </Col>
-                        <Col md={4} className='place-order-calc'>
+                        <Col md={4} className="place-order-calc">
                           {item.qty} x {''}
                           {item.price.toFixed(2).replace('.', ',')} € ={''}{' '}
-                          {(item.qty * item.price).toFixed(2).replace('.', ',')}{' '}
-                          €
+                          {(item.qty * item.price).toFixed(2).replace('.', ',')} €
                         </Col>
                       </Row>
                     </ListGroup.Item>
@@ -210,90 +193,90 @@ const PlaceOrderScreen = () => {
         </Col>
         <Col md={4}>
           <Card>
-            <ListGroup variant='flush'>
+            <ListGroup variant="flush">
               <ListGroup.Item>
                 <h2>Súhrn objednávky</h2>
               </ListGroup.Item>
               <ListGroup.Item>
-                <Row className=''>
-                  <div className='cart-box-right'>
+                <Row className="">
+                  <div className="cart-box-right">
                     Produkty:
-                    <div className='ml-auto'>
-                      {cart.itemsPrice.replace('.', ',')} €
-                    </div>
+                    <div className="ml-auto">{cart.itemsPrice.replace('.', ',')} €</div>
                   </div>
                 </Row>
               </ListGroup.Item>
               <ListGroup.Item>
                 <Row>
-                  <div className='cart-box-right'>
+                  <div className="cart-box-right">
                     Poštovné:
-                    <div className='ml-auto'>
-                      {' '}
-                      {cart.shippingPrice.replace('.', ',')} €
+                    <div className="ml-auto">
+                      {cart.shippingAddress.country !== 'Slovensko' ? (
+                        <span>Bude oznámené faktúrou</span>
+                      ) : (
+                        <>{cart.shippingPrice.replace('.', ',')} €</>
+                      )}{' '}
                     </div>
                   </div>
                 </Row>
               </ListGroup.Item>
 
-              <ListGroup.Item>
-                <Row>
-                  <div className='cart-box-right'>
-                    Celkom:
-                    <div className='ml-auto'>
-                      {' '}
-                      {cart.totalPrice.replace('.', ',')} €
+              {cart.shippingAddress.country === 'Slovensko' && (
+                <ListGroup.Item>
+                  <Row>
+                    <div className="cart-box-right">
+                      Celkom:
+                      <div className="ml-auto"> {cart.totalPrice.replace('.', ',')} €</div>
                     </div>
-                  </div>
-                </Row>
-              </ListGroup.Item>
+                  </Row>
+                </ListGroup.Item>
+              )}
+
               <ListGroup.Item>
-                {error && <Message variant='danger'>{error}</Message>}
-                {message && <Message variant='danger'>{message}</Message>}
-                <Form.Group className='billing-flex'>
+                {error && <Message variant="danger">{error}</Message>}
+                {message && <Message variant="danger">{message}</Message>}
+                <Form.Group className="billing-flex">
                   <Form.Check
-                    type='checkbox'
-                    name='gdprCheck'
+                    type="checkbox"
+                    name="gdprCheck"
                     required
                     onChange={handleGdprOrder}
                   />
-                  <p className='agree-gdpr-order'>
-                    <a href='/safety-privacy' target='_blank'>
+                  <p className="agree-gdpr-order">
+                    <a href="/safety-privacy" target="_blank">
                       Súhlasím so spracovaním osobných údajov
                     </a>
                   </p>
                 </Form.Group>
-                <Form.Group className='billing-flex'>
+                <Form.Group className="billing-flex">
                   <Form.Check
-                    type='checkbox'
-                    name='tradeRulesCheck'
+                    type="checkbox"
+                    name="tradeRulesCheck"
                     required
                     onChange={handleTradeRulesOrder}
                   />
-                  <p className='agree-traderules-order'>
-                    <a href='/trade-rules' target='_blank'>
+                  <p className="agree-traderules-order">
+                    <a href="/trade-rules" target="_blank">
                       Súhlasím s obchodnými podmienkami
                     </a>
                   </p>
                 </Form.Group>
-                <Form.Group className='billing-flex'>
+                <Form.Group className="billing-flex">
                   <Form.Check
-                    type='checkbox'
-                    name='newsletterCheck'
+                    type="checkbox"
+                    name="newsletterCheck"
                     defaultChecked={newsletterChecked}
                     onChange={handleNewsletter}
                   />
-                  <p className='agree-newsletter'>
-                    Súhlasím so zasielaním mailov o novinkách a akciách (max. 2x
-                    ročne)
+                  <p className="agree-newsletter">
+                    Súhlasím so zasielaním mailov o novinkách a akciách (max. 2x ročne)
                   </p>
                 </Form.Group>
               </ListGroup.Item>
 
               <ListGroup.Item>
                 <Button
-                  type='button'
-                  className='btn-block w-100 btn-blue'
+                  type="button"
+                  className="btn-block w-100 btn-blue"
                   disabled={cart.items === 0 || clicked}
                   onClick={placeOrderhandler}
                 >

@@ -21,12 +21,14 @@ class Email {
     this.addressinfo = user.addressinfo
     this.billinginfo = user.billinginfo
     this.paidByWhom = user.paidByWhom
-    //this.paymentMethod = user.paymentMethod
+
     let paymentMethod
     if (user.paymentMethod === 'Hotovosť') {
       paymentMethod = 'Zaplatíte pri prevzatí'
     } else if (user.paymentMethod === 'PayPal alebo karta') {
       paymentMethod = 'PayPal alebo platba kartou'
+    } else if (user.paymentMethod === 'Prevodom vopred') {
+      paymentMethod = 'Bankovým prevodom vopred'
     } else {
       paymentMethod = 'Stripe'
     }
@@ -45,14 +47,15 @@ class Email {
     this.orderId = user._id
     this.countInStock = user.countInStock
     this.error = user.error
+    this.productsOnlyPrice = user.productsOnlyPrice
   }
 
-  // 1. Create OAuth2 client
+  // // 1. Create OAuth2 client
   async createTransporter() {
     const oAuth2Client = new google.auth.OAuth2(
       process.env.GOOGLE_CLIENT_ID,
       process.env.GOOGLE_CLIENT_SECRET,
-      process.env.REDIRECT_URI
+      process.env.REDIRECT_URI,
     )
 
     oAuth2Client.setCredentials({
@@ -75,7 +78,7 @@ class Email {
     })
   }
 
-  // 3. Create transport method
+  // // 3. Create transport method
   async newTransport() {
     return await this.createTransporter()
   }
@@ -84,37 +87,35 @@ class Email {
   async send(template, subject, adminOnly, accounting) {
     const __dirname = path.resolve()
     // 1) Render HTML based on a pug template
-    const html = pug.renderFile(
-      `${__dirname}/utils/mailTemplates/${template}.pug`,
-      {
-        user: this.user,
-        firstName: this.firstName,
-        email: this.to,
-        url: this.url,
-        subject,
-        // order
-        products: this.products,
-        address: this.addressinfo,
-        billing: this.billinginfo,
-        paidByWhom: this.paidByWhom,
-        paymentMethod: this.paymentMethod,
-        paid: this.isPaid,
-        shippingPrice: this.shippingPrice,
-        taxPrice: this.taxPrice,
-        totalPrice: this.totalPrice,
-        orderNumber: this.orderNumber,
-        file: this.file,
-        // contactForm
-        emailSubject: this.subject,
-        message: this.message,
-        note: this.note,
-        // review
-        comment: this.comment,
-        orderId: this.orderId,
-        countInStock: this.countInStock,
-        error: this.error,
-      }
-    )
+    const html = pug.renderFile(`${__dirname}/utils/mailTemplates/${template}.pug`, {
+      user: this.user,
+      firstName: this.firstName,
+      email: this.to,
+      url: this.url,
+      subject,
+      // order
+      products: this.products,
+      address: this.addressinfo,
+      billing: this.billinginfo,
+      paidByWhom: this.paidByWhom,
+      paymentMethod: this.paymentMethod,
+      paid: this.isPaid,
+      shippingPrice: this.shippingPrice,
+      taxPrice: this.taxPrice,
+      totalPrice: this.totalPrice,
+      productsOnlyPrice: this.productsOnlyPrice,
+      orderNumber: this.orderNumber,
+      file: this.file,
+      // contactForm
+      emailSubject: this.subject,
+      message: this.message,
+      note: this.note,
+      // review
+      comment: this.comment,
+      orderId: this.orderId,
+      countInStock: this.countInStock,
+      error: this.error,
+    })
 
     const admin1 = process.env.ESHOP_BCC
     const admin2 = process.env.DEV_BCC
@@ -135,9 +136,7 @@ class Email {
 
       // 3) Create a transport and send email
 
-      await this.newTransport().then((transporter) =>
-        transporter.sendMail(mailOptions)
-      )
+      await this.newTransport().then((transporter) => transporter.sendMail(mailOptions))
     }
     if (this.file) {
       console.log('is file')
@@ -160,38 +159,44 @@ class Email {
         ],
       }
       // 3) Create a transport and send email
-
-      await this.newTransport().then((transporter) =>
-        transporter.sendMail(mailOptions)
-      )
+      await this.newTransport().then((transporter) => transporter.sendMail(mailOptions))
     }
   }
 
   async sendOrderToEmail() {
+    await this.send('orderToEmail', `Vaša objednávka ${this.orderNumber}`, false, true)
+  }
+
+  // bank transfer NOT SK -> no file, no postage in email
+  async sendOrderNotSkToEmail() {
+    await this.send('orderNotSkToEmail', `Vaša objednávka ${this.orderNumber}`, false, false)
+  }
+
+  // bank transfer NOT SK ->  file, admin only
+  async sendOrderNotSkAdminOnlyToEmail() {
+    await this.send('orderNotSkAdminToEmail', `URGENT objednávka ${this.orderNumber}`, true, false)
+  }
+
+  // bank transfer SK ->  file, info in template
+  async sendOrderSkBankTransferToEmail() {
     await this.send(
-      'orderToEmail',
+      'orderSKbankTransferToEmail',
       `Vaša objednávka ${this.orderNumber}`,
       false,
-      true
+      true,
     )
+  }
+
+  async sendOrderToEmail() {
+    await this.send('orderToEmail', `Vaša objednávka ${this.orderNumber}`, false, true)
   }
 
   async sendLowStoragePiecesWarningEmail() {
-    await this.send(
-      'lowStoragePieces',
-      `Počet ${this.firstName} klesol pod 10`,
-      true,
-      false
-    )
+    await this.send('lowStoragePieces', `Počet ${this.firstName} klesol pod 10`, true, false)
   }
 
   async sendFailedPaymentNotificationgEmail() {
-    await this.send(
-      'failedPaymentNotification',
-      `Platba ${this.orderNumber} zlyhala`,
-      true,
-      false
-    )
+    await this.send('failedPaymentNotification', `Platba ${this.orderNumber} zlyhala`, true, false)
   }
 
   async sendPaymentErrorEmail() {
@@ -203,7 +208,7 @@ class Email {
       'deliveredOrderEmail',
       `Vaša objednávka ${this.orderNumber} bola odoslaná`,
       false,
-      false
+      false,
     )
   }
 
@@ -220,12 +225,7 @@ class Email {
   }
 
   async sendWelcomeGoogle() {
-    await this.send(
-      'welcomeGoogle',
-      'Vaša registrácia na prud.sk',
-      false,
-      false
-    )
+    await this.send('welcomeGoogle', 'Vaša registrácia na prud.sk', false, false)
   }
 
   // contact Form

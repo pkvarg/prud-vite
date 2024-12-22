@@ -147,6 +147,8 @@ const addOrderItems = asyncHandler(async (req, res) => {
       'DIČ: ' +
       addressInfo.billingDIC
     productsObject.note = createdOrder.shippingAddress.note
+    const productsOnly = createdOrder.totalPrice - createdOrder.shippingPrice
+    productsObject.productsOnlyPrice = productsOnly.toFixed(2)
 
     //invoice
     // HandleDate
@@ -193,9 +195,7 @@ const addOrderItems = asyncHandler(async (req, res) => {
       items: createdOrder.orderItems,
       discounts: discounts,
       paymentMethod:
-        createdOrder.paymentMethod === 'Hotovosť'
-          ? 'Na dobierku'
-          : createdOrder.paymentMethod,
+        createdOrder.paymentMethod === 'Hotovosť' ? 'Na dobierku' : createdOrder.paymentMethod,
       total: createdOrder.totalPrice.toFixed(2),
       taxPrice: createdOrder.taxPrice,
       shippingPrice: createdOrder.shippingPrice.toFixed(2),
@@ -225,7 +225,20 @@ const addOrderItems = asyncHandler(async (req, res) => {
     niceInvoice(invoiceDetails, `invoices/${orderNumber}_${formattedDate}.pdf`)
     const fileTosend = `invoices/${orderNumber}_${formattedDate}.pdf`
 
-    await new Email(productsObject, '', fileTosend).sendOrderToEmail()
+    console.log('inv details', invoiceDetails.shipping.country, invoiceDetails.paymentMethod)
+
+    if (
+      invoiceDetails.shipping.country !== 'Slovensko' &&
+      invoiceDetails.paymentMethod === 'Prevodom vopred'
+    ) {
+      await new Email(productsObject, '', '').sendOrderNotSkToEmail()
+      await new Email(productsObject, '', fileTosend).sendOrderNotSkAdminOnlyToEmail()
+    } else if (
+      invoiceDetails.shipping.country === 'Slovensko' &&
+      invoiceDetails.paymentMethod === 'Prevodom vopred'
+    ) {
+      await new Email(productsObject, '', fileTosend).sendOrderSkBankTransferToEmail()
+    } else await new Email(productsObject, '', fileTosend).sendOrderToEmail()
 
     res.status(201).json(createdOrder)
   }
@@ -236,10 +249,7 @@ const addOrderItems = asyncHandler(async (req, res) => {
 // @access Private
 
 const getOrderByid = asyncHandler(async (req, res) => {
-  const order = await Order.findById(req.params.id).populate(
-    'user',
-    'name email'
-  )
+  const order = await Order.findById(req.params.id).populate('user', 'name email')
 
   if (order) {
     res.json(order)
@@ -291,13 +301,7 @@ const updateOrderToPaid = asyncHandler(async (req, res) => {
           ' %'
       } else {
         updatedOrderProductsObject[i] =
-          ' ' +
-          item.qty +
-          ' x ' +
-          item.name +
-          ' €' +
-          item.price.toFixed(2) +
-          '  '
+          ' ' + item.qty + ' x ' + item.name + ' €' + item.price.toFixed(2) + '  '
       }
     })
 
@@ -313,14 +317,11 @@ const updateOrderToPaid = asyncHandler(async (req, res) => {
     updatedOrderProductsObject.email = updatedOrder.email
     updatedOrderProductsObject.name = updatedOrder.name
     updatedOrderProductsObject.paidByWhom =
-      updatedOrder.paymentResult.name.given_name +
-      ' ' +
-      updatedOrder.paymentResult.name.surname
+      updatedOrder.paymentResult.name.given_name + ' ' + updatedOrder.paymentResult.name.surname
     updatedOrderProductsObject.orderNumber = orderNumber
     updatedOrderProductsObject.taxPrice = updatedOrder.taxPrice
     updatedOrderProductsObject.totalPrice = updatedOrder.totalPrice.toFixed(2)
-    updatedOrderProductsObject.shippingPrice =
-      updatedOrder.shippingPrice.toFixed(2)
+    updatedOrderProductsObject.shippingPrice = updatedOrder.shippingPrice.toFixed(2)
     updatedOrderProductsObject.isPaid = updatedOrder.isPaid
     updatedOrderProductsObject.productsCount = updatedOrderProductsCount
     updatedOrderProductsObject.orderId = updatedOrder._id
@@ -386,13 +387,7 @@ const updateOrderToPaidByStripe = asyncHandler(async (req, res) => {
           ' %'
       } else {
         updatedOrderProductsObject[i] =
-          ' ' +
-          item.qty +
-          ' x ' +
-          item.name +
-          ' €' +
-          item.price.toFixed(2) +
-          '  '
+          ' ' + item.qty + ' x ' + item.name + ' €' + item.price.toFixed(2) + '  '
       }
     })
 
@@ -411,8 +406,7 @@ const updateOrderToPaidByStripe = asyncHandler(async (req, res) => {
     updatedOrderProductsObject.orderNumber = orderNumber
     updatedOrderProductsObject.taxPrice = updatedOrder.taxPrice
     updatedOrderProductsObject.totalPrice = updatedOrder.totalPrice.toFixed(2)
-    updatedOrderProductsObject.shippingPrice =
-      updatedOrder.shippingPrice.toFixed(2)
+    updatedOrderProductsObject.shippingPrice = updatedOrder.shippingPrice.toFixed(2)
     updatedOrderProductsObject.isPaid = updatedOrder.isPaid
     updatedOrderProductsObject.productsCount = updatedOrderProductsCount
     updatedOrderProductsObject.orderId = updatedOrder._id

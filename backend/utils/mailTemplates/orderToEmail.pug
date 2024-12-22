@@ -11,8 +11,8 @@ block content
   h2 #{address}
   h2 Spôsob platby: #{paymentMethod}
   h2 Status: #{paid}
+  h2 Produkty: #{productsOnlyPrice.replace('.', ',') } €
   h2 Poštovné: #{shippingPrice.replace('.', ',') } €
-  //- h2 Tax: #{taxPrice}
   h2 Celkom: #{totalPrice.replace('.', ',') } €
   h2 Číslo objednávky: #{orderNumber}
   h2 Poznámka: #{note}

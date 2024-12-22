@@ -1,0 +1,24 @@
+extends baseEmail 
+
+block content 
+                            
+  h3 Ahoj Admin,
+  
+  h1 Objednávka vyžaduje úpravu faktúry s poštovným do zahraničia 
+
+  h2 Klient #{user},
+  h2 Email #{email},
+  h2 #{products}
+  h2 #{firstName}
+  h2 #{address}
+  h2 Spôsob platby: #{paymentMethod}
+  h2 Status: #{paid}
+  h2 Poštovné: Uviesť na faktúre. 
+  h2 Produkty: #{productsOnlyPrice.replace('.', ',') } €
+  h2 Číslo objednávky: #{orderNumber}
+  h2 Klient obdržal IBAN a VS emailom bez faktúry a bol vyzvaný počkať na email s celkovou sumou s poštovným do zahraničia
+  h2 Poznámka: #{note}
+ 
+
+
+  
