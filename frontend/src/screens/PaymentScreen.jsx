@@ -23,6 +23,10 @@ const PaymentScreen = () => {
 
   const submitHandler = (e) => {
     e.preventDefault()
+    if (!method) {
+      alert('Vyberte prosím spôsob platby.')
+      return
+    }
     dispatch(savePaymentMethod(method))
     navigate('/placeorder')
   }
@@ -38,7 +42,6 @@ const PaymentScreen = () => {
         <h1>Spôsob platby</h1>
         <Form onSubmit={submitHandler}>
           <Form.Group>
-            {/* <Form.Label as='legend'>Vyberte spôsob platby</Form.Label> */}
             <Col>
               {/* <Form.Check
                 type='radio'

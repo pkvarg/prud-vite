@@ -33,23 +33,6 @@ const ShippingScreen = () => {
 
   const [phone, setPhone] = useState('')
 
-  // useEffect(() => {
-  //   setName(shippingAddress.name)
-  //   setAddress(shippingAddress.address)
-  //   setCity(shippingAddress.city)
-  //   setPostalCode(shippingAddress.postalCode)
-  //   setCountry(shippingAddress.country)
-  //   setBillingName(shippingAddress.billingName)
-  //   setBillingAddress(shippingAddress.billingAddress)
-  //   setBillingCity(shippingAddress.billingCity)
-  //   setBillingPostalCode(shippingAddress.billingPostalCode)
-  //   setBillingCountry(shippingAddress.billingCountry)
-  //   setBillingICO(shippingAddress.billingICO)
-  //   setBillingDIC(shippingAddress.billingDIC)
-  //   setNote(shippingAddress.note)
-  //   setPhone(shippingAddress.phone)
-  // }, [])
-
   useEffect(() => {
     setName(shippingAddress.name || '')
     setAddress(shippingAddress.address || '')
@@ -113,13 +96,6 @@ const ShippingScreen = () => {
     )
     navigate('/payment')
   }
-
-  // const showBillingAddress = (e) => {
-  //   setDisplay('show')
-  // }
-  // const showBillingICO = (e) => {
-  //   setDisplayICO('show')
-  // }
 
   const [checked, setChecked] = useState(false)
   const handleChange = () => {

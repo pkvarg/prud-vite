@@ -187,10 +187,6 @@ class Email {
     )
   }
 
-  async sendOrderToEmail() {
-    await this.send('orderToEmail', `Vaša objednávka ${this.orderNumber}`, false, true)
-  }
-
   async sendLowStoragePiecesWarningEmail() {
     await this.send('lowStoragePieces', `Počet ${this.firstName} klesol pod 10`, true, false)
   }
