@@ -76,6 +76,10 @@ const ShippingScreen = () => {
 
   const submitHandler = (e) => {
     e.preventDefault()
+    if (country === '' || country === 'Uveďte štát' || country.includes('Uveďte štát')) {
+      alert('Uveďte prosím štát.')
+      return
+    }
     dispatch(
       saveShippingAddress({
         name,
@@ -190,7 +194,7 @@ const ShippingScreen = () => {
               type="radio"
               label="Iné"
               name="countryOption"
-              value="Iné"
+              value="Uveďte štát"
               checked={country !== 'Slovensko' && country !== ''}
               onChange={handleRadioChange}
             />
