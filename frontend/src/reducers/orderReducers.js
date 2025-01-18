@@ -23,6 +23,14 @@ import {
   ORDER_DELIVER_SUCCESS,
   ORDER_DELIVER_FAIL,
   ORDER_DELIVER_RESET,
+  ORDER_PAID_REQUEST,
+  ORDER_PAID_SUCCESS,
+  ORDER_PAID_FAIL,
+  ORDER_PAID_RESET,
+  ORDER_CONFIRMATION_EMAIL_REQUEST,
+  ORDER_CONFIRMATION_EMAIL_SUCCESS,
+  ORDER_CONFIRMATION_EMAIL_FAIL,
+  ORDER_CONFIRMATION_EMAIL_RESET,
   ORDER_CANCELL_REQUEST,
   ORDER_CANCELL_SUCCESS,
   ORDER_CANCELL_FAIL,
@@ -53,7 +61,7 @@ export const orderCreateReducer = (state = {}, action) => {
 
 export const orderDetailsReducer = (
   state = { loading: true, orderItems: [], shippingAddress: {} },
-  action
+  action,
 ) => {
   switch (action.type) {
     case ORDER_DETAILS_REQUEST:
@@ -116,6 +124,52 @@ export const orderDeliverReducer = (state = {}, action) => {
         error: action.payload,
       }
     case ORDER_DELIVER_RESET:
+      return {}
+    default:
+      return state
+  }
+}
+
+export const orderPaidReducer = (state = {}, action) => {
+  switch (action.type) {
+    case ORDER_PAID_REQUEST:
+      return {
+        loading: true,
+      }
+    case ORDER_PAID_SUCCESS:
+      return {
+        loading: false,
+        success: true,
+      }
+    case ORDER_PAID_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
+      }
+    case ORDER_PAID_RESET:
+      return {}
+    default:
+      return state
+  }
+}
+
+export const confirmationEmailReducer = (state = {}, action) => {
+  switch (action.type) {
+    case ORDER_CONFIRMATION_EMAIL_REQUEST:
+      return {
+        loading: true,
+      }
+    case ORDER_CONFIRMATION_EMAIL_SUCCESS:
+      return {
+        loading: false,
+        success: true,
+      }
+    case ORDER_CONFIRMATION_EMAIL_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
+      }
+    case ORDER_CONFIRMATION_EMAIL_RESET:
       return {}
     default:
       return state

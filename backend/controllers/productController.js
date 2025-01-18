@@ -7,9 +7,24 @@ import Email from '../utils/email.js'
 // @access Public
 
 const getAllProducts = asyncHandler(async (req, res) => {
-  const products = await Product.find({})
-    .collation({ locale: 'sk' })
-    .sort({ name: 1 })
+  // const localAddSearchNameToAllProducts = asyncHandler(async () => {
+  //   const products = await Product.find({}).collation({ locale: 'cs' }).sort({ name: 1 })
+
+  //   for (const prod of products) {
+  //     const prodDB = await Product.findById(prod._id) // Fetch the product by ID
+  //     // const searchName = prod.name.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+  //     // console.log('sname', prod.name, searchName)
+
+  //     // Optionally save the updated product back to the database
+  //     // prodDB.searchName = searchName
+  //     // await prodDB.save()
+  //     console.log('db', prodDB.name, prodDB.searchName)
+  //   }
+  //   console.log('local...', products.length)
+  // })
+  // localAddSearchNameToAllProducts()
+
+  const products = await Product.find({}).collation({ locale: 'sk' }).sort({ name: 1 })
 
   res.json({ products })
 })
@@ -123,6 +138,7 @@ const createProduct = asyncHandler(async (req, res) => {
     pages: '',
     isbn: '',
     year: '',
+    searchName: '',
   })
 
   const createdProduct = await product.save()
@@ -155,6 +171,7 @@ const updateProduct = asyncHandler(async (req, res) => {
     pages,
     isbn,
     year,
+    searchName,
   } = req.body
 
   const prod = await Product.findById(req.params.id)
@@ -185,6 +202,7 @@ const updateProduct = asyncHandler(async (req, res) => {
     prod.pages = pages
     prod.isbn = isbn
     prod.year = year
+    prod.searchName = name.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
 
     const savedProd = await prod.save()
 
@@ -221,6 +239,7 @@ const updateProductAnybody = asyncHandler(async (req, res) => {
     pages,
     isbn,
     year,
+    searchName,
   } = req.body
 
   const prod = await Product.findById(req.params.id)
@@ -251,6 +270,7 @@ const updateProductAnybody = asyncHandler(async (req, res) => {
     prod.pages = pages
     prod.isbn = isbn
     prod.year = year
+    prod.searchName = searchName
 
     const savedProd = await prod.save()
 
@@ -293,7 +313,7 @@ const createProductReview = asyncHandler(async (req, res) => {
 
   if (product) {
     const alreadyReviewed = product.reviews.find(
-      (r) => r.user.toString() === req.user._id.toString()
+      (r) => r.user.toString() === req.user._id.toString(),
     )
     if (alreadyReviewed) {
       res.status(400)
@@ -310,8 +330,7 @@ const createProductReview = asyncHandler(async (req, res) => {
     product.reviews.push(review)
     product.numReviews = product.reviews.length
     product.rating =
-      product.reviews.reduce((acc, item) => item.rating + acc, 0) /
-      product.reviews.length
+      product.reviews.reduce((acc, item) => item.rating + acc, 0) / product.reviews.length
     await product.save()
     await new Email(review).sendReviewNotification()
     res.status(201).json({ message: 'Review added' })

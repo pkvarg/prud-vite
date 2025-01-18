@@ -1,26 +1,17 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import { Link, useNavigate, useParams, useLocation } from 'react-router-dom'
-import {
-  Button,
-  Row,
-  Col,
-  ListGroup,
-  Image,
-  Card,
-  ListGroupItem,
-  // ListGroupItem,
-} from 'react-bootstrap'
+import { Button, Row, Col, ListGroup, Image, Card, ListGroupItem } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
 import {
   getOrderDetails,
   payOrder,
-  // deleteOrder,
   deliverOrder,
   cancellOrder,
-  // createOrder,
+  paidOrder,
+  resendConfirmationEmailWithInvoice,
 } from '../actions/orderActions'
 
 import {
@@ -28,6 +19,8 @@ import {
   ORDER_DELIVER_RESET,
   ORDER_CANCELL_RESET,
   ORDER_LIST_MY_RESET,
+  ORDER_PAID_RESET,
+  ORDER_CONFIRMATION_EMAIL_RESET,
 } from '../constants/orderConstants'
 import { loadStripe } from '@stripe/stripe-js'
 import { addDecimals } from '../functions'
@@ -56,24 +49,20 @@ const OrderScreen = () => {
   const orderDeliver = useSelector((state) => state.orderDeliver)
   const { loading: loadingDeliver, success: successDeliver } = orderDeliver
 
+  const orderPaid = useSelector((state) => state.orderPaid)
+  const { loading: loadingPaid, success: successPaid } = orderPaid
+
+  const confirmationEmail = useSelector((state) => state.confirmationEmail)
+  const { loading: loadingConfirmationEmail, success: successConfirmationEmail } = confirmationEmail
+
   const orderCancell = useSelector((state) => state.orderCancell)
   const { success: successCancell } = orderCancell
 
   const userLogin = useSelector((state) => state.userLogin)
   const { userInfo } = userLogin
 
-  //const userDetails = useSelector((state) => state.userDetails)
-  // const {  user } = userDetails
-
   const orderDelete = useSelector((state) => state.orderDelete)
   const { success: successDelete } = orderDelete
-
-  // const deleteOrderHandler = (id) => {
-  //   if (window.confirm('Ste si istý?')) {
-  //     dispatch(deleteOrder(id))
-  //     navigate('/admin/orderlist')
-  //   }
-  // }
 
   if (!loading) {
     // Calculate Prices
@@ -94,9 +83,19 @@ const OrderScreen = () => {
       dispatch({ type: ORDER_PAY_RESET })
       dispatch(getOrderDetails(orderId))
     }
-    if (!order || successPay || successDeliver || successCancell || order._id !== orderId) {
+    if (
+      !order ||
+      successPay ||
+      successDeliver ||
+      successPaid ||
+      successConfirmationEmail ||
+      successCancell ||
+      order._id !== orderId
+    ) {
       //     dispatch({ type: ORDER_PAY_RESET })
       dispatch({ type: ORDER_DELIVER_RESET })
+      dispatch({ type: ORDER_PAID_RESET })
+      dispatch({ type: ORDER_CONFIRMATION_EMAIL_RESET })
       dispatch({ type: ORDER_CANCELL_RESET })
 
       dispatch(getOrderDetails(orderId))
@@ -108,34 +107,18 @@ const OrderScreen = () => {
     successPay,
     successDelete,
     successDeliver,
+    successPaid,
     successCancell,
     navigate,
     userInfo,
   ])
 
-  const createOrder = (data, actions) => {
-    return actions.order.create({
-      purchase_units: [
-        {
-          amount: { value: order.totalPrice },
-        },
-      ],
-    })
-  }
-
-  const successPaymentHandler = (data, actions) => {
-    return actions.order.capture().then((details) => {
-      dispatch(payOrder(orderId, details))
-    })
-  }
-
-  // const successPaymentHandler = (paymentResult) => {
-  //   console.log(paymentResult)
-  //   dispatch(payOrder(orderId, paymentResult))
-  // }
-
   const deliverHandler = () => {
     dispatch(deliverOrder(order))
+  }
+
+  const paidHandler = () => {
+    dispatch(paidOrder(order))
   }
 
   const cancellHandler = () => {
@@ -148,6 +131,10 @@ const OrderScreen = () => {
     localStorage.removeItem('paymentMethod')
     dispatch({ type: ORDER_LIST_MY_RESET })
     document.location.href = '/'
+  }
+
+  const resendConfirmationEmail = () => {
+    dispatch(resendConfirmationEmailWithInvoice(order))
   }
 
   const ps = cart.cartItems.map((item) => ({
@@ -427,6 +414,13 @@ const OrderScreen = () => {
                   </Button>
                 </ListGroup.Item>
               )}
+              {userInfo && userInfo.isAdmin && !order.isPaid && (
+                <ListGroup.Item>
+                  <Button typ="button" className="btn w-100 btn-success" onClick={paidHandler}>
+                    Označiť ako zaplatené
+                  </Button>
+                </ListGroup.Item>
+              )}
               {userInfo && userInfo.isAdmin && !order.isCancelled && (
                 <ListGroup.Item>
                   <Button
@@ -443,6 +437,14 @@ const OrderScreen = () => {
                   Vytvoriť novú objednávku
                 </Button>
               </ListGroup.Item>
+              <ListGroup.Item>
+                <Button className="w-100 btn-red" onClick={() => resendConfirmationEmail()}>
+                  Poslať potvrdzujúci email s faktúrou
+                </Button>
+              </ListGroup.Item>
+              {successConfirmationEmail && (
+                <Message variant="success">Potvrdzujúci email s faktúrou odoslaný</Message>
+              )}
             </ListGroup>
           </Card>
         </Col>

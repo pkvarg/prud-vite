@@ -44,6 +44,7 @@ let header = (doc, invoice) => {
     doc.font('Cardo-Bold').fontSize(11).text(invoice.dic, 469.5, 95)
   }
   doc.font('Cardo').fontSize(10).text('MVSR VUS/1-900/90-26215-1', 422, 110)
+  doc.font('Cardo').fontSize(11).text('IBAN: SK38 1100 0000 0026 2075 3192', 365, 125)
 }
 
 let customerInformation = (doc, invoice) => {
@@ -66,6 +67,11 @@ let customerInformation = (doc, invoice) => {
     //
     .text('Spôsob platby:', 50, customerInformationTop + 30)
     .text(invoice.paymentMethod, 175, customerInformationTop + 30)
+  if (invoice.paymentMethod === 'Bankovým prevodom') {
+    doc
+      .text('Variabilný symbol:', 50, customerInformationTop + 45)
+      .text(invoice.orderNumber.replace('W', ''), 175, customerInformationTop + 45)
+  }
 
   doc
     .font('Cardo-Bold')
@@ -73,15 +79,11 @@ let customerInformation = (doc, invoice) => {
     .font('Cardo')
     .text(invoice.shipping.name, 320, customerInformationTop + 15)
 
-    .text(
-      invoice.shipping.address + ', ' + invoice.shipping.city,
-      320,
-      customerInformationTop + 30
-    )
+    .text(invoice.shipping.address + ', ' + invoice.shipping.city, 320, customerInformationTop + 30)
     .text(
       invoice.shipping.postalCode + ', ' + invoice.shipping.country,
       320,
-      customerInformationTop + 45
+      customerInformationTop + 45,
     )
 
     .moveDown()
@@ -99,21 +101,15 @@ let customerInformation = (doc, invoice) => {
       .text(
         invoice.shipping.address + ', ' + invoice.shipping.city,
         50,
-        customerInformationTop + 90
+        customerInformationTop + 90,
       )
       .text(
         invoice.shipping.postalCode + ', ' + invoice.shipping.country,
         50,
-        customerInformationTop + 102.5
+        customerInformationTop + 102.5,
       )
     if (invoice.note) {
-      doc
-        .fontSize(10)
-        .text(
-          'Poznámka:' + ' ' + invoice.note,
-          50,
-          customerInformationTop + 117.5
-        )
+      doc.fontSize(10).text('Poznámka:' + ' ' + invoice.note, 50, customerInformationTop + 117.5)
     }
     doc.moveDown()
   } else {
@@ -125,11 +121,7 @@ let customerInformation = (doc, invoice) => {
       .fontSize(12)
       .text(invoice.billing.name, 50, customerInformationTop + 77.5)
       .font('Cardo')
-      .text(
-        invoice.billing.address + ', ' + invoice.billing.city,
-        50,
-        customerInformationTop + 90
-      )
+      .text(invoice.billing.address + ', ' + invoice.billing.city, 50, customerInformationTop + 90)
       .text(
         invoice.billing.postalCode +
           ', ' +
@@ -141,16 +133,10 @@ let customerInformation = (doc, invoice) => {
           'DIČ: ' +
           invoice.billing.DIC,
         50,
-        customerInformationTop + 102.5
+        customerInformationTop + 102.5,
       )
     if (invoice.note) {
-      doc
-        .fontSize(10)
-        .text(
-          'Poznámka:' + ' ' + invoice.note,
-          50,
-          customerInformationTop + 117.5
-        )
+      doc.fontSize(10).text('Poznámka:' + ' ' + invoice.note, 50, customerInformationTop + 117.5)
     }
     doc.moveDown()
   }
@@ -194,12 +180,13 @@ let invoiceTable = (doc, invoice) => {
       discount,
       formatCurrency(currencySymbol, item.price.toFixed(2).replace('.', ',')),
       item.qty,
-      formatCurrency(currencySymbol, total.toFixed(2).replace('.', ','))
+      formatCurrency(currencySymbol, total.toFixed(2).replace('.', ',')),
     ),
       generateHr(doc, position + 15)
   }
 
   let shippingPrice = invoice.shippingPrice
+  console.log('nice inv sh pr', shippingPrice)
   // let tax = invoice.taxPrice
   let totalPrice = invoice.total
   productsTotalPrice = addDecimals(productsTotalPrice)
@@ -210,7 +197,7 @@ let invoiceTable = (doc, invoice) => {
     doc,
     productsTotalPosition,
     'Produkty',
-    formatCurrency(currencySymbol, productsTotalPrice.replace('.', ','))
+    formatCurrency(currencySymbol, productsTotalPrice.replace('.', ',')),
   )
 
   const shippingPosition = productsTotalPosition + 10
@@ -219,7 +206,7 @@ let invoiceTable = (doc, invoice) => {
     doc,
     shippingPosition,
     'Poštovné',
-    formatCurrency(currencySymbol, shippingPrice.replace('.', ','))
+    formatCurrency(currencySymbol, shippingPrice.replace('.', ',')),
   )
 
   const paidToDatePosition = shippingPosition + 10
@@ -228,7 +215,7 @@ let invoiceTable = (doc, invoice) => {
     doc,
     paidToDatePosition,
     'Celkom',
-    formatCurrency(currencySymbol, totalPrice.replace('.', ','))
+    formatCurrency(currencySymbol, totalPrice.replace('.', ',')),
   )
 }
 

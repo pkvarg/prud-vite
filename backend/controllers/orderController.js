@@ -157,9 +157,6 @@ const addOrderItems = asyncHandler(async (req, res) => {
     let day = dateFromJson.getDate()
     let month = dateFromJson.getMonth() + 1
     let year = dateFromJson.getFullYear()
-    let hours = dateFromJson.getHours()
-    let minutes = dateFromJson.getMinutes()
-    let seconds = dateFromJson.getSeconds()
     let billingDate = `${day}/${month}/${year}`
     // function to create Billing due date
     function addMonths(numOfMonths, date) {
@@ -195,7 +192,11 @@ const addOrderItems = asyncHandler(async (req, res) => {
       items: createdOrder.orderItems,
       discounts: discounts,
       paymentMethod:
-        createdOrder.paymentMethod === 'Hotovosť' ? 'Na dobierku' : createdOrder.paymentMethod,
+        createdOrder.paymentMethod === 'Hotovosť'
+          ? 'Na dobierku'
+          : createdOrder.paymentMethod === 'Prevodom vopred'
+          ? 'Bankovým prevodom'
+          : createdOrder.paymentMethod,
       total: createdOrder.totalPrice.toFixed(2),
       taxPrice: createdOrder.taxPrice,
       shippingPrice: createdOrder.shippingPrice.toFixed(2),
@@ -227,20 +228,34 @@ const addOrderItems = asyncHandler(async (req, res) => {
 
     console.log('inv details', invoiceDetails.shipping.country, invoiceDetails.paymentMethod)
 
-    if (
-      invoiceDetails.shipping.country !== 'Slovensko' &&
-      invoiceDetails.paymentMethod === 'Prevodom vopred'
-    ) {
-      await new Email(productsObject, '', '').sendOrderNotSkToEmail()
-      await new Email(productsObject, '', fileTosend).sendOrderNotSkAdminOnlyToEmail()
-    } else if (
-      invoiceDetails.shipping.country === 'Slovensko' &&
-      invoiceDetails.paymentMethod === 'Prevodom vopred'
-    ) {
-      await new Email(productsObject, '', fileTosend).sendOrderSkBankTransferToEmail()
-    } else await new Email(productsObject, '', fileTosend).sendOrderToEmail()
+    try {
+      if (
+        invoiceDetails.shipping.country !== 'Slovensko' &&
+        invoiceDetails.paymentMethod === 'Bankovým prevodom'
+      ) {
+        await new Email(productsObject, '', '').sendOrderNotSkToEmail()
+        await new Email(productsObject, '', fileTosend).sendOrderNotSkAdminOnlyToEmail()
+      } else if (
+        invoiceDetails.shipping.country === 'Slovensko' &&
+        invoiceDetails.paymentMethod === 'Bankovým prevodom'
+      ) {
+        console.log('here SK bank')
+        await new Email(productsObject, '', fileTosend).sendOrderSkBankTransferToEmail()
+      } else {
+        console.log('here OTHER')
+        await new Email(productsObject, '', fileTosend).sendOrderToEmail()
+      }
 
-    res.status(201).json(createdOrder)
+      res.status(201).json(createdOrder)
+    } catch (err) {
+      console.error('Error sending email:', err)
+      // Optionally, notify the frontend about the email issue
+      res.status(500).json({
+        message:
+          'Objednávka bola vytvorená, ale potvrdzujúci e-mail obdržíte neskôr. Čoskoro Vás budeme informovať.',
+        order: createdOrder,
+      })
+    }
   }
 })
 
@@ -338,6 +353,24 @@ const updateOrderToPaid = asyncHandler(async (req, res) => {
 
     await new Email(updatedOrderProductsObject).sendPaymentSuccessfullToEmail()
 
+    res.json(updatedOrder)
+  } else {
+    res.status(404)
+    throw new Error('Order not found')
+  }
+})
+
+// @desc Update order to Paid No Card (from Admin menu)
+// @desc GET /api/orders/:id/paid
+// @access Private
+const updateOrderToPaidNoCard = asyncHandler(async (req, res) => {
+  const order = await Order.findById(req.params.id)
+
+  if (order) {
+    order.isPaid = true
+    order.paidAt = Date.now()
+
+    const updatedOrder = await order.save()
     res.json(updatedOrder)
   } else {
     res.status(404)
@@ -553,6 +586,186 @@ const failedPaymentNotification = asyncHandler(async (req, res) => {
   res.json('failed-notif-sent')
 })
 
+// @desc sendConfirmationEmailWithInvoice (from Admin menu)
+// @desc GET /api/orders/:id/resend-confirmation
+// @access Private
+const sendConfirmationEmailWithInvoice = asyncHandler(async (req, res) => {
+  const order = await Order.findById(req.params.id)
+
+  if (order) {
+    // array of items
+    const discounts = order.discounts
+    const loop = order.orderItems
+    const productsCount = loop.length
+    let productsObject = {}
+    loop.map((item, i) => {
+      if (discounts[i].discount > 0) {
+        productsObject[i] =
+          ' ' +
+          item.qty +
+          ' x ' +
+          item.name +
+          ' ' +
+          item.price.toFixed(2).replace('.', ',') +
+          ' €' +
+          ' zľava: ' +
+          discounts[i].discount +
+          ' %'
+      } else {
+        productsObject[i] =
+          ' ' +
+          item.qty +
+          ' x ' +
+          item.name +
+          ' ' +
+          item.price.toFixed(2).replace('.', ',') +
+          ' €' +
+          '  '
+      }
+    })
+
+    // PRODUCTS OBJECT
+    productsObject.user = order.name
+    productsObject.email = order.email
+    productsObject.name = order.name
+    productsObject.orderNumber = order.orderNumber
+    productsObject.taxPrice = order.taxPrice.toFixed(2)
+    productsObject.totalPrice = order.totalPrice.toFixed(2)
+    productsObject.shippingPrice = order.shippingPrice.toFixed(2)
+    productsObject.isPaid = order.isPaid
+    productsObject.productsCount = productsCount
+    productsObject.orderId = order._id
+    productsObject.paymentMethod = order.paymentMethod
+    productsObject.addressinfo =
+      order.shippingAddress.address +
+      ', ' +
+      order.shippingAddress.city +
+      ', ' +
+      order.shippingAddress.postalCode +
+      ', ' +
+      order.shippingAddress.country +
+      ', ' +
+      order.shippingAddress.phone
+
+    productsObject.billinginfo =
+      order.shippingAddress.billingName +
+      ', ' +
+      order.shippingAddress.billingAddress +
+      ', ' +
+      order.shippingAddress.billingCity +
+      ', ' +
+      order.shippingAddress.billingPostalCode +
+      ', ' +
+      order.shippingAddress.billingCountry +
+      ', ' +
+      'IČO: ' +
+      order.shippingAddress.billingICO
+    const productsOnly = order.totalPrice - order.shippingPrice
+    productsObject.productsOnlyPrice = productsOnly.toFixed(2)
+    productsObject.note = order.shippingAddress.note
+
+    const date = order.createdAt
+    let dateFromJson = new Date(date)
+    let day = dateFromJson.getDate()
+    let month = dateFromJson.getMonth() + 1
+    let year = dateFromJson.getFullYear()
+    let billingDate = `${day}/${month}/${year}`
+    function addMonths(numOfMonths, date) {
+      date.setMonth(date.getMonth() + numOfMonths)
+      // return Real DMY
+      let increasedDay = date.getDate()
+      let increasedMonth = date.getMonth() + 1
+      let increasedYear = date.getFullYear()
+      let increasedDMY = `${increasedDay}/${increasedMonth}/${increasedYear}`
+      return increasedDMY
+    }
+
+    // 👇️ Add months to current Date
+    const dueDate = addMonths(1, dateFromJson)
+    const invoiceDetails = {
+      shipping: {
+        name: order.name,
+        address: order.shippingAddress.address,
+        city: order.shippingAddress.city,
+        country: order.shippingAddress.country,
+        phone: order.shippingAddress.phone,
+        postalCode: order.shippingAddress.postalCode,
+      },
+      billing: {
+        name: order.shippingAddress.billingName,
+        address: order.shippingAddress.billingAddress,
+        city: order.shippingAddress.billingCity,
+        country: order.shippingAddress.billingCountry,
+        postalCode: order.shippingAddress.billingPostalCode,
+        ICO: order.shippingAddress.billingICO,
+      },
+      items: order.orderItems,
+      discounts: order.discounts,
+      paymentMethod:
+        order.paymentMethod === 'Hotovosť'
+          ? 'Na dobierku'
+          : order.paymentMethod === 'Prevodom vopred'
+          ? 'Bankovým prevodom'
+          : order.paymentMethod,
+      total: order.totalPrice.toFixed(2).toString(),
+      taxPrice: order.taxPrice,
+      shippingPrice: order.shippingPrice.toFixed(2).toString(),
+      orderNumber: order.orderNumber,
+      header: {
+        company_name: 'Prúd',
+        company_logo: __dirname + '/utils/prud-prud-logo.png',
+        company_address: 'Špieszova 5, 84104, Bratislava, Slovensko',
+      },
+      ico: 'IČO: 36076589',
+      dic: 'DIČ: 2022028173',
+      note: productsObject.note,
+      invoice_produced_by: 'Vyhotovil: LG',
+      footer: {
+        text: 'Faktúra zároveň slúži ako dodací list',
+      },
+      currency_symbol: '€',
+      date: {
+        billing_date: billingDate,
+        due_date: dueDate,
+      },
+    }
+
+    date.setHours(date.getHours() + 1) // Increase the hour by 1
+    const formattedDate = date.toISOString().replace(/:/g, '-').substring(0, 19) // Format the date as YYYY-MM-DDTHH-MM-SS
+
+    niceInvoice(invoiceDetails, `invoices/${order.orderNumber}_${formattedDate}.pdf`)
+    const fileTosend = `invoices/${order.orderNumber}_${formattedDate}.pdf`
+
+    try {
+      if (
+        invoiceDetails.shipping.country !== 'Slovensko' &&
+        invoiceDetails.paymentMethod === 'Bankovým prevodom'
+      ) {
+        await new Email(productsObject, '', '').sendOrderNotSkToEmail()
+        await new Email(productsObject, '', fileTosend).sendOrderNotSkAdminOnlyToEmail()
+      } else if (
+        invoiceDetails.shipping.country === 'Slovensko' &&
+        invoiceDetails.paymentMethod === 'Bankovým prevodom'
+      ) {
+        await new Email(productsObject, '', fileTosend).sendOrderSkBankTransferToEmail()
+      } else await new Email(productsObject, '', fileTosend).sendOrderToEmail()
+
+      res.status(201).json(order)
+    } catch (err) {
+      // Send a sanitized error response to the frontend
+      res.status(500).json({
+        message: 'Error sending email',
+        error: err.message, // Send the error message
+        ...(process.env.NODE_ENV !== 'production' && { stack: err.stack }), // Include stack trace in non-production environments
+      })
+    }
+  } else {
+    res.status(404).json({
+      message: 'Objednávka nenájdená.',
+    })
+  }
+})
+
 export {
   addOrderItems,
   getOrderByid,
@@ -566,4 +779,6 @@ export {
   getInitPaymentId,
   failedPaymentNotification,
   deleteOrder,
+  updateOrderToPaidNoCard,
+  sendConfirmationEmailWithInvoice,
 }
