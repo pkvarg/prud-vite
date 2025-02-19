@@ -1,0 +1,15 @@
+name: Deploy Frontend to Coolify
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - 'frontend/**'  # Only trigger when frontend files change
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Notify Coolify Frontend
+        run: curl -X POST ${{ secrets.COOLIFY_FRONTEND_DEPLOY_HOOK }}
