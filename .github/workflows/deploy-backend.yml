@@ -12,4 +12,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Notify Coolify
-        run: curl -X POST ${{ secrets.COOLIFY_DEPLOY_HOOK }}
+        run: curl -X POST ${{ secrets.COOLIFY_BACKEND_DEPLOY_HOOK }}
