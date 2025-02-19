@@ -1,0 +1,15 @@
+name: Deploy to Coolify
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - 'backend/**'  # Only triggers for backend changes
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Notify Coolify
+        run: curl -X POST ${{ secrets.COOLIFY_DEPLOY_HOOK }}
