@@ -31,6 +31,7 @@ app.use(express.json())
 app.use(
   cors({
     origin: [
+      'http://localhost:3010',
       'http://localhost:2001',
       'http://localhost:2003',
       'http://localhost:3000',
@@ -42,7 +43,7 @@ app.use(
       'https://prud.sk',
       'https://proudzivota.cz',
     ],
-  })
+  }),
 )
 
 // const users = []
@@ -60,15 +61,12 @@ app.use('/api/subscribers', subscriberRoutes)
 app.use('/api/create-stripe-checkout-session', stripeRoutes)
 
 const __dirname = path.resolve()
-app.use(
-  '/uploads',
-  express.static(path.join(__dirname, './../backend/uploads'))
-)
+app.use('/uploads', express.static(path.join(__dirname, './../backend/uploads')))
 
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, './../frontend/dist/')))
   app.get('*', (req, res) =>
-    res.sendFile(path.resolve(__dirname, './../frontend', 'dist', 'index.html'))
+    res.sendFile(path.resolve(__dirname, './../frontend', 'dist', 'index.html')),
   )
 } else {
   app.get('/', (req, res) => {
@@ -82,7 +80,5 @@ app.use(errorHandler)
 const PORT = process.env.PORT || 6000
 app.listen(
   PORT,
-  console.log(
-    `Server running in ${process.env.NODE_ENV} mode on port ${PORT}`.yellow.bold
-  )
+  console.log(`Server running in ${process.env.NODE_ENV} mode on port ${PORT}`.yellow.bold),
 )
